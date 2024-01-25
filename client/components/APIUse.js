@@ -2,11 +2,11 @@ import axios from 'axios';
 
 function getEventDetails()
 {
-  axios.get('http://localhost:3000/GetEvent').then(function (response) {return response.data})
+  const response = axios.get('http://localhost:3000/GetEvent')
+  return response.data;
 }
 
 function postEventDetails(iD, t, clubName, d, i)
 {
-  axios.post('http://localhost:3000/post', {id : iD, title : t, club_name : clubName, d: date, intrested : i})
-  
+  axios.post('http://localhost:3000/postEvent', {id : iD, title : t, club_name : clubName, data: d, intrested : i})
 }
