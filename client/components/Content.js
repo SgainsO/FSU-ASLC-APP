@@ -5,13 +5,17 @@ import { Text, Image, View, FlatList } from 'react-native';
 const Content = () => {
     const containerStyle = {
         flex: 12, 
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        marginVertical: 20,
   };
 
   const data = [
-    { id: '1', title: 'Item 1', club: 'Club 1', date: 'WED, JAN 25 AT 10 PM', interested: '69K interested'},
-    { id: '2', title: 'Item 2', club: 'Club 2', date: 'WED, JAN 26 - 28', interested: '4.2K interested'},
-    // ... more items
+    { id: '0', title: 'Event 1', club: 'Club 1', date: 'MON, JAN 22 AT 10 PM', interested: '4.9K interested'},
+    { id: '1', title: 'Event 2', club: 'Club 2', date: 'WED, JAN 24 - 25', interested: '2.2K interested'},
+    { id: '2', title: 'Event 3', club: 'Club 3', date: 'MON, JAN 22 AT 10 AM', interested: '1.6K interested'},
+    { id: '3', title: 'Event 4', club: 'Club 4', date: 'THUR, JAN 25 - 26', interested: '420 interested'},
+    { id: '4', title: 'Event 5', club: 'Club 5', date: 'MON, JAN 22 AT 9 AM', interested: '160 interested'},
+    { id: '5', title: 'Event 6', club: 'Club 6', date: 'SAT, JAN 27 - 28', interested: '42 interested'},
   ];
 
   const renderItem = ({ item }) => (
@@ -19,8 +23,8 @@ const Content = () => {
       <View style={overlayStyle}>
         <Text style={{ fontSize: 10, fontWeight: 600 }}>{item.date}</Text>
         <Text style={{ fontSize: 13, fontWeight: 600 }}>{item.title}</Text>
-        <Text style={{ fontSize: 12, fontColor: '#455154' }}>{item.club}</Text>
-        <Text style={{ fontSize: 12, fontColor: '#455154' }}>{item.interested}</Text>
+        <Text style={{ fontSize: 12, color: '#455154' }}>{item.club}</Text>
+        <Text style={{ fontSize: 12, color: '#455154' }}>{item.interested}</Text>
       </View>
     </View>
   );
@@ -29,7 +33,7 @@ const Content = () => {
     flex: 1,
     justifyContent: "space-around",
     marginHorizontal: 25,
-    marginTop: 40, 
+    marginVertical: 10, 
   };
   const cardImageStyle = {
     flex: 1,
