@@ -3,6 +3,7 @@ import { StyleSheet, View, StatusBar } from 'react-native';
 import Header from './components/Header';
 import Content from './components/Content';
 import Footer from './components/Footer';
+import Rewards from './components/section/Rewards'
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +17,7 @@ const App = () => {
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
       <Header />
-      <Content />
+      <Rewards />
       <Footer />
     </View>
   );
