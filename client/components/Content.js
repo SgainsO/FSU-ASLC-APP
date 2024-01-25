@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useNavigation, NavigationContext } from '@react-navigation/native';
+import { NavigationContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Events from './section/Events';
@@ -17,7 +17,7 @@ const Content = ({ navigation }) => {
   return (
     <NavigationContext.Provider value={navigation}>
       <View style={containerStyle}>
-          <Stack.Navigator initialRouteName="Events">
+          <Stack.Navigator initialRouteName="Events" screenOptions={{animation: 'none'}}>
             <Stack.Screen
               name="Home"
               component={Home}

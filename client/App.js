@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
-import { NavigationContainer, useNavigation, NavigationContext } from '@react-navigation/native';
+import { NavigationContainer, NavigationContext } from '@react-navigation/native';
 
 import Header from './components/Header';
 import Content from './components/Content';
@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-
-
 
 const App = () => {
   const navigation = React.useContext(NavigationContext);

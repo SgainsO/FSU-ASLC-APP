@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
 import { View } from 'react-native';
-import { NavigationContext, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import Icon from './Icon';
 
@@ -15,7 +14,6 @@ const Footer = () => {
     };
 
     const navigation = useNavigation();
-    console.log('Navigation object:', navigation);
     
     return (
         <View style={barStyle}>
