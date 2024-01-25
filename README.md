@@ -6,9 +6,9 @@ Follow these steps to run the client code on your machine:
 
 ### Prerequisites
 - Clone the repository
-- Ensure you have `NPM`` installed on your machine.
+- Ensure you have `NPM` installed on your machine.
 - Download the `Expo Go` application on your mobile device.
-- Make sure to install libraries by going into the `client` folder and using `npm install`.
+- Make sure to install dependencies by going into the `client` folder and using `npm install`.
 
 ```bash
 cd client
@@ -22,7 +22,7 @@ npm install
 npx expo login
 ```
 
-### Run the Code
+### Running the Code
 - After logging in on both devices, ensure that they are both on the same Wi-Fi network. Then, you can start the Expo Go server locally and be able to see it on your Expo Go application.
 
 ```bash
