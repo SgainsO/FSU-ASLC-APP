@@ -26,7 +26,7 @@ const Card = ({ title, club, startDate, endDate, interested }) => {
     bottom: 0,
     left: 0,
     right: 0,
-    height: 90,
+    height: 85,
     paddingHorizontal: 8,
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -42,8 +42,8 @@ const Card = ({ title, club, startDate, endDate, interested }) => {
   }
 
   function formatDateAndTime(startDate, endDate) {
-    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
 
     // Check if the dates are the same
     const isSameDay = startDate.toDateString() === endDate.toDateString();
