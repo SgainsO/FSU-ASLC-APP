@@ -1,5 +1,6 @@
+import * as React from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, NavigationContext } from '@react-navigation/native';
 
 import Header from './components/Header';
 import Content from './components/Content';
@@ -12,14 +13,18 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
 const App = () => {
+  const navigation = React.useContext(NavigationContext);
+
   return (
     <NavigationContainer>
       <View style={styles.container}>
         <StatusBar barStyle={'light-content'} />
         <Header />
-        <Content />
-        <Footer />
+        <Content navigation={navigation}/>
+        <Footer navigation={navigation}/>
       </View>
     </NavigationContainer>
   );

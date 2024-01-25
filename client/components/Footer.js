@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { View } from 'react-native';
-import { NavigationContext } from '@react-navigation/native';
+import { NavigationContext, useNavigation } from '@react-navigation/native';
 
 import Icon from './Icon';
 
-const Footer = (navigation) => {
+const Footer = () => {
     const barStyle = {
         flex: 1,
         flexDirection: 'row',
@@ -14,6 +14,7 @@ const Footer = (navigation) => {
         alignItems: 'flex-start',
     };
 
+    const navigation = useNavigation();
     console.log('Navigation object:', navigation);
     
     return (
@@ -21,7 +22,7 @@ const Footer = (navigation) => {
             <Icon
                 iconSource={require('../assets/home_outline.png')}
                 text="Home"
-                onPress={() => console.log('Home pressed')}
+                onPress={() => navigation.navigate('Home')}
             />
             <Icon
                 iconSource={require('../assets/search_outline.png')}
