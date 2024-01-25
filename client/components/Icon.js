@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 
 const Icon = ({ iconSource, text, textColor = 'white' }) => {
   const iconStyle = {
@@ -18,10 +18,12 @@ const Icon = ({ iconSource, text, textColor = 'white' }) => {
   };
 
   return (
-    <View>
-      <Image source={iconSource} style={iconStyle} />
-      <Text style={textStyle}>{text}</Text>
-    </View>
+    <TouchableOpacity onPress={() => this.onPress}>
+      <View>
+        <Image source={iconSource} style={iconStyle} />
+        <Text style={textStyle}>{text}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

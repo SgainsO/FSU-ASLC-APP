@@ -34,6 +34,7 @@ const Content = () => {
         numColumns={2}
         columnWrapperStyle={rowStyle}
       />
+      
     </View>
   );
 };
