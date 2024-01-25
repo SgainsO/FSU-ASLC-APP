@@ -8,7 +8,7 @@ const Header = () => {
         backgroundColor: '#782F40',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
-  };
+    };
 
     return (
         <View style={barStyle}>
@@ -16,7 +16,7 @@ const Header = () => {
             <Text style={{ color: 'white', fontSize: 30, fontWeight: 600, marginBottom: 8 }}>ASLC Connect</Text>
             <Image source={require('../assets/burger_menu.png')} style={{ width: 25, height: 25, margin: 8 }} />
         </View>
-  );
+    );
 };
 
 export default Header;

@@ -20,7 +20,7 @@ const Footer = () => {
             <Icon iconSource={require('../assets/events_filled.png')} text="Events" textColor="#CEB888" />
             <Icon iconSource={require('../assets/rewards_outline.png')} text="Rewards" />
         </View>
-  );
+    );
 };
 
 export default Footer;
