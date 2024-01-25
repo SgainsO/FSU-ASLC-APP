@@ -1,3 +1,30 @@
 # FSU-ASLC-APP
 
-test
+## Getting Started
+
+Follow these steps to run the client code on your machine:
+
+### Prerequisites
+- Clone the repository
+- Ensure you have `NPM`` installed on your machine.
+- Download the `Expo Go` application on your mobile device.
+- Make sure to install libraries by going into the `client` folder and using `npm install`.
+
+```bash
+cd client
+npm install
+```
+
+### Creating an Expo Account
+- Once you have installed the prequisites, you can create an account on the Expo Go mobile application, making sure to remember your login credentials to login on your desktop, using the following line and then entering your credentials:
+
+```bash
+npx expo login
+```
+
+### Run the Code
+- After logging in on both devices, ensure that they are both on the same Wi-Fi network. Then, you can start the Expo Go server locally and be able to see it on your Expo Go application.
+
+```bash
+npx expo start
+```
