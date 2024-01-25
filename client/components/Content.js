@@ -17,12 +17,12 @@ const Content = () => {
   };
 
   const data = [
-    { id: '0', title: 'Event 1', club: 'Club 1', date: 'MON, JAN 22 AT 10 PM', interested: '4.9K interested' },
-    { id: '1', title: 'Event 2', club: 'Club 2', date: 'WED, JAN 24 - 25', interested: '2.2K interested' },
-    { id: '2', title: 'Event 3', club: 'Club 3', date: 'MON, JAN 22 AT 10 AM', interested: '1.6K interested' },
-    { id: '3', title: 'Event 4', club: 'Club 4', date: 'THUR, JAN 25 - 26', interested: '420 interested' },
-    { id: '4', title: 'Event 5', club: 'Club 5', date: 'MON, JAN 22 AT 9 AM', interested: '160 interested' },
-    { id: '5', title: 'Event 6', club: 'Club 6', date: 'SAT, JAN 27 - 28', interested: '42 interested' },
+    { id: 0, title: 'Event 1', club: 'Club 1', date: 'MON, JAN 22 AT 10 PM', interested: 4942 },
+    { id: 1, title: 'Event 2', club: 'Club 2', date: 'WED, JAN 24 - 25', interested: 2245 },
+    { id: 2, title: 'Event 3', club: 'Club 3', date: 'MON, JAN 22 AT 10 AM', interested: 1632 },
+    { id: 3, title: 'Event 4', club: 'Club 4', date: 'THUR, JAN 25 - 26', interested: 420 },
+    { id: 4, title: 'Event 5', club: 'Club 5', date: 'MON, JAN 22 AT 9 AM', interested: 165 },
+    { id: 5, title: 'Event 6', club: 'Club 6', date: 'SAT, JAN 27 - 28', interested: 42 },
   ];
 
   return (
