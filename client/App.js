@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
 
 import Header from './components/Header';
 import Content from './components/Content';
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <View style={styles.container}>
+      <StatusBar barStyle={'light-content'} />
       <Header />
       <Content />
       <Footer />
