@@ -6,7 +6,6 @@ const Content = () => {
     const containerStyle = {
         flex: 12, 
         backgroundColor: 'white',
-        marginVertical: 20,
   };
 
   const data = [
