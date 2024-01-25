@@ -9,6 +9,13 @@ const Content = () => {
     backgroundColor: 'white',
   };
 
+  const rowStyle = {
+    flex: 1,
+    justifyContent: "space-around",
+    marginHorizontal: 25,
+    marginVertical: 10,
+  };
+
   const data = [
     { id: '0', title: 'Event 1', club: 'Club 1', date: 'MON, JAN 22 AT 10 PM', interested: '4.9K interested' },
     { id: '1', title: 'Event 2', club: 'Club 2', date: 'WED, JAN 24 - 25', interested: '2.2K interested' },
@@ -17,13 +24,6 @@ const Content = () => {
     { id: '4', title: 'Event 5', club: 'Club 5', date: 'MON, JAN 22 AT 9 AM', interested: '160 interested' },
     { id: '5', title: 'Event 6', club: 'Club 6', date: 'SAT, JAN 27 - 28', interested: '42 interested' },
   ];
-
-  const rowStyle = {
-    flex: 1,
-    justifyContent: "space-around",
-    marginHorizontal: 25,
-    marginVertical: 10,
-  };
 
   return (
     <View style={containerStyle}>

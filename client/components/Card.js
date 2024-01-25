@@ -2,7 +2,7 @@ import { Text, Image, View, FlatList } from 'react-native';
 
 //import * as Section from './section';
 
-const Card = ({ id, title, club, date, interested }) => {
+const Card = ({ title, club, date, interested }) => {
   const cardImageStyle = {
     flex: 1,
     marginHorizontal: 10,
