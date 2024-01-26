@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,33 +16,44 @@ const Footer = () => {
 
     const navigation = useNavigation();
     
+    const [activeIcon, setActiveIcon] = useState("Events");
+
+    const handleIconPress = (iconName, navigateTo) => {
+        setActiveIcon(iconName);
+        navigation.navigate(navigateTo);
+    };
+
     return (
         <View style={barStyle}>
             <Icon
-                iconSource={require('../assets/home_outline.png')}
+                iconSource={activeIcon === 'Home' ? require('../assets/home_filled.png') : require('../assets/home_outline.png')}
                 text="Home"
-                onPress={() => navigation.navigate('Home')}
+                textColor={activeIcon === 'Home' ? "#CEB888" : undefined}
+                onPress={() => handleIconPress('Home', 'Home')}
             />
             <Icon
-                iconSource={require('../assets/search_outline.png')}
+                iconSource={activeIcon === 'Search' ? require('../assets/search_filled.png') : require('../assets/search_outline.png')}
                 text="Search"
-                onPress={() => navigation.navigate('Events')}
+                textColor={activeIcon === 'Search' ? "#CEB888" : undefined}
+                onPress={() => handleIconPress('Search', 'Events')}
             />
             <Icon
-                iconSource={require('../assets/post_outline.png')}
+                iconSource={activeIcon === 'Post' ? require('../assets/post_filled.png') : require('../assets/post_outline.png')}
                 text="Post"
-                onPress={() => navigation.navigate('Events')}
+                textColor={activeIcon === 'Post' ? "#CEB888" : undefined}
+                onPress={() => handleIconPress('Post', 'Events')}
             />
             <Icon
-                iconSource={require('../assets/events_filled.png')}
+                iconSource={activeIcon === 'Events' ? require('../assets/events_filled.png') : require('../assets/events_outline.png')}
                 text="Events"
-                textColor="#CEB888"
-                onPress={() => navigation.navigate('Events')}
+                textColor={activeIcon === 'Events' ? "#CEB888" : undefined}
+                onPress={() => handleIconPress('Events', 'Events')}
             />
             <Icon
-                iconSource={require('../assets/rewards_outline.png')}
+                iconSource={activeIcon === 'Rewards' ? require('../assets/rewards_filled.png') : require('../assets/rewards_outline.png')}
                 text="Rewards"
-                onPress={() => navigation.navigate('Rewards')}
+                textColor={activeIcon === 'Rewards' ? "#CEB888" : undefined}
+                onPress={() => handleIconPress('Rewards', 'Rewards')}
             />
         </View>
     );

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { NavigationContainer, NavigationContext } from '@react-navigation/native';
 
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 });
 
 const App = () => {
-  const navigation = React.useContext(NavigationContext);
+  const navigation = useContext(NavigationContext);
 
   return (
     <NavigationContainer>
