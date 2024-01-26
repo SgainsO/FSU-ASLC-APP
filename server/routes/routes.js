@@ -20,7 +20,7 @@ router.get('/events', async (req, res) => {
 });
 
 // POST 
-router.post('/create', async (req, res) => {
+router.post('/create_event', async (req, res) => {
     try {
         // Parse data from the req.bodys
         const { id, title, club, date, interested} = req.body;
@@ -41,7 +41,7 @@ router.post('/create', async (req, res) => {
 })
 
 // DELETE by id param
-router.delete('/remove/:id', async (req, res) => {
+router.delete('/remove_event/:id', async (req, res) => {
     try {
         // Parse the id from params
         const eventID = req.params.id
