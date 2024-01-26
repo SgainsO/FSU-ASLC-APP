@@ -1,6 +1,4 @@
-import { Text, Image, View } from 'react-native';
-
-//import * as Section from './section';
+import { Text, View } from 'react-native';
 
 const Card = ({ title, club, startDate, endDate, interested }) => {
   const cardImageStyle = {
@@ -10,8 +8,6 @@ const Card = ({ title, club, startDate, endDate, interested }) => {
     paddingHorizontal: 70,
     width: 150,
     height: 250,
-    //borderWidth: 0,
-    //borderColor: 'white',
     borderRadius: 10,
     backgroundColor: '#D9D9D9',
     shadowColor: 'rgba(0,0,0, 0.25)',

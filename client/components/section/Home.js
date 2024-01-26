@@ -1,7 +1,6 @@
 import { View, FlatList } from 'react-native';
 
 import Card from '../Card';
-//import * as Section from './section';
 
 const Content = () => {
   const containerStyle = {
