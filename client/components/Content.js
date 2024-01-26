@@ -19,7 +19,7 @@ const Content = ({ navigation }) => {
   return (
     <NavigationContext.Provider value={navigation}>
       <View style={containerStyle}>
-          <Stack.Navigator initialRouteName="Events" screenOptions={{animation: 'none'}}>
+          <Stack.Navigator initialRouteName="Home" screenOptions={{animation: 'none'}}>
             <Stack.Screen
               name="Home"
               component={Home}

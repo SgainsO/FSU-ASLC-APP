@@ -16,7 +16,7 @@ const Footer = () => {
 
     const navigation = useNavigation();
     
-    const [activeIcon, setActiveIcon] = useState("Events");
+    const [activeIcon, setActiveIcon] = useState("Home");
 
     const handleIconPress = (iconName, navigateTo) => {
         setActiveIcon(iconName);
