@@ -28,7 +28,7 @@ npx expo login
 ```bash
 npx expo start
 ```
-#### Before starting server you must have access to the .env file 
+#### Before starting server you must have access to the .env file and place it in the server folder 
 
 ### Installing Neccesary Modules
 ```
