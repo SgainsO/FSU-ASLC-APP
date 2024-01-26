@@ -2,17 +2,18 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+
+
 const mongoString = process.env.DATABASE_URL;
 
 // Import your routes
 const routes = require('./routes/routes');
 
 const app = express();
+app.use(express.json()); //Utilize express json middleware to turn req.body to json
+app.use('/api', routes); // localhost:8080/api
 
-app.use(express.json());
-
-app.use('/api', routes);
-
+// Establish a connection to the database via mongoose
 mongoose.connect(mongoString);
 const database = mongoose.connection;
 
