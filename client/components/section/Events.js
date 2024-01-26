@@ -2,7 +2,7 @@ import { View, FlatList } from 'react-native';
 
 import Card from '../Card';
 
-const Content = () => {
+const Events = () => {
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
@@ -38,4 +38,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default Events;
