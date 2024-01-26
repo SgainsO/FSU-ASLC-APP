@@ -1,6 +1,4 @@
-import { Text, Image, View } from 'react-native';
-
-//import * as Section from './section';
+import { Text, View } from 'react-native';
 
 const Card = ({ title, club, startDate, endDate, interested }) => {
   const cardImageStyle = {
@@ -10,8 +8,6 @@ const Card = ({ title, club, startDate, endDate, interested }) => {
     paddingHorizontal: 70,
     width: 150,
     height: 250,
-    //borderWidth: 0,
-    //borderColor: 'white',
     borderRadius: 10,
     backgroundColor: '#D9D9D9',
     shadowColor: 'rgba(0,0,0, 0.25)',
@@ -26,7 +22,7 @@ const Card = ({ title, club, startDate, endDate, interested }) => {
     bottom: 0,
     left: 0,
     right: 0,
-    height: 90,
+    height: 85,
     paddingHorizontal: 8,
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -42,8 +38,8 @@ const Card = ({ title, club, startDate, endDate, interested }) => {
   }
 
   function formatDateAndTime(startDate, endDate) {
-    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const days = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
 
     // Check if the dates are the same
     const isSameDay = startDate.toDateString() === endDate.toDateString();

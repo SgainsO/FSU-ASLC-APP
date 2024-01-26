@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 
-const Icon = ({ iconSource, text, textColor = 'white' }) => {
+const Icon = ({ iconSource, text, textColor = 'white', onPress }) => {
   const iconStyle = {
     width: 30,
     height: 30,
@@ -18,10 +18,12 @@ const Icon = ({ iconSource, text, textColor = 'white' }) => {
   };
 
   return (
-    <View>
-      <Image source={iconSource} style={iconStyle} />
-      <Text style={textStyle}>{text}</Text>
-    </View>
+    <TouchableOpacity onPress={onPress}>
+      <View>
+        <Image source={iconSource} style={iconStyle} />
+        <Text style={textStyle}>{text}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

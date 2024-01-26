@@ -2,7 +2,7 @@ import { View, FlatList, Text } from 'react-native';
 
 import Card from '../Card';
 
-const Home = () => {
+const Search = () => {
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
@@ -10,9 +10,9 @@ const Home = () => {
 
   return (
     <View style={containerStyle}>
-      <Text> Events </Text>
+      <Text> Search </Text>
     </View>
   );
 };
 
-export default Home;
+export default Search;
