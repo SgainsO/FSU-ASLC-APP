@@ -28,3 +28,9 @@ npx expo login
 ```bash
 npx expo start
 ```
+
+### Starting Server
+```
+npm install
+npm start
+```
