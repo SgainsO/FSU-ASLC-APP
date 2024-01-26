@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Events from './section/Events';
 import Home from './section/Home';
+import Search from './section/Search';
+import Post from './section//Post';
 import Rewards from './section/Rewards';
 
 const Stack = createNativeStackNavigator();
@@ -21,6 +23,16 @@ const Content = ({ navigation }) => {
             <Stack.Screen
               name="Home"
               component={Home}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Search"
+              component={Search}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Post"
+              component={Post}
               options={{ headerShown: false }}
             />
             <Stack.Screen

@@ -35,13 +35,13 @@ const Footer = () => {
                 iconSource={activeIcon === 'Search' ? require('../assets/search_filled.png') : require('../assets/search_outline.png')}
                 text="Search"
                 textColor={activeIcon === 'Search' ? "#CEB888" : undefined}
-                onPress={() => handleIconPress('Search', 'Events')}
+                onPress={() => handleIconPress('Search', 'Search')}
             />
             <Icon
                 iconSource={activeIcon === 'Post' ? require('../assets/post_filled.png') : require('../assets/post_outline.png')}
                 text="Post"
                 textColor={activeIcon === 'Post' ? "#CEB888" : undefined}
-                onPress={() => handleIconPress('Post', 'Events')}
+                onPress={() => handleIconPress('Post', 'Post')}
             />
             <Icon
                 iconSource={activeIcon === 'Events' ? require('../assets/events_filled.png') : require('../assets/events_outline.png')}
