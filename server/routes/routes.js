@@ -11,7 +11,7 @@ router.get('/events', async (req, res) => {
     try {
         // Returns all events from the database
         const events = await Event.find({});
-
+        console.log("Get Command Success",res.body);
         res.status(200).json(events);
     } catch (error) {
         console.error('Error Retrieving events: ', error);
@@ -23,10 +23,10 @@ router.get('/events', async (req, res) => {
 router.post('/create', async (req, res) => {
     try {
         // Parse data from the req.bodys
-        const { id, title, club, date, interested} = req.body;
+        const { id, title, club, date_begin, date_end, interested} = req.body;
 
         // Create a new instance of event from our eventScheme with mongoose
-        const newEvent = new Event({id, title, club, date, interested});
+        const newEvent = new Event({id, title, club, date_begin, date_end, interested});
 
         // Save the event to the database
         await newEvent.save();
