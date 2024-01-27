@@ -1,7 +1,6 @@
 import { View, Text, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import { SearchBar } from '@rneui/themed';
-import { Icon } from '@rneui/base';
 
 import Card from '../EventCard';
 

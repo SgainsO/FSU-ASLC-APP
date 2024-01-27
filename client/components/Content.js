@@ -2,10 +2,10 @@ import { View } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Events from './section/Events';
 import Home from './section/Home';
 import Search from './section/Search';
 import Post from './section//Post';
+import Events from './section/Events';
 import Rewards from './section/Rewards';
 
 const Stack = createNativeStackNavigator();
