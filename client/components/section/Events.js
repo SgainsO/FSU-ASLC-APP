@@ -1,7 +1,9 @@
 import { View, Text, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { SearchBar } from '@rneui/themed';
+import { Icon } from '@rneui/base';
 
 import Card from '../EventCard';
-import { SearchBar } from 'react-native-screens';
 
 const Events = () => {
   const containerStyle = {
@@ -9,14 +11,34 @@ const Events = () => {
     backgroundColor: 'white',
   };
 
-  const searchContainerStyle = {
-    height: 60,
+  const topContainerStyle = {
+    height: 80,
     backgroundColor: 'white',
     shadowColor: 'rgba(60,60,67, 0.29)',
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 1,
-    elevation: 1
+    elevation: 1,
+    alignItems: 'center',
+  };
+
+  const searchContainerStyle = {
+    height: 40,
+    backgroundColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderTopColor: 'transparent',
+  };
+
+  const searchBoxStyle = {
+    width: 300,
+    height: 25,
+    backgroundColor: '#D9D9D9',
+    borderRadius: 18,
+  };
+
+  const searchInputStyle = {
+    fontSize: 16,
+    color: '#3C3C4399',
   };
 
   const titleStyle = {
@@ -42,19 +64,37 @@ const Events = () => {
     { id: 5, title: 'Event 6', club: 'Club 6', startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 42 },
   ];
 
+  const [value, setValue] = useState("");
+
+  const updateSearch = (search) => {
+    setSearch(search);
+  };
+
   return (
     <View style={containerStyle}>
-      <View style={searchContainerStyle}>
-        <SearchBar placeholder="Search" />
-      </View>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <Card {...item} />}
-          keyExtractor={item => item.id}
-          numColumns={2}
-          columnWrapperStyle={rowStyle}
-          ListHeaderComponent={() => <Text style={titleStyle}>DISCOVER EVENTS</Text>}
+      <View style={topContainerStyle}>
+        <SearchBar
+          containerStyle={searchContainerStyle}
+          inputContainerStyle={searchBoxStyle}
+          inputStyle={searchInputStyle}
+          searchIcon={{ color: '#3C3C4360' }}
+          clearIcon={{ color: '#3C3C4360' }}
+          onChangeText={newVal => setValue(newVal)}
+          onClearText={() => console.log(onClearText())}
+          placeholder='Search'
+          placeholderTextColor='#3C3C4350'
+          value={value}
         />
+      </View>
+
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <Card {...item} />}
+        keyExtractor={item => item.id}
+        numColumns={2}
+        columnWrapperStyle={rowStyle}
+        ListHeaderComponent={() => <Text style={titleStyle}>DISCOVER EVENTS</Text>}
+      />
       
       
     </View>
