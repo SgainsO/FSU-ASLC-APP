@@ -1,7 +1,5 @@
 import { View, FlatList, Text } from 'react-native';
 
-import Card from '../Card';
-
 const Rewards = () => {
   const containerStyle = {
     flex: 12,

@@ -1,6 +1,7 @@
-import { View, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 
-import Card from '../Card';
+import Card from '../EventCard';
+import { SearchBar } from 'react-native-screens';
 
 const Events = () => {
   const containerStyle = {
@@ -8,11 +9,28 @@ const Events = () => {
     backgroundColor: 'white',
   };
 
+  const searchContainerStyle = {
+    height: 60,
+    backgroundColor: 'white',
+    shadowColor: 'rgba(60,60,67, 0.29)',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 1,
+    elevation: 1
+  };
+
+  const titleStyle = {
+    fontSize: 16,
+    fontWeight: 600,
+    marginHorizontal: 35,
+    marginVertical: 14,
+  };
+
   const rowStyle = {
     flex: 1,
     justifyContent: "space-around",
     marginHorizontal: 25,
-    marginVertical: 10,
+    marginBottom: 20,
   };
 
   const data = [
@@ -26,13 +44,18 @@ const Events = () => {
 
   return (
     <View style={containerStyle}>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <Card {...item} />}
-        keyExtractor={item => item.id}
-        numColumns={2}
-        columnWrapperStyle={rowStyle}
-      />
+      <View style={searchContainerStyle}>
+        <SearchBar placeholder="Search" />
+      </View>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <Card {...item} />}
+          keyExtractor={item => item.id}
+          numColumns={2}
+          columnWrapperStyle={rowStyle}
+          ListHeaderComponent={() => <Text style={titleStyle}>DISCOVER EVENTS</Text>}
+        />
+      
       
     </View>
   );

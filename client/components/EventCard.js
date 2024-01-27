@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 
-const Card = ({ title, club, startDate, endDate, interested }) => {
+const EventCard = ({ title, club, startDate, endDate, interested }) => {
   const cardImageStyle = {
     flex: 1,
     marginHorizontal: 10,
@@ -92,4 +92,4 @@ const Card = ({ title, club, startDate, endDate, interested }) => {
   );
 };
 
-export default Card;
+export default EventCard;
