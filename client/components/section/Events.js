@@ -2,7 +2,7 @@ import { View, Text, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import { SearchBar } from '@rneui/themed';
 
-import Card from '../EventCard';
+import Card from '../cards/EventCard';
 
 const Events = () => {
   const containerStyle = {
