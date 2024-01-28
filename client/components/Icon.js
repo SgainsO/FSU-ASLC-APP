@@ -1,4 +1,4 @@
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
 const Icon = ({ iconSource, text, textColor = 'white', onPress }) => {
   const iconStyle = {
@@ -17,12 +17,12 @@ const Icon = ({ iconSource, text, textColor = 'white', onPress }) => {
   };
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableWithoutFeedback onPress={onPress}>
       <View>
         <Image source={iconSource} style={iconStyle} />
         <Text style={textStyle}>{text}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 
