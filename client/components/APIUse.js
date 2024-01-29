@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+
 //Retrieves all event data and return as a json file
 function GetAllEventData()
 {
@@ -16,9 +18,9 @@ function GetAllEventData()
 
 //Makes a new event based on the parameters passed in.
 function postEventDetails(iD, t, clubName, sD, ed, i)
-{
+{  
   axios.post('http://localhost:8080/api/create_event', 
-    {id : iD, title : t, club_name : clubName, start_date: sD, end_date:ed, intrested : i})
+    {id : iD, title : "t", club_name : "clubName", start_date: "sD", end_date: "ed", intrested : i})
       .then(response =>
         {
           console.log("Post Request Succesful")
