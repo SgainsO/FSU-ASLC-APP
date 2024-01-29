@@ -1,6 +1,7 @@
-import { View, FlatList, Text, Image } from 'react-native';
+import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
 
 import RewardsCard from '../RewardsCard';
+import RoundedBox from '../RewardsRoundedBox';
 
 const Rewards = () => {
   const containerStyle = {
@@ -22,11 +23,27 @@ const Rewards = () => {
     { id: 3, title: 'Reward 4', icon: <Image source = {require('../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 1000 },
   ];
 
+  const header = [
+    {id: 'header1', component: <Text style={{fontSize: 16, fontWeight: '600', paddingLeft: 32}}>MY REWARDS</Text>},
+    { id: 'header3', component: <Text style={{fontSize: 16, fontWeight: '600', paddingLeft: 32}}>REWARDS STORE</Text>}
+  ];
+
+  const styles = StyleSheet.create({
+    centeredBox: {
+      flex:1, 
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+  });
+
   return (
     <View style={containerStyle}>
+      <View style={styles.centeredBox}>
+        <RoundedBox />
+      </View>
       <FlatList
       data ={data}
-      renderItem ={({item}) => <RewardsCard {...item}/>}
+      renderItem ={({item}) => <RewardsCard {...item} />}
       keyExtractor={item => item.id}
       numColumns={2}
       columnWrapperStyle={rowStyle}
