@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 const EventCard = (props) => {
   const cardImageStyle = {
     marginHorizontal: 10,
+    marginBottom: 20,
     paddingVertical: 100,
     paddingHorizontal: 30,
     width: '45%',

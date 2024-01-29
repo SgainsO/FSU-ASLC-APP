@@ -33,18 +33,15 @@ const Events = () => {
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
   const renderItem = ({ item }) => {
-    // when no input, show all
-    if (searchPhrase === "") {
-      return <Card title={item.title} club={item.club} startDate={item.startDate} endDate={item.endDate} interested={item.interested} />
+    const isMatch = searchPhrase === "" ||
+    item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
+    item.club.toUpperCase().includes(searchPhrase.toUpperCase());
+
+    if (isMatch) {
+      return <Card title={item.title} club={item.club} type={item.type} startDate={item.startDate} endDate={item.endDate} interested={item.interested} />;
     }
-    // filter of the title
-    if (item.title.toUpperCase().includes(searchPhrase.toUpperCase())) {
-      return <Card title={item.title} club={item.club} startDate={item.startDate} endDate={item.endDate} interested={item.interested} />
-    }
-    // filter of the club
-    if (item.club.toUpperCase().includes(searchPhrase.toUpperCase())) {
-      return <Card title={item.title} club={item.club} startDate={item.startDate} endDate={item.endDate} interested={item.interested} />
-    }
+
+    return null;
   };
 
   return (
@@ -115,7 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     marginHorizontal: 25,
-    marginBottom: 20,
+    marginBottom: 0,
   },
 });
 
