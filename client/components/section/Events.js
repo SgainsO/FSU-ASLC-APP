@@ -1,14 +1,14 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import { SearchBar, ButtonGroup } from '@rneui/themed';
-import Search from '../SearchBar';
+import { ButtonGroup } from '@rneui/themed';
+import SearchBar from '../SearchBar';
 
 import Card from '../cards/EventCard';
 
 const Events = () => {
   const filters = [
-    { id: 0, type: 'All'  },
-    { id: 1, type: 'Club'  },
+    { id: 0, type: 'All' },
+    { id: 1, type: 'Club' },
     { id: 2, type: 'Movie' },
     { id: 3, type: 'University' },
   ];
@@ -28,18 +28,29 @@ const Events = () => {
   // Dropdown filter consts
   const [dropdownType, setdropdownType] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-
-  const updateSearch = (search) => {
-    setSearch(search);
-  };
-
+  // Filter button consts
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
+
+  const renderItem = ({ item }) => {
+    // when no input, show all
+    if (searchPhrase === "") {
+      return <Card title={item.title} club={item.club} startDate={item.startDate} endDate={item.endDate} interested={item.interested} />
+    }
+    // filter of the title
+    if (item.title.toUpperCase().includes(searchPhrase.toUpperCase())) {
+      return <Card title={item.title} club={item.club} startDate={item.startDate} endDate={item.endDate} interested={item.interested} />
+    }
+    // filter of the club
+    if (item.club.toUpperCase().includes(searchPhrase.toUpperCase())) {
+      return <Card title={item.title} club={item.club} startDate={item.startDate} endDate={item.endDate} interested={item.interested} />
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <Search
+        <SearchBar
           dropdownType={dropdownType}
           setdropdownType={setdropdownType}
           isFocus={isFocus}
@@ -49,29 +60,11 @@ const Events = () => {
           clicked={clicked}
           setClicked={setClicked}
         />
-
-        <ButtonGroup
-          buttonStyle={{  }}
-          buttonContainerStyle={{ backgroundColor: '#D9D9D9', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: 'transparent', borderBottomColor: 'transparent'}}
-          buttons={["Popular", "Date", "Following"]}
-          containerStyle={{}}
-          disabledStyle={{}}
-          disabledTextStyle={{}}
-          disabledSelectedStyle={{}}
-          disabledSelectedTextStyle={{}}
-          innerBorderStyle={{}}
-          onPress={selectedIdx => setSelectedIndex(selectedIdx) }
-          selectedButtonStyle={{ backgroundColor: '#CEB888' }}
-          selectedIndex={selectedIndex}
-          selectedIndexes={selectedIndexes}
-          selectedTextStyle={{}}
-          textStyle={{}}
-        />
       </View>
 
       <FlatList
         data={data}
-        renderItem={({ item }) => <Card {...item} />}
+        renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}
@@ -120,7 +113,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     marginHorizontal: 25,
     marginBottom: 20,
   },

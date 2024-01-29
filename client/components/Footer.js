@@ -28,31 +28,31 @@ const Footer = () => {
             <Icon
                 iconSource={activeIcon === 'Home' ? require('../assets/home_filled.png') : require('../assets/home_outline.png')}
                 text="Home"
-                textColor={activeIcon === 'Home' ? "#CEB888" : undefined}
+                textColor={activeIcon === 'Home' ? '#CEB888' : 'white'}
                 onPress={() => handleIconPress('Home', 'Home')}
             />
             <Icon
                 iconSource={activeIcon === 'Search' ? require('../assets/search_filled.png') : require('../assets/search_outline.png')}
                 text="Search"
-                textColor={activeIcon === 'Search' ? "#CEB888" : undefined}
+                textColor={activeIcon === 'Search' ? '#CEB888' : 'white'}
                 onPress={() => handleIconPress('Search', 'Search')}
             />
             <Icon
                 iconSource={activeIcon === 'Post' ? require('../assets/post_filled.png') : require('../assets/post_outline.png')}
                 text="Post"
-                textColor={activeIcon === 'Post' ? "#CEB888" : undefined}
+                textColor={activeIcon === 'Post' ? '#CEB888' : 'white'}
                 onPress={() => handleIconPress('Post', 'Post')}
             />
             <Icon
                 iconSource={activeIcon === 'Events' ? require('../assets/events_filled.png') : require('../assets/events_outline.png')}
                 text="Events"
-                textColor={activeIcon === 'Events' ? "#CEB888" : undefined}
+                textColor={activeIcon === 'Events' ? '#CEB888' : 'white'}
                 onPress={() => handleIconPress('Events', 'Events')}
             />
             <Icon
                 iconSource={activeIcon === 'Rewards' ? require('../assets/rewards_filled.png') : require('../assets/rewards_outline.png')}
                 text="Rewards"
-                textColor={activeIcon === 'Rewards' ? "#CEB888" : undefined}
+                textColor={activeIcon === 'Rewards' ? '#CEB888' : 'white'}
                 onPress={() => handleIconPress('Rewards', 'Rewards')}
             />
         </View>
