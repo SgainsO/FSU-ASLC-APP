@@ -1,4 +1,4 @@
-import { View, Image, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 
 const Icon = (props) => {
   const iconStyle = {
