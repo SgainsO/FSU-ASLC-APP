@@ -39,18 +39,16 @@ const EventCard = (props) => {
 
   function formatDateAndTime(startDate, endDate) {
     const days = ['SUN', 'MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT'];
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC'];    
 
-    // Check if the dates are the same
-    const isSameDay = props.startDate.toDateString() === props.endDate.toDateString();
-
-    // Format Date
     const formatDay = (date) => {
         const day = days[date.getDay()];
         const month = months[date.getMonth()];
         const dateOfMonth = date.getDate();
         return `${day}, ${month} ${dateOfMonth}`;
     };
+
+    const isSameDay = props.startDate.toDateString() === props.endDate.toDateString();
 
     let dateString;
     if (isSameDay) {
@@ -59,11 +57,10 @@ const EventCard = (props) => {
         dateString = `${formatDay(props.startDate)} - ${props.endDate.getDate()}`;
     }
 
-    // Format Time
     const formatTime = (date) => {
         let hours = date.getHours();
         const minutes = date.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const ampm = hours <= 12 ? 'AM' : 'PM';
         hours = hours % 12;
         hours = hours ? hours : 12; // the hour '0' should be '12'
         const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;

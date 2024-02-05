@@ -66,6 +66,7 @@ const Events = () => {
         numColumns={2}
         columnWrapperStyle={styles.row}
         ListHeaderComponent={() => <Text style={styles.title}>DISCOVER EVENTS</Text>}
+        ListEmptyComponent={() => <Text style={{}}>NO MATCHES FOUND</Text>}
       />
     </View>
   );
