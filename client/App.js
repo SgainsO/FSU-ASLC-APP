@@ -20,7 +20,7 @@ const App = () => {
     <NavigationContainer>
       <View style={styles.container}>
         <StatusBar barStyle={'light-content'} />
-        <Header />
+        <Header navigation={navigation}/>
         <Content navigation={navigation}/>
         <Footer navigation={navigation}/>
       </View>

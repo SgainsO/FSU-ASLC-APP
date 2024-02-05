@@ -7,6 +7,7 @@ import Search from './section/Search';
 import Post from './section//Post';
 import Events from './section/Events';
 import Rewards from './section/Rewards';
+import FAQs from './section/FAQs';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,11 @@ const Content = ({ navigation }) => {
             <Stack.Screen
               name="Rewards"
               component={Rewards}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="FAQs"
+              component={FAQs}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

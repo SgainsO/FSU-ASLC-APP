@@ -12,7 +12,7 @@ const Icon = (props) => {
   const textStyle = {
     fontSize: 12,
     fontWeight: 600,
-    color: props.textColor,
+    ...(props.textColor && { color: props.textColor }),
     textAlign: 'center',
   };
 
@@ -20,7 +20,7 @@ const Icon = (props) => {
     <TouchableWithoutFeedback onPress={props.onPress}>
       <View>
         <Image source={props.iconSource} style={iconStyle} />
-        <Text style={textStyle}>{props.text}</Text>
+        {props.text && <Text style={textStyle}>{props.text}</Text>}
       </View>
     </TouchableWithoutFeedback>
   );

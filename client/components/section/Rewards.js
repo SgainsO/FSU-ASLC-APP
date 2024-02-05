@@ -1,4 +1,4 @@
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, Image } from 'react-native';
 
 import Card from '../RewardsCard';
 
