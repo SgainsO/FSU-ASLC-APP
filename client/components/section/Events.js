@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ButtonGroup } from '@rneui/themed';
 import SearchBar from '../SearchBar';
 
+
 import Card from '../cards/EventCard';
 
 const Events = () => {
