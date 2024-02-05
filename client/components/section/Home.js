@@ -1,7 +1,5 @@
 import { View, FlatList, Text } from 'react-native';
 
-import Card from '../Card';
-
 const Home = () => {
   const containerStyle = {
     flex: 12,
