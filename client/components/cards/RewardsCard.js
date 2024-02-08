@@ -2,11 +2,11 @@ import { Text, View } from 'react-native';
 
 const Card = ({ title, icon, rewardAmount}) => {
   const cardImageStyle = {
-    flex: 1,
     marginHorizontal: 10,
+    marginBottom: 20,
     paddingVertical: 100,
-    paddingHorizontal: 70,
-    width: 150,
+    paddingHorizontal: 30,
+    width: '45%',
     height: 250,
     borderRadius: 10,
     backgroundColor: '#D9D9D9',
@@ -22,7 +22,7 @@ const Card = ({ title, icon, rewardAmount}) => {
     bottom: 0,
     left: 0,
     right: 0,
-    height: 85,
+    height: 55,
     paddingHorizontal: 8,
     backgroundColor: 'white',
     justifyContent: 'center',

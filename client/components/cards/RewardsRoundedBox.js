@@ -1,11 +1,11 @@
 import React from 'react'
-import {View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 const RoundedBox = () => {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <Image source={require('../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>
+                <Image source={require('../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>
                 <Text style={styles.text}>Unlocked Rewards will appear here.</Text>
             </View>
         </View>
@@ -15,10 +15,10 @@ const RoundedBox = () => {
 const styles = StyleSheet.create({
     container: {
         borderRadius: 10,
-        borderWidth:1, 
+        borderWidth: 1, 
         borderColor: 'black',
         padding: 10,
-        width: 300,
+        width: 360,
         height: 50,
         justifyContent: 'center',
     },
