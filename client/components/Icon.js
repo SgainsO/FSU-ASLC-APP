@@ -4,14 +4,14 @@ const Icon = (props) => {
   const iconStyle = {
     width: 30,
     height: 30,
-    marginTop: 12,
-    marginHorizontal: 28,
-    marginBottom: 4,
+    marginTop: props.marginTop || 12,
+    marginHorizontal: props.marginHorizontal || 28,
+    marginBottom: props.marginBottom || 4,
   };
 
   const textStyle = {
     fontSize: 12,
-    fontWeight: 600,
+    fontWeight: '600',
     ...(props.textColor && { color: props.textColor }),
     textAlign: 'center',
   };
