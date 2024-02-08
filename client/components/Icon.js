@@ -1,7 +1,6 @@
-import React from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 
-const Icon = ({ iconSource, text, textColor = 'white' }) => {
+const Icon = (props) => {
   const iconStyle = {
     width: 30,
     height: 30,
@@ -13,15 +12,17 @@ const Icon = ({ iconSource, text, textColor = 'white' }) => {
   const textStyle = {
     fontSize: 12,
     fontWeight: 600,
-    color: textColor,
+    ...(props.textColor && { color: props.textColor }),
     textAlign: 'center',
   };
 
   return (
-    <View>
-      <Image source={iconSource} style={iconStyle} />
-      <Text style={textStyle}>{text}</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={props.onPress}>
+      <View>
+        <Image source={props.iconSource} style={iconStyle} />
+        {props.text && <Text style={textStyle}>{props.text}</Text>}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

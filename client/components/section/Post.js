@@ -1,6 +1,6 @@
 import { View, FlatList, Text } from 'react-native';
 
-const Home = () => {
+const Post = () => {
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
@@ -8,9 +8,9 @@ const Home = () => {
 
   return (
     <View style={containerStyle}>
-      <Text> Home </Text>
+      <Text> Post </Text>
     </View>
   );
 };
 
-export default Home;
+export default Post;
