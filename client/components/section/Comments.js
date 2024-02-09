@@ -36,6 +36,8 @@ const CommentSection = (props) => {
     }
   ]
 
+  const totalComments = data.reduce((acc, item) => acc + (item.replies ? item.replies.length + 1 : 1), 0);
+
   const renderItem = ({ item }) => (
     <View>
       <View style={styles.commentStyle}>
@@ -61,7 +63,7 @@ const CommentSection = (props) => {
           <TouchableWithoutFeedback onPress={() => {}}>
             <View style={styles.containerStyle}>
               <View>
-                <Text style={styles.title}>COMMENTS</Text>
+                <Text style={styles.title}>{totalComments} COMMENTS</Text>
               </View>
               <View>
                 <FlatList
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 20,
+    padding: 30,
     marginTop: '40%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background, removed later
   },
   modalStyle: {
     margin: 20,
