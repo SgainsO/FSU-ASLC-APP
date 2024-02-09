@@ -1,5 +1,5 @@
 import { View, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, } from 'react-native';
-import { Entypo } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import Icon from '../Icon';
@@ -9,19 +9,19 @@ const CommentSection = (props) => {
     {
       id: 0,
       name: 'Daniel Dang',
-      avatar: 'https://www.jesusisthesubject.org/wp-content/uploads/2017/04/blank-profile-hi.jpg',
+      avatar: 'https://c.stocksy.com/a/bBo600/z9/1622887.jpg',
       text: 'This is a comment!',
       replies: [ 
         {
           id: 1,
           name: 'Zachary De Aguiar',
-          avatar: 'https://www.jesusisthesubject.org/wp-content/uploads/2017/04/blank-profile-hi.jpg',
+          avatar: 'https://i.pinimg.com/originals/80/fb/8d/80fb8d8390601bfe5ba4c52b4dc79b8a.jpg',
           text: 'This is a reply!'
         },
         {
           id: 2,
           name: 'Jas Chawla',
-          avatar: 'https://www.jesusisthesubject.org/wp-content/uploads/2017/04/blank-profile-hi.jpg',
+          avatar: 'https://i.pinimg.com/236x/47/51/48/475148587abdbdd81cc3d09fdbcbab16.jpg',
           text: 'This is another reply!'
         },
        ]
@@ -29,14 +29,14 @@ const CommentSection = (props) => {
     {
       id: 3,
       name: 'Ryan Nageer',
-      avatar: 'https://www.jesusisthesubject.org/wp-content/uploads/2017/04/blank-profile-hi.jpg',
+      avatar: 'https://th.bing.com/th/id/R.57529fe941352b6a608aa0c77cacc099?rik=ja%2f2y3qTNUZQVQ&riu=http%3a%2f%2fwww.pak101.com%2ffunnypictures%2fFunny%2f2011%2f7%2f22%2f5_cjlxs.jpg&ehk=8WobPJQV0XRZ0iGg7UzDSOJbCsygoHpsoYYUz7WoF9o%3d&risl=&pid=ImgRaw&r=0',
       text: 'This is another comment!'
     },
     {
       id: 4,
       name: 'Matthew Echenique',
-      avatar: 'https://www.jesusisthesubject.org/wp-content/uploads/2017/04/blank-profile-hi.jpg',
-      text: 'This is yet another commesdfgsdfgdsfgdsfgffgggggggggggggggggggggggsd fgdsfgdsfgsdfgsdfgdsfgsd fgsdfgsdfgdsfgsdfgsdfgdsf gsdfgsdfgdsfgdsg sdfgdfsggfdsnt!'
+      avatar: 'https://th.bing.com/th/id/OIP.3GZTipqj8i7LniAr6IgDdwAAAA?rs=1&pid=ImgDetMain',
+      text: 'This is yet another adfggggggggggggdfagadfgcomment!'
     }
   ]
 
@@ -45,26 +45,47 @@ const CommentSection = (props) => {
   const renderItem = ({ item }) => (
     <View>
       <View style={styles.comment}>
-        <Icon
-          iconStyle={styles.icon}
-          iconSource={{uri: item.avatar}}
+        <View style={{flexDirection: 'row'}}>
+          <Icon
+            iconStyle={styles.commentIcon}
+            iconSource={{uri: item.avatar}}
+          />
+          <Text style={styles.commentText}>
+            <Text style={{fontWeight: '500'}}>{item.name}</Text>{'\n'}{item.text}
+          </Text>
+        </View>
+        <AntDesign 
+            name="heart" 
+            size={16} 
+            color="#782F40" 
+            style={{ right: -5, marginTop: 3, }} 
+            onPress={props.onClose}
         />
-        <Text style={styles.commentText}>
-          <Text style={{fontWeight: '500'}}>{item.name}</Text>{'\n'}{item.text}
-        </Text>
       </View>
       {item.replies && item.replies.map(reply => (
         <View key={reply.id} style={styles.reply}>
-          <Text style={styles.replyText}>
-            <Text style={{fontWeight: '500'}}>{reply.name}</Text>{'\n'}{reply.text}
-          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Icon
+              iconStyle={styles.replyIcon}
+              iconSource={{uri: reply.avatar}}
+            />
+            <Text style={styles.replyText}>
+              <Text style={{fontWeight: '500'}}>{reply.name}</Text>{'\n'}{reply.text}
+            </Text>
+          </View>
+          <AntDesign 
+            name="hearto" 
+            size={16} 
+            color="#000" 
+            style={{ right: -5, marginTop: 3, }} 
+            onPress={props.onClose}
+          />
         </View>
       ))}
     </View>
   );
 
   return (
-    
       <Modal 
         animationType='slide'
         transparent={true}
@@ -98,7 +119,6 @@ const CommentSection = (props) => {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    
   );
 };
 
@@ -132,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'left',
     width: '100%',
   },
   modalOverlay: {
@@ -141,10 +161,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
   },
-  icon: {
+  commentIcon: {
+    marginTop: 3,
     width: 30,
     height: 30,
     borderRadius: 15,
+    marginRight: 10,
+  },
+  replyIcon: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
     marginRight: 10,
   },
   noCommentContainer: {
@@ -163,19 +190,22 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   comment: {
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    backgroundColor: '#fff',
+    padding: 5,
+    marginTop: 15,
     width: '100%',
+    flexDirection: 'row',
   },
   reply: {
-    backgroundColor: '#e0e0e0',
-    padding: 8,
-    marginVertical: 3,
-    marginLeft: 20, // Indent replies for visual hierarchy
-    borderRadius: 5,
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    backgroundColor: '#fff',
+    padding: 5,
+    paddingLeft: 45,
     width: '100%',
+    flexDirection: 'row',
   },
   commentText: {
     flexShrink: 1,
