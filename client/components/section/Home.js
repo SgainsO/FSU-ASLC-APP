@@ -1,4 +1,7 @@
-import { View, FlatList, Text } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, FlatList, Text, Button } from 'react-native';
+
+import CommentSection from './Comments';
 
 const Home = () => {
   const containerStyle = {
@@ -6,9 +9,16 @@ const Home = () => {
     backgroundColor: 'white',
   };
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+
   return (
     <View style={containerStyle}>
-      <Text> Home </Text>
+      <Button title="Placeholder Comments Button" onPress={toggleModal} />
+      <CommentSection isVisible={isModalVisible} onClose={toggleModal} />
     </View>
   );
 };
