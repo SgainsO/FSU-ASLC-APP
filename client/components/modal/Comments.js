@@ -40,11 +40,11 @@ const CommentSection = (props) => {
 
   const renderItem = ({ item }) => (
     <View>
-      <View style={styles.commentStyle}>
+      <View style={styles.comment}>
         <Text>{item.name}: {item.text}</Text>
       </View>
       {item.replies && item.replies.map(reply => (
-        <View key={reply.id} style={styles.replyStyle}>
+        <View key={reply.id} style={styles.reply}>
           <Text>{reply.name}: {reply.text}</Text>
         </View>
       ))}
@@ -57,24 +57,24 @@ const CommentSection = (props) => {
       transparent={true}
       visible={props.isVisible}
       onRequestClose={props.onClose}
+      swipeDirection="down"
+      onSwipeComplete={() => { props.isVisible = false; }}
     >
       <TouchableWithoutFeedback onPress={props.onClose}>
         <View style={styles.modalOverlay}>
-          <TouchableWithoutFeedback onPress={() => {}}>
-            <View style={styles.containerStyle}>
+            <View style={styles.container}>
               <View>
                 <Text style={styles.title}>{totalComments} COMMENTS</Text>
               </View>
-              <View>
+              <View style={styles.commentContainer}>
                 <FlatList
                   data={data}
                   renderItem={renderItem}
                   keyExtractor={item => item.id.toString()}
-                  ListEmptyComponent={() => <Text>No comments</Text>}
+                  ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
                 />
               </View>
             </View>
-          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -82,7 +82,7 @@ const CommentSection = (props) => {
 };
 
 const styles = StyleSheet.create({
-  containerStyle: {
+  container: {
     flex: 1,
     backgroundColor: 'white',
     padding: 30,
@@ -97,27 +97,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    borderRadius: 20,
+    width: '100%',
+  },
+  commentContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background, removed later
-  },
-  modalStyle: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
   },
   title: {
     fontSize: 16,
@@ -125,13 +119,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 10,
   },
-  commentStyle: {
+  comment: {
     backgroundColor: '#f0f0f0',
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,
   },
-  replyStyle: {
+  noCommentContainer: {
+    marginTop: '150%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noCommentText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  reply: {
     backgroundColor: '#e0e0e0',
     padding: 8,
     marginVertical: 3,
