@@ -37,7 +37,15 @@ const Rewards = () => {
     },
     header: {
       flexDirection: 'row',
+      justifyContent: 'center',
       alignItems: 'left',
+      backgroundColor: 'white',
+      shadowColor: 'rgba(60,60,67, 0.29)',
+      shadowOpacity: 0.5,
+      shadowOffset: { width: 0, height: 1 },
+      shadowRadius: 1,
+      elevation: 1,
+      paddingBottom: 10,
     },
     icon: {
       width: 40,
@@ -66,8 +74,7 @@ const Rewards = () => {
         <Text style={styles.RewardsAmount}>180</Text>
         <Text style={styles.RewardsHistory}>Rewards History {'>'}</Text>
       </View>
-      <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
-      <ScrollView>
+      <ScrollView style={{paddingTop: 10}}>
         <Text style={{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 5}}>MY REWARDS</Text>
         <View style={styles.centeredBox}>
           <RoundedBox />
