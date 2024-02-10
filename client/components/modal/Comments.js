@@ -5,42 +5,82 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Icon from '../Icon';
 
 const CommentSection = (props) => {
+  const loggedIn = {
+    uuid: 0,
+    name: 'Daniel Dang',
+    avatar: 'https://c.stocksy.com/a/bBo600/z9/1622887.jpg',
+  }
+
+  const users = [
+    {
+    uuid: 0,
+    name: 'Daniel Dang',
+    avatar: 'https://c.stocksy.com/a/bBo600/z9/1622887.jpg',
+    },
+    {
+    uuid: 1,
+    name: 'Zachary De Aguiar',
+    avatar: 'https://i.pinimg.com/originals/80/fb/8d/80fb8d8390601bfe5ba4c52b4dc79b8a.jpg',
+    },
+    {
+    uuid: 2,
+    name: 'Jas Chawla',
+    avatar: 'https://i.pinimg.com/236x/47/51/48/475148587abdbdd81cc3d09fdbcbab16.jpg',
+    },
+        {
+    uuid: 3,
+    name: 'Ryan Nageer',
+    avatar: 'https://th.bing.com/th/id/R.57529fe941352b6a608aa0c77cacc099?rik=ja%2f2y3qTNUZQVQ&riu=http%3a%2f%2fwww.pak101.com%2ffunnypictures%2fFunny%2f2011%2f7%2f22%2f5_cjlxs.jpg&ehk=8WobPJQV0XRZ0iGg7UzDSOJbCsygoHpsoYYUz7WoF9o%3d&risl=&pid=ImgRaw&r=0',
+    },
+    {
+      uuid: 4,
+      name: 'Matthew Echenique',
+      avatar: 'https://th.bing.com/th/id/OIP.3GZTipqj8i7LniAr6IgDdwAAAA?rs=1&pid=ImgDetMain',
+    },
+  ]
+
   const data = [
     {
-      id: 0,
-      name: 'Daniel Dang',
-      avatar: 'https://c.stocksy.com/a/bBo600/z9/1622887.jpg',
+      comment_id: 0,
+      uuid: 0,
+      likes: 12451,
       text: 'This is a comment!',
       replies: [ 
         {
-          id: 1,
-          name: 'Zachary De Aguiar',
-          avatar: 'https://i.pinimg.com/originals/80/fb/8d/80fb8d8390601bfe5ba4c52b4dc79b8a.jpg',
+          comment_id: 1,
+          uuid: 1,
+          likes: 1245,
           text: 'This is a reply!'
         },
         {
-          id: 2,
-          name: 'Jas Chawla',
-          avatar: 'https://i.pinimg.com/236x/47/51/48/475148587abdbdd81cc3d09fdbcbab16.jpg',
+          comment_id: 2,
+          uuid: 2,
+          likes: 251,
           text: 'This is another reply!'
         },
        ]
     },
     {
-      id: 3,
-      name: 'Ryan Nageer',
-      avatar: 'https://th.bing.com/th/id/R.57529fe941352b6a608aa0c77cacc099?rik=ja%2f2y3qTNUZQVQ&riu=http%3a%2f%2fwww.pak101.com%2ffunnypictures%2fFunny%2f2011%2f7%2f22%2f5_cjlxs.jpg&ehk=8WobPJQV0XRZ0iGg7UzDSOJbCsygoHpsoYYUz7WoF9o%3d&risl=&pid=ImgRaw&r=0',
+      comment_id: 3,
+      uuid: 3,
+      likes: 356451,
       text: 'This is another comment!'
     },
     {
-      id: 4,
-      name: 'Matthew Echenique',
-      avatar: 'https://th.bing.com/th/id/OIP.3GZTipqj8i7LniAr6IgDdwAAAA?rs=1&pid=ImgDetMain',
-      text: 'This is yet another adfggggggggggggdfagadfgcomment!'
+      comment_id: 4,
+      uuid: 4,
+      likes: 1236451,
+      text: 'This is yet another comment!'
     }
   ]
 
   const totalComments = data.reduce((acc, item) => acc + (item.replies ? item.replies.length + 1 : 1), 0);
+
+  const formatLikes = n => {
+    if (n < 1e3) return n;
+    if (n >= 1e3 && n < 1e6) return +(n / 1e3).toFixed(1) + "K";
+    if (n >= 1e6 && n < 1e9) return +(n / 1e6).toFixed(1) + "M";
+  };
 
   const renderItem = ({ item }) => (
     <View>
@@ -48,29 +88,32 @@ const CommentSection = (props) => {
         <View style={{flexDirection: 'row'}}>
           <Icon
             iconStyle={styles.commentIcon}
-            iconSource={{uri: item.avatar}}
+            iconSource={{uri: users[item.uuid].avatar}}
           />
           <Text style={styles.commentText}>
-            <Text style={{fontWeight: '500'}}>{item.name}</Text>{'\n'}{item.text}
+            <Text style={{fontWeight: '500'}}>{users[item.uuid].name}</Text>{'\n'}{item.text}
           </Text>
         </View>
-        <AntDesign 
-            name="heart" 
-            size={16} 
-            color="#782F40" 
-            style={{ right: -5, marginTop: 3, }} 
-            onPress={props.onClose}
-        />
+        <View style={{alignItems:'center', backgroundColor: 'white', shadowColor: '#000', shadowOffset: { width: 0, height: 2, }, shadowOpacity: 0.25, shadowRadius: 4, elevation: 5,}}>
+          <AntDesign 
+              name="heart" 
+              size={16} 
+              color="#782F40" 
+              style={{ marginTop: 3, }} 
+              onPress={props.onClose}
+          />
+          <Text style={{fontSize: 12, color: 'gray', textAlign: 'center'}}>{formatLikes(item.likes)}</Text>
+        </View>
       </View>
       {item.replies && item.replies.map(reply => (
-        <View key={reply.id} style={styles.reply}>
+        <View key={reply.comment_id} style={styles.reply}>
           <View style={{flexDirection: 'row'}}>
             <Icon
               iconStyle={styles.replyIcon}
-              iconSource={{uri: reply.avatar}}
+              iconSource={{uri: users[reply.uuid].avatar}}
             />
             <Text style={styles.replyText}>
-              <Text style={{fontWeight: '500'}}>{reply.name}</Text>{'\n'}{reply.text}
+              <Text style={{fontWeight: '500'}}>{users[reply.uuid].name}</Text>{'\n'}{reply.text}
             </Text>
           </View>
           <AntDesign 
@@ -102,7 +145,7 @@ const CommentSection = (props) => {
                     name="cross" 
                     size={24} 
                     color="#000" 
-                    style={{ position: 'absolute', right: -6 }} 
+                    style={{ position: 'absolute', right: -5 }} 
                     onPress={props.onClose}
                   />
                 </View>
@@ -110,7 +153,7 @@ const CommentSection = (props) => {
                   <FlatList
                     data={data}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.comment_id}
                     ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
                   />
                 </View>
@@ -126,7 +169,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 30,
     paddingTop: 0,
     marginTop: '40%',
     justifyContent: 'center',
@@ -141,6 +183,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 20,
     width: '100%',
+    overflow: 'hidden',
   },
   headerContainer:{
     backgroundColor: 'white',
@@ -150,6 +193,8 @@ const styles = StyleSheet.create({
   },
   commentContainer: {
     flex: 1,
+    padding: 30,
+    paddingTop: 0,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'left',
@@ -169,6 +214,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   replyIcon: {
+    marginTop: 3,
     width: 26,
     height: 26,
     borderRadius: 13,
@@ -194,7 +240,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#fff',
     padding: 5,
-    marginTop: 15,
+    marginTop: 25,
     width: '100%',
     flexDirection: 'row',
   },
@@ -204,6 +250,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 5,
     paddingLeft: 45,
+    marginTop: 15,
     width: '100%',
     flexDirection: 'row',
   },
