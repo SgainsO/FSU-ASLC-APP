@@ -71,7 +71,7 @@ const CommentSection = (props) => {
     }
   ]
   
-  const [liked, setLiked] = useState([0, 1, 4]); // in backend, we can request liked per post
+  const [liked, setLiked] = useState([]); // in backend, we can request liked per post
   const [comments, setComments] = useState(data); // data is what is requested from backend
 
   const totalComments = data.reduce((acc, item) => acc + (item.replies ? item.replies.length + 1 : 1), 0);
