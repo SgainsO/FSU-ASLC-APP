@@ -118,9 +118,8 @@ const CommentSection = (props) => {
     }
   };
   
-
   const renderItem = ({ item }) => (
-    <View>
+    <View style={styles.commentContainer}>
       <View style={styles.comment}>
         <View style={{flexDirection: 'row'}}>
           <Icon
@@ -132,12 +131,12 @@ const CommentSection = (props) => {
           </Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
-          <Text style={{fontSize: 12, color: liked.includes(item.comment_id) ? "#782F40" : "gray", textAlign: 'center', marginTop: 1}}>{formatLikes(item.likes)}</Text>
+          <Text style={{position: 'absolute', right: 18, top: 3, fontSize: 12, color: liked.includes(item.comment_id) ? "#782F40" : "gray",}}>{formatLikes(item.likes)}</Text>
           <AntDesign 
               name={liked.includes(item.comment_id) ? "heart" : "hearto"} 
               size={16} 
               color={liked.includes(item.comment_id) ? "#782F40" : "gray"} 
-              style={{ right: -5, marginTop: 3, }} 
+              style={{ position: 'absolute', right: -5, top: 3, }} 
               onPress={() => toggleLike(item.comment_id)}
           />
         </View>
@@ -154,12 +153,12 @@ const CommentSection = (props) => {
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
-            <Text style={{fontSize: 12, color: liked.includes(reply.comment_id) ? "#782F40" : "gray", textAlign: 'center', marginTop: 1}}>{formatLikes(reply.likes)}</Text>
+            <Text style={{position: 'absolute', right: 18, top: 3, fontSize: 12, color: liked.includes(reply.comment_id) ? "#782F40" : "gray",}}>{formatLikes(reply.likes)}</Text>
             <AntDesign 
                 name={liked.includes(reply.comment_id) ? "heart" : "hearto"} 
                 size={16} 
                 color={liked.includes(reply.comment_id) ? "#782F40" : "gray"} 
-                style={{ right: -5, marginTop: 3, }} 
+                style={{ position: 'absolute', right: -5, top: 3, }} 
                 onPress={() => toggleLike(reply.comment_id)}
             />
           </View>
@@ -233,7 +232,7 @@ const styles = StyleSheet.create({
   },
   commentContainer: {
     flex: 1,
-    padding: 30,
+    padding: 15,
     paddingTop: 0,
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -283,6 +282,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     width: '100%',
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   reply: {
     justifyContent: 'space-between',
@@ -293,14 +293,14 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: '100%',
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   commentText: {
     flexShrink: 1,
   },
-  
   replyText: {
     flexShrink: 1,
-  }
+  },
 });
 
 export default CommentSection;
