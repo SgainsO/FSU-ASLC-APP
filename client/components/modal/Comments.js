@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { View, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, } from 'react-native';
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -5,11 +6,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import Icon from '../Icon';
 
 const CommentSection = (props) => {
-  const loggedIn = {
-    uuid: 0,
-    name: 'Daniel Dang',
-    avatar: 'https://c.stocksy.com/a/bBo600/z9/1622887.jpg',
-  }
+  const loggedInUUID = 0;
 
   const users = [
     {
@@ -73,6 +70,9 @@ const CommentSection = (props) => {
       text: 'This is yet another comment!'
     }
   ]
+  
+  const [liked, setLiked] = useState([0, 1, 4]); // in backend, we can request liked per post
+  const [comments, setComments] = useState(data); // data is what is requested from backend
 
   const totalComments = data.reduce((acc, item) => acc + (item.replies ? item.replies.length + 1 : 1), 0);
 
@@ -81,6 +81,43 @@ const CommentSection = (props) => {
     if (n >= 1e3 && n < 1e6) return +(n / 1e3).toFixed(1) + "K";
     if (n >= 1e6 && n < 1e9) return +(n / 1e6).toFixed(1) + "M";
   };
+
+  const toggleLike = (commentId) => {
+    // Create a new array with updated likes
+    const updatedComments = comments.map(comment => {
+      if (comment.comment_id === commentId) {
+        // For a top-level comment
+        return {
+          ...comment,
+          likes: liked.includes(commentId) ? comment.likes - 1 : comment.likes + 1,
+        };
+      } else if (comment.replies) {
+        // Check if it's a reply to a comment
+        const updatedReplies = comment.replies.map(reply => {
+          if (reply.comment_id === commentId) {
+            return {
+              ...reply,
+              likes: liked.includes(commentId) ? reply.likes - 1 : reply.likes + 1,
+            };
+          }
+          return reply;
+        });
+        return {...comment, replies: updatedReplies};
+      }
+      return comment;
+    });
+  
+    // Set the updated comments array back to the state
+    setComments(updatedComments);
+  
+    // Update the liked state
+    if (liked.includes(commentId)) {
+      setLiked(liked.filter(id => id !== commentId));
+    } else {
+      setLiked([...liked, commentId]);
+    }
+  };
+  
 
   const renderItem = ({ item }) => (
     <View>
@@ -94,15 +131,15 @@ const CommentSection = (props) => {
             <Text style={{fontWeight: '500'}}>{users[item.uuid].name}</Text>{'\n'}{item.text}
           </Text>
         </View>
-        <View style={{alignItems:'center', backgroundColor: 'white', shadowColor: '#000', shadowOffset: { width: 0, height: 2, }, shadowOpacity: 0.25, shadowRadius: 4, elevation: 5,}}>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
+          <Text style={{fontSize: 12, color: liked.includes(item.comment_id) ? "#782F40" : "gray", textAlign: 'center', marginTop: 1}}>{formatLikes(item.likes)}</Text>
           <AntDesign 
-              name="heart" 
+              name={liked.includes(item.comment_id) ? "heart" : "hearto"} 
               size={16} 
-              color="#782F40" 
-              style={{ marginTop: 3, }} 
-              onPress={props.onClose}
+              color={liked.includes(item.comment_id) ? "#782F40" : "gray"} 
+              style={{ right: -5, marginTop: 3, }} 
+              onPress={() => toggleLike(item.comment_id)}
           />
-          <Text style={{fontSize: 12, color: 'gray', textAlign: 'center'}}>{formatLikes(item.likes)}</Text>
         </View>
       </View>
       {item.replies && item.replies.map(reply => (
@@ -116,13 +153,16 @@ const CommentSection = (props) => {
               <Text style={{fontWeight: '500'}}>{users[reply.uuid].name}</Text>{'\n'}{reply.text}
             </Text>
           </View>
-          <AntDesign 
-            name="hearto" 
-            size={16} 
-            color="#000" 
-            style={{ right: -5, marginTop: 3, }} 
-            onPress={props.onClose}
-          />
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
+            <Text style={{fontSize: 12, color: liked.includes(reply.comment_id) ? "#782F40" : "gray", textAlign: 'center', marginTop: 1}}>{formatLikes(reply.likes)}</Text>
+            <AntDesign 
+                name={liked.includes(reply.comment_id) ? "heart" : "hearto"} 
+                size={16} 
+                color={liked.includes(reply.comment_id) ? "#782F40" : "gray"} 
+                style={{ right: -5, marginTop: 3, }} 
+                onPress={() => toggleLike(reply.comment_id)}
+            />
+          </View>
         </View>
       ))}
     </View>
@@ -145,13 +185,13 @@ const CommentSection = (props) => {
                     name="cross" 
                     size={24} 
                     color="#000" 
-                    style={{ position: 'absolute', right: -5 }} 
+                    style={{ position: 'absolute', right: 15 }} 
                     onPress={props.onClose}
                   />
                 </View>
                 <View style={styles.commentContainer}>
                   <FlatList
-                    data={data}
+                    data={comments}
                     renderItem={renderItem}
                     keyExtractor={item => item.comment_id}
                     ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
@@ -181,7 +221,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    borderRadius: 20,
+    borderRadius: 30,
     width: '100%',
     overflow: 'hidden',
   },
