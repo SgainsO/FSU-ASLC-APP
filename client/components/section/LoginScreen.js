@@ -19,8 +19,8 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/aslc_logo.png')} style= {styles.logoImage} />
-      <Image source={require('../assets/connect.png') }  style = {{marginBottom: 20}}/>
+      <Image source={require('../../assets/aslc_logo.png')} style= {styles.logoImage} />
+      <Image source={require('../../assets/connect.png') }  style = {{marginBottom: 20}}/>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
