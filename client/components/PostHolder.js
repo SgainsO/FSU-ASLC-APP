@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Dimensions, StyleSheet, Text, View, Button, Image, Touchable } from 'react-native';
 import { ImageBackground, TouchableOpacity } from 'react-native-web';
+import Icon from 'react-native-vector-icons/Ionicons';
 const {width, height} = Dimensions.get('window');
 
 //Back Color is used to keep the holder the same color as callers background
@@ -13,7 +14,7 @@ require("../assets/Bookmark.png"), require("../assets/Share.png")]
 PostHeight = height * 1;
 
 
-const PostHolder = (Club, Date, BackColor) => {
+const PostHolder = (props) => {
     const Styles = StyleSheet.create({
         Canvas:
         {
@@ -61,6 +62,13 @@ const PostHolder = (Club, Date, BackColor) => {
             top: '80%',
             left: '25%',
         },
+        DotHolder:
+        {   position: 'absolute',
+            justifyContent: 'center',
+            width: iconHolderWidth /2,
+            flexDirection: 'row',
+            bottom: '95%',
+            },
         IconStyle:
         {
             flex: 1,
@@ -69,6 +77,31 @@ const PostHolder = (Club, Date, BackColor) => {
             height: undefined,
             aspectRatio: 1,
             resizeMode: 'contain'
+        },
+        OrgAndDeventParent:
+        {
+          position: 'absolute',
+          justifyContent: 'left',
+          flex: 1,
+          flexDirection: 'row',
+//          backgroundColor: 'green',
+          top: 15,
+          left:15
+          
+        },
+        OrgPhotoHolder:
+        {
+            height: 40,
+            width: 40,
+            borderRadius: 40,
+            overflow: 'hidden'
+        },
+        ProfileImage:
+        {
+          height: 40,
+          width: 40,
+          borderRadius:20,
+          overflow: 'hidden'
         },
         GoLeft:
         {
@@ -102,7 +135,14 @@ const PostHolder = (Club, Date, BackColor) => {
 
     
 
-    const IconView = ({ icons, spacing = 10 }) => {
+      const TestPhotos = [require("../assets/Daniel.jpg"), require("../assets/Ryan.jpg")]
+      const [Image_Source, ChaImageSource] = useState(TestPhotos[0])
+      const [ImageIndex, ChangeImageIndex] = useState(0)
+
+      const {clubName} = props;
+
+      console.log(clubName)
+      const IconView = ({icons}) => {                                    // Create progress widgets and Icon widgets 
         return (
           <View style={Styles.VectorStyle}>
             {icons.map((icon, index) => (
@@ -111,23 +151,40 @@ const PostHolder = (Club, Date, BackColor) => {
           </View>
         );
       };
+      const dots = []
+      const dotColors = []
 
-      const TestPhotos = [require("../assets/Daniel.jpg"), require("../assets/Ryan.jpg")]
-      const [Image_Source, ChaImageSource] = useState(TestPhotos[0])
-      const [ImageIndex, ChangeImageIndex] = useState(0)
+      for (let i = 0; i < TestPhotos.length; i++)
+      {
+        const [color, setColor] = useState(i === 0 ? "black" : "white")
+        dotColors.push({color, setColor})
+        dots.push(
+          <Icon name= 'square' size={4} color={color} style= {{margin: 1}}/>
+        )
+      }
+        
+    
+
+
 
       const GoForeward = () =>
       {
-        ImageIndex < (TestPhotos.length - 1) ? ChangeImageIndex(ImageIndex + 1) : ChangeImageIndex(0); 
-        console.log("Going to " + ImageIndex)
-        ChaImageSource(TestPhotos[ImageIndex])
+        ImageIndex < (TestPhotos.length - 1) ? ChangeImageIndex(ImageIndex + 1) : ChangeImageIndex(0);           ///Changes the image index
+        console.log("Going to " + ImageIndex)  
+        ChaImageSource(TestPhotos[ImageIndex])       
+        dotColors[ImageIndex !== 0 ? ImageIndex - 1 : TestPhotos.length - 1].setColor("white")                   //Sets previous to White and Current to black
+        dotColors[ImageIndex].setColor("black")
       } 
 
-      const GoBackward = () =>
+      const GoBackward =  () =>
       {
-        ImageIndex > 0 ? ChangeImageIndex(ImageIndex - 1) : ChangeImageIndex(TestPhotos.length - 1); 
+        const pre = ImageIndex;
+        dotColors[ImageIndex].setColor("white")
+        ImageIndex > 0 ? ChangeImageIndex(ImageIndex - 1) : ChangeImageIndex(TestPhotos.length - 1);      //saves the current image index
         console.log("Going to " + ImageIndex)
         ChaImageSource(TestPhotos[ImageIndex])
+        dotColors[ImageIndex !== TestPhotos.length - 1 ? 0 : ImageIndex + 1].setColor("white")             // Sets previouse Image to white and Current to Black
+        dotColors[ImageIndex].setColor("black")
       }
 
 return (
@@ -137,6 +194,15 @@ return (
         source = {Image_Source}
         resizeMode= {'contain'} />
         <IconView icons={Icons} spacing={10} />         
+        <View style = {Styles.DotHolder}>
+        {dots}
+        </View>
+        <View style = {Styles.OrgAndDeventParent}>
+        <Image style = {Styles.ProfileImage} source = {require("../assets/smile.png")}/>
+        <Text style= {{color: "white"}}>
+          {clubName}
+        </Text>
+        </View>
         <TouchableOpacity onPress = {GoBackward} style = {Styles.GoLeft}>
         </TouchableOpacity> 
         
@@ -146,10 +212,6 @@ return (
 
 
     </View>
-  
- 
-
-        
        
 
 );
@@ -157,3 +219,5 @@ return (
 };
 
 export default PostHolder;
+
+
