@@ -33,6 +33,7 @@ const PostHolder = (props) => {
             width: PostWidth,
             borderRadius: 40,
             aspectRatio: 1,
+            margin: '10%',
 
         //    background: 'transparent',
             overflow: 'hidden'
@@ -212,6 +213,10 @@ return (
 
 
     </View>
+  
+ 
+
+        
        
 
 );
@@ -219,5 +224,4 @@ return (
 };
 
 export default PostHolder;
-
 
