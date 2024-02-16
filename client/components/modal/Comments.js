@@ -41,18 +41,21 @@ const CommentSection = (props) => {
       comment_id: 0,
       uuid: 0,
       likes: 12451,
+      date: '2024-02-16T04:00:00Z',
       text: 'This is a comment!',
       replies: [ 
         {
           comment_id: 1,
           uuid: 1,
           likes: 1245,
+          date: '2024-02-16T05:30:00Z',
           text: 'This is a reply!'
         },
         {
           comment_id: 2,
           uuid: 2,
           likes: 251,
+          date: '2024-02-16T05:38:30Z',
           text: 'This is another reply!'
         },
        ]
@@ -61,12 +64,14 @@ const CommentSection = (props) => {
       comment_id: 3,
       uuid: 3,
       likes: 356451,
+      date: '2024-01-01T00:00:00Z',
       text: 'This is another comment!'
     },
     {
       comment_id: 4,
       uuid: 4,
       likes: 1236451,
+      date: '2021-10-03T00:00:00Z',
       text: 'This is yet another comment!'
     }
   ]
@@ -117,6 +122,39 @@ const CommentSection = (props) => {
       setLiked([...liked, commentId]);
     }
   };
+
+  const timeSince = (date) => {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+  
+    let interval = seconds / 31536000; // Number of seconds in a year
+  
+    if (interval > 1) {
+      return Math.floor(interval) + "y";
+    }
+    interval = seconds / 604800; // Number of seconds in a week
+    if (interval > 1) {
+      return Math.floor(interval) + "w";
+    }
+    interval = seconds / 86400; // Number of seconds in a day
+    if (interval > 1) {
+      return Math.floor(interval) + "d";
+    }
+    interval = seconds / 3600; // Number of seconds in an hour
+    if (interval > 1) {
+      return Math.floor(interval) + "h";
+    }
+    interval = seconds / 60; // Number of seconds in a minute
+    if (interval > 1) {
+      return Math.floor(interval) + "m";
+    }
+    
+    return Math.floor(seconds) + "s";
+  };
+
+  const handleReplyPress = (commentId) => {
+    // Placeholder function - implement your reply logic here
+    console.log('Reply to comment:', commentId);
+  };
   
   const renderItem = ({ item }) => (
     <View style={styles.commentContainer}>
@@ -127,7 +165,9 @@ const CommentSection = (props) => {
             iconSource={{uri: users[item.uuid].avatar}}
           />
           <Text style={styles.commentText}>
-            <Text style={{fontWeight: '500'}}>{users[item.uuid].name}</Text>{'\n'}{item.text}
+            <Text style={{fontWeight: '500'}}>{users[item.uuid].name}</Text>
+            <Text style={{fontWeight: '400', color: "gray"}}> {timeSince(item.date)}</Text>
+            {'\n'}{item.text}
           </Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
@@ -149,7 +189,9 @@ const CommentSection = (props) => {
               iconSource={{uri: users[reply.uuid].avatar}}
             />
             <Text style={styles.replyText}>
-              <Text style={{fontWeight: '500'}}>{users[reply.uuid].name}</Text>{'\n'}{reply.text}
+              <Text style={{fontWeight: '500'}}>{users[reply.uuid].name}</Text>
+              <Text style={{fontWeight: '400', color: "gray"}}> {timeSince(reply.date)}</Text>
+              {'\n'}{reply.text}
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
