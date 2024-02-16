@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, } from 'react-native';
+import { View, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, } from 'react-native';
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import Icon from '../Icon';
+import CommentBar from '../CommentBar';
 
 const CommentSection = (props) => {
   const loggedInUUID = 0;
@@ -156,6 +157,10 @@ const CommentSection = (props) => {
     console.log('Reply to comment:', commentId);
   };
   
+  // Comment bar consts
+  const [commentPhrase, setCommentPhrase] = useState("");
+  const [clicked, setClicked] = useState(false);
+
   const renderItem = ({ item }) => (
     <View style={styles.commentContainer}>
       <View style={styles.comment}>
@@ -210,15 +215,16 @@ const CommentSection = (props) => {
   );
 
   return (
-      <Modal 
-        animationType='slide'
-        transparent={true}
-        visible={props.isVisible}
-        onRequestClose={props.onClose}
-      >
-        <TouchableWithoutFeedback onPress={props.onClose}>
-          <View style={styles.modalOverlay}>
-            <TouchableWithoutFeedback>
+    <Modal 
+      animationType='slide'
+      transparent={true}
+      visible={props.isVisible}
+      onRequestClose={props.onClose}
+    >
+      <TouchableWithoutFeedback onPress={props.onClose}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
               <View style={styles.container}>
                 <View style={styles.headerContainer}>
                   <Text style={styles.title}>{totalComments} comments</Text>
@@ -226,7 +232,7 @@ const CommentSection = (props) => {
                     name="cross" 
                     size={24} 
                     color="#000" 
-                    style={{ position: 'absolute', right: 15 }} 
+                    style={{ position: 'absolute', right: -142 }} 
                     onPress={props.onClose}
                   />
                 </View>
@@ -238,11 +244,21 @@ const CommentSection = (props) => {
                     ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
                   />
                 </View>
+                <View>
+                  <CommentBar
+                    iconSource={{uri: users[loggedInUUID].avatar}}
+                    commentPhrase={commentPhrase}
+                    setCommentPhrase={setCommentPhrase}
+                    clicked={clicked}
+                    setClicked={setClicked}
+                  />
+                </View>
               </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+            </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
   );
 };
 
@@ -262,7 +278,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    borderRadius: 30,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
     width: '100%',
     overflow: 'hidden',
   },
@@ -280,6 +297,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'left',
     width: '100%',
+    
   },
   modalOverlay: {
     flex: 1,
