@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, } from 'react-native';
+import { View, SafeAreaView, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, } from 'react-native';
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
@@ -244,7 +244,7 @@ const CommentSection = (props) => {
                     ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
                   />
                 </View>
-                <View>
+                <SafeAreaView style={styles.commentBarContainer}>
                   <CommentBar
                     iconSource={{uri: users[loggedInUUID].avatar}}
                     commentPhrase={commentPhrase}
@@ -252,7 +252,7 @@ const CommentSection = (props) => {
                     clicked={clicked}
                     setClicked={setClicked}
                   />
-                </View>
+                </SafeAreaView>
               </View>
             </KeyboardAvoidingView>
           </TouchableWithoutFeedback>
@@ -270,14 +270,6 @@ const styles = StyleSheet.create({
     marginTop: '40%',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     width: '100%',
@@ -291,13 +283,19 @@ const styles = StyleSheet.create({
   },
   commentContainer: {
     flex: 1,
-    padding: 15,
+    paddingHorizontal: 15,
     paddingTop: 0,
+    paddingBottom: 0,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'left',
     width: '100%',
-    
+  },
+  commentBarContainer: {
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#e0e0e0',
+    width: '100%',
   },
   modalOverlay: {
     flex: 1,

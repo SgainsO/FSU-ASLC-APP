@@ -7,11 +7,13 @@ import Icon from './Icon';
 const CommentBar = (props) => {
   return (
     <View style={styles.container}>
-      <View style={ props.commentPhrase == "" ? styles.commentBar__empty : styles.commentBar__notEmpty }>
+      <View>
         <Icon
           iconStyle={styles.commentIcon}
           iconSource={props.iconSource}
         />
+      </View>
+      <View style={ props.commentPhrase == "" ? styles.commentBar__empty : styles.commentBar__notEmpty }>
         <TextInput
           style={styles.input}
           placeholder="Add comment..."
@@ -39,37 +41,40 @@ const CommentBar = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    backgroundColor: "white",
+    marginTop: 20,
+    marginBottom: 5,
+    paddingHorizontal: '4%',
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
     width: "100%",
-    maxWidth: 360,
-    height: 35,
+    maxWidth: "100%",
+    height: 45,
   },
   commentIcon: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 40,
+    height: 40,
+    borderRadius: 25,
     marginRight: 10,
   },
   commentBar__empty: {
     padding: 10,
     flexDirection: "row",
-    width: "100%",
+    width: "88%",
     backgroundColor: "#D9D9D9",
-    borderRadius: 18,
+    borderRadius: 23,
     alignItems: "center",
-    height: 35,
+    height: 40,
   },
   commentBar__notEmpty: {
     padding: 10,
     flexDirection: "row",
-    width: "85%",
+    width: "74%",
     backgroundColor: "#D9D9D9",
-    borderRadius: 18,
+    borderRadius: 23,
     alignItems: "center",
-    height: 35,
+    height: 40,
   },
   input: {
     fontSize: 16,
