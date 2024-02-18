@@ -1,6 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { NavigationContainer, NavigationContext } from '@react-navigation/native';
+import firebase from 'firebase/app';
+import { auth } from './config/firebase';
+import LoginScreen from './components/section/LoginScreen';
 
 import Header from './components/Header';
 import Content from './components/Content';
@@ -16,15 +19,35 @@ const styles = StyleSheet.create({
 
 const App = () => {
   const navigation = useContext(NavigationContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (isLoggedIn === null) {
+    return null;
+  }
 
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-        <StatusBar barStyle={'light-content'} />
-        <Header navigation={navigation}/>
-        <Content navigation={navigation}/>
-        <Footer navigation={navigation}/>
-      </View>
+      {isLoggedIn ? (
+        <View style={styles.container}>
+          <StatusBar barStyle={'light-content'} />
+          <Header navigation={navigation}/>
+          <Content navigation={navigation}/>
+          <Footer navigation={navigation}/>
+        </View>
+      ) : (
+        <LoginScreen />
+      )}
     </NavigationContainer>
   );
 };

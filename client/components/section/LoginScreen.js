@@ -1,20 +1,37 @@
 // LoginScreen.js
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import {auth} from '../../config/firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+
 
 const {width, height} = Dimensions.get('window');
 const LoginScreen = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Sign in logic here
-    console.log(`Logging in with username: ${username} and password: ${password}`);
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      userCredential.Name = userName
+      document.cookie = "authToken" + "=" + "Bearer " + userCredential.user.accessToken
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
   };
 
   const handleSignUp = () => {
-    // sign up logic here
-    console.log('Sign up button pressed');
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        console.log(userCredential)
+        document.cookie = "authToken" + "=" + "Bearer " + userCredential.user.accessToken
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
   };
 
   return (
@@ -24,9 +41,9 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Username"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
         />
       </View>
 
