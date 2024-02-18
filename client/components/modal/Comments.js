@@ -77,10 +77,11 @@ const CommentSection = (props) => {
     }
   ]
   
+  const totalComments = data.reduce((acc, item) => acc + (item.replies ? item.replies.length + 1 : 1), 0);
+
   const [liked, setLiked] = useState([]); // in backend, we can request liked per post
   const [comments, setComments] = useState(data); // data is what is requested from backend
-
-  const totalComments = data.reduce((acc, item) => acc + (item.replies ? item.replies.length + 1 : 1), 0);
+  const [commentCount, setCommentCount] = useState(totalComments);
 
   const formatLikes = n => {
     if (n < 1e3) return n;
@@ -153,10 +154,25 @@ const CommentSection = (props) => {
   };
 
   const handleReplyPress = (commentId) => {
-    // Placeholder function - implement your reply logic here
     console.log('Reply to comment:', commentId);
   };
   
+  const addNewComment = (commentText) => {
+    const newComment = {
+      comment_id: commentCount,
+      uuid: loggedInUUID,
+      likes: 0,
+      date: new Date().toISOString(),
+      text: commentText,
+      replies: []
+    };
+  
+    // Add the new comment to the existing comments array
+    setComments([...comments, newComment]);
+    setCommentCount(commentCount + 1);
+  };
+  
+
   // Comment bar consts
   const [commentPhrase, setCommentPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
@@ -227,7 +243,7 @@ const CommentSection = (props) => {
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
               <View style={styles.container}>
                 <View style={styles.headerContainer}>
-                  <Text style={styles.title}>{totalComments} comments</Text>
+                  <Text style={styles.title}>{commentCount} comments</Text>
                   <Entypo 
                     name="cross" 
                     size={24} 
@@ -251,6 +267,7 @@ const CommentSection = (props) => {
                     setCommentPhrase={setCommentPhrase}
                     clicked={clicked}
                     setClicked={setClicked}
+                    onSend={addNewComment}
                   />
                 </SafeAreaView>
               </View>

@@ -29,6 +29,7 @@ const CommentBar = (props) => {
             title="Send"
             onPress={() => {
               Keyboard.dismiss();
+              props.onSend(props.commentPhrase);
               props.setClicked(false);
               props.setCommentPhrase("");
             }}
