@@ -5,6 +5,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 import Icon from '../Icon';
 import CommentBar from '../CommentBar';
+import CommentItem from '../CommentItem';
 
 const CommentSection = (props) => {
   const loggedInUUID = 0;
@@ -172,60 +173,42 @@ const CommentSection = (props) => {
     setCommentCount(commentCount + 1);
   };
   
-
   // Comment bar consts
   const [commentPhrase, setCommentPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
 
   const renderItem = ({ item }) => (
     <View style={styles.commentContainer}>
-      <View style={styles.comment}>
-        <View style={{flexDirection: 'row'}}>
-          <Icon
-            iconStyle={styles.commentIcon}
-            iconSource={{uri: users[item.uuid].avatar}}
-          />
-          <Text style={styles.commentText}>
-            <Text style={{fontWeight: '500'}}>{users[item.uuid].name}</Text>
-            <Text style={{fontWeight: '400', color: "gray"}}> {timeSince(item.date)}</Text>
-            {'\n'}{item.text}
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
-          <Text style={{position: 'absolute', right: 18, top: 3, fontSize: 12, color: liked.includes(item.comment_id) ? "#782F40" : "gray",}}>{formatLikes(item.likes)}</Text>
-          <AntDesign 
-              name={liked.includes(item.comment_id) ? "heart" : "hearto"} 
-              size={16} 
-              color={liked.includes(item.comment_id) ? "#782F40" : "gray"} 
-              style={{ position: 'absolute', right: -5, top: 3, }} 
-              onPress={() => toggleLike(item.comment_id)}
-          />
-        </View>
-      </View>
+      <CommentItem
+        comment_id={item.comment_id}
+        item={item}
+        liked={liked}
+        likes={formatLikes(item.likes)}
+        toggleLike={toggleLike}
+        iconStyle={styles.commentIcon}
+        textStyle={styles.commentText}
+        container={styles.comment}
+        avatar={users[item.uuid].avatar}
+        name={users[item.uuid].name}
+        timeSince={timeSince(item.date)}
+        text={item.text}
+      />
       {item.replies && item.replies.map(reply => (
-        <View key={reply.comment_id} style={styles.reply}>
-          <View style={{flexDirection: 'row'}}>
-            <Icon
-              iconStyle={styles.replyIcon}
-              iconSource={{uri: users[reply.uuid].avatar}}
-            />
-            <Text style={styles.replyText}>
-              <Text style={{fontWeight: '500'}}>{users[reply.uuid].name}</Text>
-              <Text style={{fontWeight: '400', color: "gray"}}> {timeSince(reply.date)}</Text>
-              {'\n'}{reply.text}
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', backgroundColor: 'white',}}>
-            <Text style={{position: 'absolute', right: 18, top: 3, fontSize: 12, color: liked.includes(reply.comment_id) ? "#782F40" : "gray",}}>{formatLikes(reply.likes)}</Text>
-            <AntDesign 
-                name={liked.includes(reply.comment_id) ? "heart" : "hearto"} 
-                size={16} 
-                color={liked.includes(reply.comment_id) ? "#782F40" : "gray"} 
-                style={{ position: 'absolute', right: -5, top: 3, }} 
-                onPress={() => toggleLike(reply.comment_id)}
-            />
-          </View>
-        </View>
+        <CommentItem
+          key={reply.comment_id}
+          comment_id={reply.comment_id}
+          item={reply}
+          liked={liked}
+          likes={formatLikes(reply.likes)}
+          toggleLike={toggleLike}
+          iconStyle={styles.replyIcon}
+          textStyle={styles.replyText}
+          container={styles.reply}
+          avatar={users[reply.uuid].avatar}
+          name={users[reply.uuid].name}
+          timeSince={timeSince(reply.date)}
+          text={reply.text}
+        />
       ))}
     </View>
   );
