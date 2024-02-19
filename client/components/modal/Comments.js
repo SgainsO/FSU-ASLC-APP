@@ -277,7 +277,7 @@ const CommentSection = (props) => {
     >
       <TouchableWithoutFeedback onPress={props.onClose}>
         <View style={styles.modalOverlay}>
-          <TouchableWithoutFeedback >
+          <TouchableWithoutFeedback>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
               <View style={styles.container}>
                 <View style={styles.headerContainer}>
@@ -296,6 +296,7 @@ const CommentSection = (props) => {
                     renderItem={renderItem}
                     keyExtractor={item => item.comment_id}
                     ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
+                    keyboardDismissMode="interactive"
                   />
                 </View>
                 <SafeAreaView style={styles.commentBarContainer}>
