@@ -26,7 +26,7 @@ const CommentBar = (props) => {
             value={props.commentPhrase}
             onChangeText={props.setCommentPhrase}
             onFocus={() => { props.setClicked(true); }}
-            onBlur={() => { props.setClicked(false); props.setReplyingTo("")}}
+            onBlur={() => { props.setClicked(false); props.setReplyingTo(""); props.setReplyId(-1)}}
             ref={props.inputRef}
           />
         </View>

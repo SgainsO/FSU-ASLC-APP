@@ -154,17 +154,61 @@ const CommentSection = (props) => {
   };
   
   const addNewComment = (commentText) => {
-    const newComment = {
-      comment_id: commentCount,
-      uuid: loggedInUUID,
-      likes: 0,
-      date: new Date().toISOString(),
-      text: commentText,
-      replies: []
-    };
+    if (replyingTo === "") {
+      const newComment = {
+        comment_id: commentCount,
+        uuid: loggedInUUID,
+        likes: 0,
+        date: new Date().toISOString(),
+        text: commentText,
+        replies: []
+      };
+
+      setComments([...comments, newComment]);
+    }
+    else {
+      const newReply = {
+        comment_id: commentCount,
+        uuid: loggedInUUID,
+        likes: 0,
+        date: new Date().toISOString(),
+        text: commentText,
+      };
   
-    // Add the new comment to the existing comments array
-    setComments([...comments, newComment]);
+      let repliedToFound = false;
+
+    const updatedComments = comments.map(comment => {
+      if (comment.comment_id === replyId || (comment.replies && comment.replies.some(reply => reply.comment_id === replyId))) {
+        // Found the parent comment or a reply to which the user is replying
+        repliedToFound = true;
+        const newReplies = comment.replies ? [...comment.replies, newReply] : [newReply];
+        return { ...comment, replies: newReplies };
+      }
+      return comment;
+    });
+
+    // This means the reply was to a nested reply. We need to add the reply to the correct nested location
+    if (!repliedToFound) {
+      for (let i = 0; i < updatedComments.length; i++) {
+        let comment = updatedComments[i];
+        if (comment.replies && comment.replies.length > 0) {
+          let newReplies = comment.replies.map(reply => {
+            if (reply.comment_id === replyId) {
+              // This is the nested reply being replied to
+              return { ...reply, replies: [...(reply.replies || []), newReply] };
+            } else {
+              return reply;
+            }
+          });
+          updatedComments[i] = { ...comment, replies: newReplies };
+          break;
+        }
+      }
+    }
+
+    setComments(updatedComments);
+  }
+
     setCommentCount(commentCount + 1);
   };
   
@@ -172,15 +216,12 @@ const CommentSection = (props) => {
   const [commentPhrase, setCommentPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
   const [replyingTo, setReplyingTo] = useState("");
+  const [replyId, setReplyId] = useState(-1);
   const inputRef = useRef(null);
 
   // Focus the input when replying to a comment
   const focusInput = () => {
     inputRef.current.focus();
-  };
-
-  const unfocusInput = () => {
-    inputRef.current.blur();
   };
 
   const renderItem = ({ item }) => (
@@ -199,6 +240,7 @@ const CommentSection = (props) => {
         timeSince={timeSince(item.date)}
         text={item.text}
         setReplyingTo={setReplyingTo}
+        setReplyId={setReplyId}
         setClicked={setClicked}
         focusInput={focusInput}
       />
@@ -218,6 +260,7 @@ const CommentSection = (props) => {
           timeSince={timeSince(reply.date)}
           text={reply.text}
           setReplyingTo={setReplyingTo}
+          setReplyId={setReplyId}
           setClicked={setClicked}
           focusInput={focusInput}
         />
@@ -266,6 +309,7 @@ const CommentSection = (props) => {
                     isReply={replyingTo !== ""}
                     repliedName={replyingTo}
                     setReplyingTo={setReplyingTo}
+                    setReplyId={setReplyId}
                     inputRef={inputRef}
                   />
                 </SafeAreaView>
@@ -353,7 +397,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#fff',
     padding: 5,
-    marginTop: 25,
+    marginTop: 20,
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -364,7 +408,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 5,
     paddingLeft: 45,
-    marginTop: 15,
+    marginTop: 10,
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',

@@ -19,6 +19,7 @@ const CommentBar = (props) => {
                 <View style={{ paddingTop: 20 }}></View>
                 <TouchableWithoutFeedback onPress={() => {
                     props.setReplyingTo(props.name);
+                    props.setReplyId(props.comment_id);
                     props.setClicked(true);
                     props.focusInput();
                     }}
