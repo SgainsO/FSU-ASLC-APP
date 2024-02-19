@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { Dimensions, StyleSheet, Text, View, Button, Image, Touchable } from 'react-native';
-import { ImageBackground, TouchableOpacity } from 'react-native-web';
+import { Dimensions, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+//import { ImageBackground, TouchableOpacity } from 'react-native-web';
 import Icon from 'react-native-vector-icons/Ionicons';
 const {width, height} = Dimensions.get('window');
 
 //Back Color is used to keep the holder the same color as callers background
-PostWidth = width * 1/2;
+PostWidth = width * 3/4;
 iconHolderWidth = PostWidth * 1/5;
 iconWidth = iconHolderWidth * 1/2;
 const Icons = [require("../assets/Like.png"), require("../assets/message.png"),
 require("../assets/Bookmark.png"), require("../assets/Share.png")]
-
+const months = ['Janurary', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'Augest', 'September', 'October', 'November', 'December'];    
 PostHeight = height * 1;
 
 
@@ -23,6 +23,7 @@ const PostHolder = (props) => {
             borderBottomLeftRadius: 80,
             borderTopLeftRadius: 80,
             backgroundColor: '#ccc8b9',
+
 //            borderRadius: 30
         },
         PostHolderStyle: {
@@ -33,8 +34,12 @@ const PostHolder = (props) => {
             width: PostWidth,
             borderRadius: 40,
             aspectRatio: 1,
-            margin: '10%',
-
+            marginTop: '10%',
+//            margin: '10%',
+            shadowOpacity: 0.8,
+            shadowRadius: 10,
+            shadowColor: '#000',
+  //          padding: '20%',
         //    background: 'transparent',
             overflow: 'hidden'
         },
@@ -57,11 +62,11 @@ const PostHolder = (props) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            width: '50%',
+            width: '40%',
             height: '20%',
             flexDirection: 'row',
             top: '80%',
-            left: '25%',
+            left: '27%',
         },
         DotHolder:
         {   position: 'absolute',
@@ -77,7 +82,8 @@ const PostHolder = (props) => {
             width: iconWidth,
             height: undefined,
             aspectRatio: 1,
-            resizeMode: 'contain'
+            resizeMode: 'contain',
+            marginLeft: 10,
         },
         OrgAndDeventParent:
         {
@@ -93,9 +99,8 @@ const PostHolder = (props) => {
         OrgPhotoHolder:
         {
             height: 40,
-            width: 40,
+            width: 80,
             borderRadius: 40,
-            overflow: 'hidden'
         },
         ProfileImage:
         {
@@ -140,7 +145,7 @@ const PostHolder = (props) => {
       const [Image_Source, ChaImageSource] = useState(TestPhotos[0])
       const [ImageIndex, ChangeImageIndex] = useState(0)
 
-      const {clubName} = props;
+      const {clubName, date} = props;
 
       console.log(clubName)
       const IconView = ({icons}) => {                                    // Create progress widgets and Icon widgets 
@@ -179,12 +184,11 @@ const PostHolder = (props) => {
 
       const GoBackward =  () =>
       {
-        const pre = ImageIndex;
-        dotColors[ImageIndex].setColor("white")
         ImageIndex > 0 ? ChangeImageIndex(ImageIndex - 1) : ChangeImageIndex(TestPhotos.length - 1);      //saves the current image index
         console.log("Going to " + ImageIndex)
         ChaImageSource(TestPhotos[ImageIndex])
-        dotColors[ImageIndex !== TestPhotos.length - 1 ? 0 : ImageIndex + 1].setColor("white")             // Sets previouse Image to white and Current to Black
+        dotColors[ImageIndex === TestPhotos.length - 1 ? 0 : ImageIndex + 1].setColor("white")             // Sets previous Image Tracker to white and Current to Black
+        console.log("ii is: " + ImageIndex)
         dotColors[ImageIndex].setColor("black")
       }
 
@@ -200,15 +204,19 @@ return (
         </View>
         <View style = {Styles.OrgAndDeventParent}>
         <Image style = {Styles.ProfileImage} source = {require("../assets/smile.png")}/>
-        <Text style= {{color: "white"}}>
+        <View style = {Styles.OrgPhotoHolder}> 
+        <Text style= {{color: "white", marginLeft: 3}}>
           {clubName}
         </Text>
+        <Text style= {{color: "white", marginLeft: 3}}>
+          {months[date.getMonth()]}
+        </Text>
+        </View>
         </View>
         <TouchableOpacity onPress = {GoBackward} style = {Styles.GoLeft}>
         </TouchableOpacity> 
         
         <TouchableOpacity onPress={GoForeward} style = {Styles.GoRight}>
-        
         </TouchableOpacity>
 
 
