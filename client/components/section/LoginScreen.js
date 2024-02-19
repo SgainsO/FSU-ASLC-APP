@@ -1,6 +1,7 @@
 // LoginScreen.js
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image } from 'react-native';
+
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image, StatusBar } from 'react-native';
 import {auth} from '../../config/firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -9,6 +10,7 @@ const {width, height} = Dimensions.get('window');
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -19,6 +21,8 @@ const LoginScreen = () => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+
+      setError(errorCode)
     });
   };
 
@@ -31,11 +35,14 @@ const LoginScreen = () => {
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-    });
+
+        setError(errorCode)
+      });
   };
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle={'light-content'} />
       <Image source={require('../../assets/aslc_logo.png')} style= {styles.logoImage} />
       <Image source={require('../../assets/connect.png') }  style = {{marginBottom: 20}}/>
       <View style={styles.inputContainer}>
@@ -57,6 +64,8 @@ const LoginScreen = () => {
         />
       </View>
 
+      <Text style={styles.errorColor} > {error} </Text>
+
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -72,7 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: width,
-    backgroundColor: '#782F40',
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
@@ -83,26 +92,29 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: 'black',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#F8F5E4',
+    backgroundColor: 'black',
     padding: 10,
     borderRadius: 8,
     width: '100%',
     marginTop: 10,
   },
   buttonText: {
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     fontWeight: 'bold',
   },
   logoImage:
   {
     margin: 15
+  },
+  errorColor: {
+    color: 'red',
   }
 });
 
