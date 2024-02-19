@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import React from 'react';
+import { StyleSheet, TextInput, View, Keyboard, Button, Text } from "react-native";
 
 import Icon from './Icon';
 
 const CommentBar = (props) => {
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.iconContainer}>
         <Icon
           iconStyle={styles.commentIcon}
           iconSource={props.iconSource}
         />
       </View>
-      <View style={ props.commentPhrase == "" ? styles.commentBar__empty : styles.commentBar__notEmpty }>
-        <TextInput
-          style={styles.input}
-          placeholder="Add comment..."
-          placeholderTextColor="#888"
-          value={props.commentPhrase}
-          onChangeText={props.setCommentPhrase}
-          onFocus={() => { props.setClicked(true); }}
-        />
+      <View style={{ width: props.commentPhrase === "" ? "88%" : "74%" }}>
+        {props.isReply && (
+          <View style={styles.replyingToBar}>
+            <Text style={styles.replyingToText}>Replying to {props.repliedName}</Text>
+          </View>
+        )}
+        <View style={!props.isReply ? styles.commentBar : styles.commentBarReplying}>
+          <TextInput
+            style={styles.input}
+            placeholder={props.isReply ? "Add Reply..." : "Add comment..."}
+            placeholderTextColor="#888"
+            value={props.commentPhrase}
+            onChangeText={props.setCommentPhrase}
+            onFocus={() => { props.setClicked(true); }}
+            onBlur={() => { props.setClicked(false); props.setReplyingTo("")}}
+            ref={props.inputRef}
+          />
+        </View>
       </View>
-      {props.clicked && props.commentPhrase != "" && (
-        <View>
+      {props.clicked && props.commentPhrase !== "" && (
+        <View style={styles.sendButtonContainer}>
           <Button
             title="Send"
             onPress={() => {
@@ -32,6 +40,7 @@ const CommentBar = (props) => {
               props.onSend(props.commentPhrase);
               props.setClicked(false);
               props.setCommentPhrase("");
+              props.setReplyingTo("");
             }}
           />
         </View>
@@ -47,42 +56,58 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     paddingHorizontal: '4%',
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "flex-end",
     flexDirection: "row",
     width: "100%",
     maxWidth: "100%",
-    height: 45,
+  },
+  iconContainer: {
+    backgroundColor: "white",
+    marginRight: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   commentIcon: {
     width: 40,
     height: 40,
     borderRadius: 25,
-    marginRight: 10,
   },
-  commentBar__empty: {
+  commentBar: {
     padding: 10,
     flexDirection: "row",
-    width: "88%",
     backgroundColor: "#D9D9D9",
-    borderRadius: 23,
+    borderRadius: 20,
     alignItems: "center",
     height: 40,
   },
-  commentBar__notEmpty: {
+  commentBarReplying: {
     padding: 10,
     flexDirection: "row",
-    width: "74%",
     backgroundColor: "#D9D9D9",
-    borderRadius: 23,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     alignItems: "center",
     height: 40,
   },
   input: {
     fontSize: 16,
     marginLeft: 10,
-    height: "150%",
-    width: "85%",
     color: 'black',
+    flex: 1, // Use flex to ensure it fills the available space
+  },
+  replyingToBar: {
+    backgroundColor: "#eee", // A light grey to distinguish the replying to bar
+    padding: 8,
+    paddingLeft: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  replyingToText: {
+    fontSize: 14,
+    color: "#666", // A darker grey for text
+  },
+  sendButtonContainer: {
+    marginLeft: 5, // Ensure some space between the text input and the send button
   },
 });
 

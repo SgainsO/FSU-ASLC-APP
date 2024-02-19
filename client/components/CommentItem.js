@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, SafeAreaView, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, } from 'react-native';
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 import Icon from './Icon';
 
@@ -17,7 +17,14 @@ const CommentBar = (props) => {
                 <Text style={{ fontWeight: '400', color: 'gray' }}> {props.timeSince}</Text>
                 {'\n'}{props.text}{'\n'}
                 <View style={{ paddingTop: 20 }}></View>
-                <Text style={{ fontWeight: '400', color: 'gray' }}>Reply</Text>
+                <TouchableWithoutFeedback onPress={() => {
+                    props.setReplyingTo(props.name);
+                    props.setClicked(true);
+                    props.focusInput();
+                    }}
+                >
+                    <Text style={{ fontWeight: '400', color: 'gray' }}>Reply</Text>
+                </TouchableWithoutFeedback>
             </Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', }}>

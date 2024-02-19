@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, SafeAreaView, Modal, Text, FlatList, StyleSheet, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, } from 'react-native';
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
-import Icon from '../Icon';
 import CommentBar from '../CommentBar';
 import CommentItem from '../CommentItem';
 
@@ -147,15 +146,11 @@ const CommentSection = (props) => {
       return Math.floor(interval) + "h";
     }
     interval = seconds / 60; // Number of seconds in a minute
-    if (interval > 1) {
+    if (interval >= 1) {
       return Math.floor(interval) + "m";
     }
     
     return Math.floor(seconds) + "s";
-  };
-
-  const handleReplyPress = (commentId) => {
-    console.log('Reply to comment:', commentId);
   };
   
   const addNewComment = (commentText) => {
@@ -176,6 +171,17 @@ const CommentSection = (props) => {
   // Comment bar consts
   const [commentPhrase, setCommentPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
+  const [replyingTo, setReplyingTo] = useState("");
+  const inputRef = useRef(null);
+
+  // Focus the input when replying to a comment
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
+  const unfocusInput = () => {
+    inputRef.current.blur();
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.commentContainer}>
@@ -192,6 +198,9 @@ const CommentSection = (props) => {
         name={users[item.uuid].name}
         timeSince={timeSince(item.date)}
         text={item.text}
+        setReplyingTo={setReplyingTo}
+        setClicked={setClicked}
+        focusInput={focusInput}
       />
       {item.replies && item.replies.map(reply => (
         <CommentItem
@@ -208,6 +217,9 @@ const CommentSection = (props) => {
           name={users[reply.uuid].name}
           timeSince={timeSince(reply.date)}
           text={reply.text}
+          setReplyingTo={setReplyingTo}
+          setClicked={setClicked}
+          focusInput={focusInput}
         />
       ))}
     </View>
@@ -222,7 +234,7 @@ const CommentSection = (props) => {
     >
       <TouchableWithoutFeedback onPress={props.onClose}>
         <View style={styles.modalOverlay}>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback >
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
               <View style={styles.container}>
                 <View style={styles.headerContainer}>
@@ -251,6 +263,10 @@ const CommentSection = (props) => {
                     clicked={clicked}
                     setClicked={setClicked}
                     onSend={addNewComment}
+                    isReply={replyingTo !== ""}
+                    repliedName={replyingTo}
+                    setReplyingTo={setReplyingTo}
+                    inputRef={inputRef}
                   />
                 </SafeAreaView>
               </View>
