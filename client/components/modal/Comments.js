@@ -278,43 +278,41 @@ const CommentSection = (props) => {
       <TouchableWithoutFeedback onPress={props.onClose}>
         <View style={styles.modalOverlay}>
           <TouchableWithoutFeedback>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-              <View style={styles.container}>
-                <View style={styles.headerContainer}>
-                  <Text style={styles.title}>{commentCount} comments</Text>
-                  <Entypo 
-                    name="cross" 
-                    size={24} 
-                    color="#000" 
-                    style={{ position: 'absolute', right: -142 }} 
-                    onPress={props.onClose}
-                  />
-                </View>
-                <View style={styles.commentContainer}>
-                  <FlatList
-                    data={comments}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.comment_id}
-                    ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
-                    keyboardDismissMode="interactive"
-                  />
-                </View>
-                <SafeAreaView style={styles.commentBarContainer}>
-                  <CommentBar
-                    iconSource={{uri: users[loggedInUUID].avatar}}
-                    commentPhrase={commentPhrase}
-                    setCommentPhrase={setCommentPhrase}
-                    clicked={clicked}
-                    setClicked={setClicked}
-                    onSend={addNewComment}
-                    isReply={replyingTo !== ""}
-                    repliedName={replyingTo}
-                    setReplyingTo={setReplyingTo}
-                    setReplyId={setReplyId}
-                    inputRef={inputRef}
-                  />
-                </SafeAreaView>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+              <View style={styles.headerContainer}>
+                <Text style={styles.title}>{commentCount} comments</Text>
+                <Entypo 
+                  name="cross" 
+                  size={24} 
+                  color="#000" 
+                  style={{ position: 'absolute', right: 25 }} 
+                  onPress={props.onClose}
+                />
               </View>
+              <View style={styles.commentContainer}>
+                <FlatList
+                  data={comments}
+                  renderItem={renderItem}
+                  keyExtractor={item => item.comment_id}
+                  ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
+                  keyboardDismissMode="interactive"
+                />
+              </View>
+              <SafeAreaView style={styles.commentBarContainer}>
+                <CommentBar
+                  iconSource={{uri: users[loggedInUUID].avatar}}
+                  commentPhrase={commentPhrase}
+                  setCommentPhrase={setCommentPhrase}
+                  clicked={clicked}
+                  setClicked={setClicked}
+                  onSend={addNewComment}
+                  isReply={replyingTo !== ""}
+                  repliedName={replyingTo}
+                  setReplyingTo={setReplyingTo}
+                  setReplyId={setReplyId}
+                  inputRef={inputRef}
+                />
+              </SafeAreaView>
             </KeyboardAvoidingView>
           </TouchableWithoutFeedback>
         </View>
