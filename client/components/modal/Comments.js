@@ -276,47 +276,45 @@ const CommentSection = (props) => {
       onRequestClose={props.onClose}
     >
       <TouchableWithoutFeedback onPress={props.onClose}>
-        <View style={styles.modalOverlay}>
-          <TouchableWithoutFeedback>
-            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
-              <View style={styles.headerContainer}>
-                <Text style={styles.title}>{commentCount} comments</Text>
-                <Entypo 
-                  name="cross" 
-                  size={24} 
-                  color="#000" 
-                  style={{ position: 'absolute', right: 25 }} 
-                  onPress={props.onClose}
-                />
-              </View>
-              <View style={styles.commentContainer}>
-                <FlatList
-                  data={comments}
-                  renderItem={renderItem}
-                  keyExtractor={item => item.comment_id}
-                  ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
-                  keyboardDismissMode="interactive"
-                />
-              </View>
-              <SafeAreaView style={styles.commentBarContainer}>
-                <CommentBar
-                  iconSource={{uri: users[loggedInUUID].avatar}}
-                  commentPhrase={commentPhrase}
-                  setCommentPhrase={setCommentPhrase}
-                  clicked={clicked}
-                  setClicked={setClicked}
-                  onSend={addNewComment}
-                  isReply={replyingTo !== ""}
-                  repliedName={replyingTo}
-                  setReplyingTo={setReplyingTo}
-                  setReplyId={setReplyId}
-                  inputRef={inputRef}
-                />
-              </SafeAreaView>
-            </KeyboardAvoidingView>
-          </TouchableWithoutFeedback>
-        </View>
+        <View style={styles.darkBackground}/>
       </TouchableWithoutFeedback>
+
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>{commentCount} comments</Text>
+          <Entypo 
+            name="cross" 
+            size={24} 
+            color="#000" 
+            style={{ position: 'absolute', right: 25 }} 
+            onPress={props.onClose}
+          />
+        </View>
+        <View style={styles.commentContainer}>
+          <FlatList
+            data={comments}
+            renderItem={renderItem}
+            keyExtractor={item => item.comment_id}
+            ListEmptyComponent={<View style= {styles.noCommentContainer}><Text style={styles.noCommentText}>Be the first to comment!</Text></View>}
+            keyboardDismissMode="interactive"
+          />
+        </View>
+        <SafeAreaView style={styles.commentBarContainer}>
+          <CommentBar
+            iconSource={{uri: users[loggedInUUID].avatar}}
+            commentPhrase={commentPhrase}
+            setCommentPhrase={setCommentPhrase}
+            clicked={clicked}
+            setClicked={setClicked}
+            onSend={addNewComment}
+            isReply={replyingTo !== ""}
+            repliedName={replyingTo}
+            setReplyingTo={setReplyingTo}
+            setReplyId={setReplyId}
+            inputRef={inputRef}
+          />
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -326,8 +324,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     paddingTop: 0,
-    marginTop: '40%',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -356,10 +353,8 @@ const styles = StyleSheet.create({
     borderTopColor: '#e0e0e0',
     width: '100%',
   },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  darkBackground: {
+    flex: 0.4,
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
   },
   commentIcon: {
