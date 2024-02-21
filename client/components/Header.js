@@ -14,6 +14,14 @@ const Header = () => {
         alignItems: 'flex-end',
     };
 
+    const iconStyle = {
+        width: 30,
+        height: 30,
+        marginTop: 8,
+        marginBottom: 8,
+        marginHorizontal: 8,
+    };
+
     const navigation = useNavigation();
 
     const [activeIcon, setActiveIcon] = useState("Home");
@@ -28,9 +36,7 @@ const Header = () => {
             <Image source={require('../assets/fsu_logo.png')} style={{ width: 50, height: 50, margin: 4 }} />
             <Text style={{ color: 'white', fontSize: 30, fontWeight: 600, marginBottom: 8 }}>ASLC Connect</Text>
             <Icon
-                marginTop={8}
-                marginBottom={8}
-                marginHorizontal={8}
+                iconStyle={iconStyle}
                 iconSource={activeIcon === 'Home' ? require('../assets/burger_menu.png') : require('../assets/burger_menu.png')}
                 onPress={() => handleIconPress('FAQs', 'FAQs')}
             />
