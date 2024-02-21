@@ -279,8 +279,8 @@ const CommentSection = (props) => {
         <View style={styles.darkBackground}/>
       </TouchableWithoutFeedback>
 
-      <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)',}}>
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)',}}>
+        <View style={styles.container}>
           <View style={styles.headerContainer}>
             <Text style={styles.title}>{commentCount} comments</Text>
             <Entypo 
@@ -315,8 +315,8 @@ const CommentSection = (props) => {
               inputRef={inputRef}
             />
           </SafeAreaView>
-        </KeyboardAvoidingView>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
