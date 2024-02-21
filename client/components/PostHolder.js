@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Dimensions, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import {heart, } from '@ant-design/icons'
 //import { ImageBackground, TouchableOpacity } from 'react-native-web';
 import Icon from 'react-native-vector-icons/Ionicons';
 const {width, height} = Dimensions.get('window');
@@ -8,11 +9,11 @@ const {width, height} = Dimensions.get('window');
 PostWidth = width * 3/4;
 iconHolderWidth = PostWidth * 1/5;
 iconWidth = iconHolderWidth * 1/2;
-const Icons = [require("../assets/Like.png"), require("../assets/message.png"),
-require("../assets/Bookmark.png"), require("../assets/Share.png")]
+//const Icons = [require("../assets/Like.png"), require("../assets/message.png"),
+//require("../assets/Bookmark.png"), require("../assets/Share.png")]
 const months = ['Janurary', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'Augest', 'September', 'October', 'November', 'December'];    
 PostHeight = height * 1;
-
+const Icons = ['heart-circle', 'bookmark', 'send-sharp', 'chatbubble-ellipses']
 
 const PostHolder = (props) => {
     const Styles = StyleSheet.create({
@@ -59,14 +60,18 @@ const PostHolder = (props) => {
         },
         VectorStyle:             // Holds the icon
         {
+            flex: 1,
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'absolute',
-            width: '40%',
+            width: '60%',
             height: '20%',
             flexDirection: 'row',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             top: '80%',
-            left: '27%',
+            left: '20%',
+            borderTopRightRadius: '10px',
+            borderTopLeftRadius: '10px',
         },
         DotHolder:
         {   position: 'absolute',
@@ -83,7 +88,7 @@ const PostHolder = (props) => {
             height: undefined,
             aspectRatio: 1,
             resizeMode: 'contain',
-            marginLeft: 10,
+
         },
         OrgAndDeventParent:
         {
@@ -144,6 +149,9 @@ const PostHolder = (props) => {
       const TestPhotos = [require("../assets/Daniel.jpg"), require("../assets/Ryan.jpg")]
       const [Image_Source, ChaImageSource] = useState(TestPhotos[0])
       const [ImageIndex, ChangeImageIndex] = useState(0)
+      const [LikeColor, ChangeLikeColor] = useState('white')
+      const [BookmarkColor, ChangeBookmarkColor] = useState('white')
+
 
       const {clubName, date} = props;
 
@@ -151,8 +159,10 @@ const PostHolder = (props) => {
       const IconView = ({icons}) => {                                    // Create progress widgets and Icon widgets 
         return (
           <View style={Styles.VectorStyle}>
-            {icons.map((icon, index) => (
-              <Image key={index} source={icon} style={Styles.IconStyle}  />
+            {icons.map((icon, index) => (                            
+              <TouchableOpacity onPress={() => HandleIcons(index)}>                                              
+              <Icon key = {index} name={icon} size = {40} color={DefineException(icon)}/>
+             </TouchableOpacity>
             ))}
           </View>
         );
@@ -160,8 +170,8 @@ const PostHolder = (props) => {
       const dots = []
       const dotColors = []
 
-      for (let i = 0; i < TestPhotos.length; i++)
-      {
+      for (let i = 0; i < TestPhotos.length; i++)                 //Makes seperate ColorChanger for every dot
+      {                                                           //access by similar index as dots
         const [color, setColor] = useState(i === 0 ? "black" : "white")
         dotColors.push({color, setColor})
         dots.push(
@@ -170,7 +180,43 @@ const PostHolder = (props) => {
       }
         
     
+      function DefineException(name){            //Allows button colors to be changed during runtime
+        if (name === "heart-circle")
+        {
+          return LikeColor;
+        }
+        else if (name === "bookmark")
+        {
+          return BookmarkColor;
+        }
+        else
+        {
+          return "white";
+        }
 
+      }
+
+      function HandleIcons(index)
+      {
+        if(index === 0)
+        {
+          console.log("like button pressed")
+          ChangeLikeColor(LikeColor === "white" ? "red" : "white")
+        }
+        else if(index === 1)
+        {
+          console.log("Bookmark button pressed")
+          ChangeBookmarkColor(BookmarkColor === "white" ? "yellow" : "white")
+        }
+        else if(index === 2)
+        {
+          console.log("Message button pressed")
+        }
+        else if(index === 3)
+        {
+          console.log("Share button pressed")
+        }
+      }
 
 
       const GoForeward = () =>
@@ -191,6 +237,8 @@ const PostHolder = (props) => {
         console.log("ii is: " + ImageIndex)
         dotColors[ImageIndex].setColor("black")
       }
+
+
 
 return (
     <View style = {Styles.PostHolderStyle}>
