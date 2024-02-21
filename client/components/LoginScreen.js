@@ -1,4 +1,3 @@
-// LoginScreen.js
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image } from 'react-native';
 
@@ -25,6 +24,7 @@ const LoginScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Username"
+          placeholderTextColor= '#a19f99'
           value={username}
           onChangeText={(text) => setUsername(text)}
         />
@@ -33,6 +33,7 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
+          placeholderTextColor= '#a19f99'
           placeholder="Password"
           secureTextEntry={true}
           value={password}
@@ -48,7 +49,7 @@ const LoginScreen = () => {
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
-    color: 'black',
+    color: '#a19f99',
     textAlign: 'center',
     fontWeight: 'bold',
   },
