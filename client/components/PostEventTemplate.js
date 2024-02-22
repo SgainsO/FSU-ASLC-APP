@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
+import {GetDateInformation}  from './api.js'
+import {useRoute} from '@react-navigation/native'
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
 import PostHolder from './PostHolder';
 const {width, height} = Dimensions.get('window');
 import { useFonts, AbhayaLibre_400Regular } from '@expo-google-fonts/abhaya-libre';
-const PostEventTemplate = (props) => 
+const PostEventTemplate = ({navigation }) => 
 {
-const {Title} = props; 
+const route = useRoute();
+
+let {Title} = route.params; 
+
+let Dates = GetDateInformation()
+
+console.log(Dates)
+
+Title !== undefined ? Title : Title = "NO_TITLE"; 
 
 
-Title !== undefined ? Title : "NO_TITLE"; 
 
 return (
     <View style= {styles.PageStyle}>
@@ -16,7 +25,7 @@ return (
             style = {styles.searchBar}
             placeholder= "Search"
         />
-        <Text style = {styles.titleStyle}> Past Events </Text>  
+        <Text style = {styles.titleStyle}> {Title} </Text>  
         <View style = {styles.line}></View>
     <View style = {styles.ScrollHolderStyle}>
     <ScrollView 
