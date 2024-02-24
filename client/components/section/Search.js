@@ -1,12 +1,24 @@
-import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
+import { View, FlatList, Text, StyleSheet, TextInput } from 'react-native';
+//import React, { useState } from 'react';
 
 import SearchCard from '../SearchCard';
 
 const Search = () => {
+//const [searchText, setSearchText] = useState('');
+
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
   };
+
+  /*const searchBarContainerStyle = {
+    width: '60%',
+    alignSelf: 'center',
+    marginTop: 10,
+    borderRadius: 20,
+    backgroundColor: '#F0F0F0',
+    paddingHorizontal: 10, 
+  };*/
 
   const rowStyle = {
     flex: 1,
@@ -15,15 +27,19 @@ const Search = () => {
     marginVertical: 10,
   };
 
+  const handleSearch = (text) => {
+    setSearchText(text);
+  }
+
   const data = [
-    { id: 0, picture: <Image source = {require('../../assets/calendar.png')}/>, title: 'Today\'s Events'},
-    { id: 1, picture: <Image source = {require('../../assets/save_the_date.png')}/>, title: 'Upcoming Events'},
-    { id: 2, picture: <Image source = {require('../../assets/indiana_jones.png')}/>, title: 'Past Events'},
-    { id: 3, picture: <Image source = {require('../../assets/pulp_fiction.png')}/>, title: 'Movie Events'},
-    { id: 4, picture: <Image source = {require('../../assets/sans_undertale.png')}/>, title: 'Gaming Events'},
-    { id: 5, picture: <Image source = {require('../../assets/Pottery.png')}/>, title: 'Pottery Events'},
-    { id: 6, picture: <Image source = {require('../../assets/american_psycho.png')}/>, title: 'Holiday Specific Events'},
-    { id: 7, picture: <Image source = {require('../../assets/faq_guy.png')}/>, title: 'FAQ'},
+    { id: 0, title: 'Today\'s Events', backgroundImage: require('../../assets/calendar.png') },
+    { id: 1, title: 'Upcoming Events', backgroundImage: require('../../assets/save_the_date.png') },
+    { id: 2, title: 'Past Events', backgroundImage: require('../../assets/indiana_jones.png') },
+    { id: 3, title: 'Movie Events', backgroundImage: require('../../assets/pulp_fiction.png') },
+    { id: 4, title: 'Gaming Events', backgroundImage: require('../../assets/sans_undertale.png') },
+    { id: 5, title: 'Pottery Events', backgroundImage: require('../../assets/Pottery.png') },
+    { id: 6, title: 'Holiday Specific Events', backgroundImage: require('../../assets/american_psycho.png') },
+    { id: 7, title: 'FAQ', backgroundImage: require('../../assets/faq_guy.png') },
   ];
 
   
@@ -60,7 +76,7 @@ const Search = () => {
   return (
     <View style={containerStyle}>
       <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
-      <Text style={{fontSize: 16, fontWeight: '600', paddingLeft: 32, paddingBottom: 35, paddingTop: 5}}>Browse Categories</Text>
+      <Text style={{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5}}>Browse Categories</Text>
       <FlatList
       data ={data}
       renderItem ={({item}) => <SearchCard {...item} />}
