@@ -42,37 +42,6 @@ const Search = () => {
     { id: 7, title: 'FAQ', backgroundImage: require('../../assets/faq_guy.png') },
   ];
 
-  
-
-  const styles = StyleSheet.create({
-    centeredBox: {
-      flex:1, 
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'left'
-    },
-    icon: {
-      width: 40,
-      height: 40, 
-      marginLeft: 15,
-      marginTop: 5,
-    },
-    RewardsAmount: {
-      fontSize: 40,
-      fontWeight: '600',
-      paddingLeft: 10
-    },
-    RewardsHistory: {
-      fontSize: 22,
-      fontWeight: '600',
-      paddingLeft: 50,
-      paddingTop: 13
-    }
-  });
-
   return (
     <View style={containerStyle}>
       <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
