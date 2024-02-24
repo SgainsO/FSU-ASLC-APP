@@ -38,7 +38,7 @@ const Header = () => {
             <Icon
                 iconStyle={iconStyle}
                 iconSource={activeIcon === 'Home' ? require('../assets/burger_menu.png') : require('../assets/burger_menu.png')}
-                onPress={() => handleIconPress('FAQs', 'FAQs')}
+                onPress={() => handleIconPress('DropDown', 'DropDown')}
             />
         </View>
     );
