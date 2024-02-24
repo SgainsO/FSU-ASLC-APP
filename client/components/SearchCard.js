@@ -1,6 +1,6 @@
 import { Text, View, ImageBackground } from 'react-native';
 
-const Card = ({ picture, title }) => {
+const Card = ({ title, backgroundImage }) => {
   const cardImageStyle = {
     flex: 1,
     marginHorizontal: 10,
@@ -18,25 +18,28 @@ const Card = ({ picture, title }) => {
     overflow: 'hidden', // Ensure the image doesn't overflow the card
   };
 
-  const overlayStyle = {
+  const titleContainerStyle = {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    height: 85,
     paddingHorizontal: 8,
-    backgroundColor: 'rgba(220, 20, 60, 0.3)', // Semi-transparent crimson overlay
-    justifyContent: 'center',
-    alignItems: 'left',
+    paddingVertical: 5,
     borderBottomLeftRadius: 10, // Match the border radius of the parent View
     borderBottomRightRadius: 10,
   };
 
+  const titleStyle = {
+    fontSize: 27,
+    fontWeight: '600',
+    color: 'rgba(206, 184, 136, 1)',
+  };
+
   return (
     <View style={cardImageStyle}>
-      <ImageBackground source={picture} style={{ flex: 1 }} resizeMode="cover">
-        <View style={overlayStyle}>
-          <Text style={{ fontSize: 16, fontWeight: '600', color: 'white' }}>{title}</Text>
+      <ImageBackground source={bacgkroundImage} style={{ flex: 1 }} resizeMode='cover'>
+        <View style={titleContainerStyle}>
+          <Text style={titleStyle}>{title}</Text>
         </View>
       </ImageBackground>
     </View>
