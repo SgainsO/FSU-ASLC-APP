@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
+
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,6 +17,12 @@ const LoginScreen = () => {
     // sign up logic here
     console.log('Sign up button pressed');
   };
+
+  const navigation = useNavigation();
+
+  const navigate = (navigateTo) => {
+    navigation.navigate(navigateTo);
+  }
 
   return (
     <View style={styles.container}>
@@ -47,6 +55,10 @@ const LoginScreen = () => {
 
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+        <Text style={styles.buttonText} onPress={() => navigate('Main')}>Temp Go To Home</Text>
       </TouchableOpacity>
     </View>
   )
