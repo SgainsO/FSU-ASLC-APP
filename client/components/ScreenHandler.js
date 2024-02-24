@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 const ScreenHandler = () => {
   return (
     <View style={styles.container}>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{animation: 'none'}}>
+      <Stack.Navigator initialRouteName="Main" screenOptions={{animation: 'none'}}>
         <Stack.Screen
           name="Login"
           component={LoginScreen}
