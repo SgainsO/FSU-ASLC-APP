@@ -17,10 +17,10 @@ const Rewards = () => {
   };
 
   const data = [
-    { id: 0, title: 'Reward 1', icon: <Image source = {require('../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 200 },
-    { id: 1, title: 'Reward 2', icon: <Image source = {require('../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 300 },
-    { id: 2, title: 'Reward 3', icon: <Image source = {require('../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 500 },
-    { id: 3, title: 'Reward 4', icon: <Image source = {require('../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 1000 },
+    { id: 0, title: 'Reward 1', icon: <Image source = {require('../../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 200 },
+    { id: 1, title: 'Reward 2', icon: <Image source = {require('../../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 300 },
+    { id: 2, title: 'Reward 3', icon: <Image source = {require('../../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 500 },
+    { id: 3, title: 'Reward 4', icon: <Image source = {require('../../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>, rewardAmount: 1000 },
   ];
 
   /*
@@ -70,7 +70,7 @@ const Rewards = () => {
   return (
     <View style={containerStyle}>
       <View style={styles.header}>
-        <Image source={require('../../assets/fsu_coins.png')} style={styles.icon} />
+        <Image source={require('../../../assets/fsu_coins.png')} style={styles.icon} />
         <Text style={styles.RewardsAmount}>180</Text>
         <Text style={styles.RewardsHistory}>Rewards History {'>'}</Text>
       </View>

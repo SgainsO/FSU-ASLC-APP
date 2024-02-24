@@ -8,7 +8,7 @@ const FAQs = () => {
         <View style={styles.midTextContainer}>
           <Text style={styles.title}>FAQ</Text>
           <Image
-          source={require('../../assets/question.png')} // Provide the correct path to your image
+          source={require('../../../assets/question.png')} // Provide the correct path to your image
           style={styles.image}
           />
         </View>

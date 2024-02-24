@@ -146,7 +146,7 @@ const PostHolder = (props) => {
 
     
 
-      const TestPhotos = [require("../assets/Daniel.jpg"), require("../assets/Ryan.jpg")]
+      const TestPhotos = [require("../../assets/Daniel.jpg"), require("../../assets/Ryan.jpg")]
       const [Image_Source, ChaImageSource] = useState(TestPhotos[0])
       const [ImageIndex, ChangeImageIndex] = useState(0)
       const [LikeColor, ChangeLikeColor] = useState('white')
@@ -251,7 +251,7 @@ return (
         {dots}
         </View>
         <View style = {Styles.OrgAndDeventParent}>
-        <Image style = {Styles.ProfileImage} source = {require("../assets/smile.png")}/>
+        <Image style = {Styles.ProfileImage} source = {require("../../assets/smile.png")}/>
         <View style = {Styles.OrgPhotoHolder}> 
         <Text style= {{color: "white", marginLeft: 3}}>
           {clubName}
