@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
+
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,10 +18,16 @@ const LoginScreen = () => {
     console.log('Sign up button pressed');
   };
 
+  const navigation = useNavigation();
+
+  const navigate = (navigateTo) => {
+    navigation.navigate(navigateTo);
+  }
+
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/aslc_logo.png')} style= {styles.logoImage} />
-      <Image source={require('../assets/connect.png') }  style = {{marginBottom: 20}}/>
+      <Image source={require('../../assets/aslc_logo.png')} style= {styles.logoImage} />
+      <Image source={require('../../assets/connect.png') }  style = {{marginBottom: 20}}/>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -47,6 +55,10 @@ const LoginScreen = () => {
 
       <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+        <Text style={styles.buttonText} onPress={() => navigate('Main')}>Temp Go To Home</Text>
       </TouchableOpacity>
     </View>
   )

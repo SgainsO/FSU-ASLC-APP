@@ -5,7 +5,7 @@ const RoundedBox = () => {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <Image source={require('../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>
+                <Image source={require('../../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>
                 <Text style={styles.text}>Unlocked Rewards will appear here.</Text>
             </View>
         </View>

@@ -33,11 +33,11 @@ const Header = () => {
 
     return (
         <View style={barStyle}>
-            <Image source={require('../assets/fsu_logo.png')} style={{ width: 50, height: 50, margin: 4 }} />
+            <Image source={require('../../assets/fsu_logo.png')} style={{ width: 50, height: 50, margin: 4 }} />
             <Text style={{ color: 'white', fontSize: 30, fontWeight: 600, marginBottom: 8 }}>ASLC Connect</Text>
             <Icon
                 iconStyle={iconStyle}
-                iconSource={activeIcon === 'Home' ? require('../assets/burger_menu.png') : require('../assets/burger_menu.png')}
+                iconSource={activeIcon === 'Home' ? require('../../assets/burger_menu.png') : require('../../assets/burger_menu.png')}
                 onPress={() => handleIconPress('FAQs', 'FAQs')}
             />
         </View>
