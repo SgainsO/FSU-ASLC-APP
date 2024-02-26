@@ -1,24 +1,14 @@
 import { View, FlatList, Text, StyleSheet, TextInput } from 'react-native';
-//import React, { useState } from 'react';
-
+import React, { useState } from 'react';
+import SearchBar from '../SearchBar';
 import SearchCard from '../SearchCard';
 
 const Search = () => {
-//const [searchText, setSearchText] = useState('');
 
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
   };
-
-  /*const searchBarContainerStyle = {
-    width: '60%',
-    alignSelf: 'center',
-    marginTop: 10,
-    borderRadius: 20,
-    backgroundColor: '#F0F0F0',
-    paddingHorizontal: 10, 
-  };*/
 
   const rowStyle = {
     flex: 1,
@@ -26,6 +16,12 @@ const Search = () => {
     marginHorizontal: 25,
     marginVertical: 10,
   };
+
+const searchBarContainerStyle = {
+  alignItems: 'center',
+}
+
+const [searchText, setSearchText] = useState('');
 
   const handleSearch = (text) => {
     setSearchText(text);
@@ -44,6 +40,12 @@ const Search = () => {
 
   return (
     <View style={containerStyle}>
+      <View style={searchBarContainerStyle}>
+        <SearchBar
+          searchPhrase={searchText}
+          setSearchPhrase={handleSearch}
+        />
+      </View>
       <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
       <Text style={{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5}}>Browse Categories</Text>
       <FlatList
