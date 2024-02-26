@@ -8,7 +8,6 @@ import Post from './section//Post';
 import Events from './section/Events';
 import Rewards from './section/Rewards';
 import FAQs from './section/FAQs';
-import DropDown from './section/DropDown';
 const Stack = createNativeStackNavigator();
 
 const Content = ({ navigation }) => {
@@ -51,11 +50,6 @@ const Content = ({ navigation }) => {
               component={FAQs}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name="DropDown"
-              component={DropDown}
-              options={{headerShown: false}}
-              />
           </Stack.Navigator>
       </View>
     </NavigationContext.Provider>
