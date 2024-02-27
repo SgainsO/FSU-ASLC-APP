@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import Accordion from 'react-native-collapsible/Accordion';
 
 const FAQ = [
@@ -14,10 +15,11 @@ const FAQ = [
 ];
 
 const FAQs = () => {
-  renderHeader = (section) => {
+  renderHeader = (section, _, isActive) => {
     return (
       <View style={styles.questionContainer}>
         <Text style={styles.question}>{section.question}</Text>
+        <AntDesign name={ isActive ? 'up' : 'down' } size={16} color={ isActive ? 'black' : 'gray' } />
       </View>
     );
   };
@@ -73,14 +75,16 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     backgroundColor: 'white',
-    borderBottomColor: '#D9D9D9',
     borderBottomWidth: 1,
     paddingVertical: 12,
-    paddingLeft: 12,
+    paddingHorizontal: 12,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    alignItems: 'center',
   },
   question: {
-    fontSize: 24,
-    fontWeight: 'italic',
+    fontSize: 16,
     color: '#782f40',
   },
   answer: {
