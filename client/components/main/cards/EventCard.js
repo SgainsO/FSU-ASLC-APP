@@ -1,13 +1,22 @@
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
+import { Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+const cardWidth = screenWidth * .43
+const infoHeight = 85
+console.log(cardWidth)
+
+const cardHeight = 250;
 
 const EventCard = (props) => {
   const cardImageStyle = {
-    marginHorizontal: 10,
+    marginRight: 10,
     marginBottom: 20,
     paddingVertical: 100,
     paddingHorizontal: 30,
-    width: '45%',
-    height: 250,
+    width: cardWidth,
+    height: cardHeight,
     borderRadius: 10,
     backgroundColor: '#D9D9D9',
     shadowColor: 'rgba(0,0,0, 0.25)',
@@ -22,7 +31,7 @@ const EventCard = (props) => {
     bottom: 0,
     left: 0,
     right: 0,
-    height: 85,
+    height: infoHeight,
     paddingHorizontal: 8,
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -30,6 +39,25 @@ const EventCard = (props) => {
     borderBottomLeftRadius: 10, // Match the border radius of the parent View
     borderBottomRightRadius: 10,
   };
+
+  const ImageHolderStyle = {
+    position: 'absolute',
+    overflow: 'hidden',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    left: 0,
+    top: 0,
+    width: cardWidth,
+    height: cardHeight - infoHeight,
+    backgroundColor: 'black',
+  }
+
+  const ImageStyle = {
+    resizeMode: 'contain',
+    flex: 1
+
+  }
 
   function formatNumber(num) {
     if (num >= 1000)
@@ -78,6 +106,9 @@ const EventCard = (props) => {
 
   return (
     <View style={cardImageStyle}>
+      <View style={ImageHolderStyle}>
+        <Image source={ require("./bob.jpg")} style = {ImageStyle}/>
+        </View>
       <View style={overlayStyle}>
         <Text style={{ fontSize: 10, fontWeight: 600 }}>{dateString}</Text>
         <Text style={{ fontSize: 10, fontWeight: 600 }}>{timeString}</Text>
