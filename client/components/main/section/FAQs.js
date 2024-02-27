@@ -4,36 +4,28 @@ import Accordion from 'react-native-collapsible/Accordion';
 
 const FAQ = [
   {
-    title: 'First',
-    content: 'Lorem ipsum...',
+    question: 'Where is the ASLC located?',
+    answer: '942 Learning Way, Tallahassee, FL 32304',
   },
   {
-    title: 'Second',
-    content: 'Lorem ipsum...',
+    question: 'What are our hours of operation?',
+    answer: 'Monday – Thursday: 8am – 11pm\nFriday (or any Midnight movie date): 8am – 12am \nSaturday & Sunday: 12pm – 11pm',
   },
 ];
 
 const FAQs = () => {
-  renderSectionTitle = (section) => {
-    return (
-      <View style={styles.content}>
-        <Text>{section.content}</Text>
-      </View>
-    );
-  };
-  
   renderHeader = (section) => {
     return (
-      <View style={styles.header}>
-        <Text style={styles.headerText}>{section.title}</Text>
+      <View style={styles.questionContainer}>
+        <Text style={styles.question}>{section.question}</Text>
       </View>
     );
   };
   
   renderContent = (section) => {
     return (
-      <View style={styles.content}>
-        <Text>{section.content}</Text>
+      <View style={styles.answer}>
+        <Text>{section.answer}</Text>
       </View>
     );
   };
@@ -42,15 +34,15 @@ const FAQs = () => {
 
   return (
     <ScrollView style={styles.container}>
-        <View style={styles.midTextContainer}>
+        <View style={styles.headerContainer}>
           <Text style={styles.title}>FAQ</Text>
         </View>
       
-        <View style={styles.topTextContainer}>
+        <View style={styles.accordionContainer}>
           <Accordion
+            expandMultiple={true}
             sections={FAQ}
             activeSections={activeSection}
-            renderSectionTitle={renderSectionTitle}
             renderHeader={renderHeader}
             renderContent={renderContent}
             onChange={setActiveSection}
@@ -62,22 +54,29 @@ const FAQs = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    padding: 16,
-  },
-  topTextContainer: {
-    marginRight: 16,
+    backgroundColor: 'white',
     flexDirection: 'column',
   },
-  midTextContainer: {
+  headerContainer: {
     width: "100%",
     textAlign: 'center',
     alignItems: 'center',
-    marginBottom: 8,
   },
   title: {
     fontSize: 60,
-    fontWeight: 'bold',
+    fontWeight: '600',
+  },
+  accordionContainer: {
+    marginTop: 16,
+    marginHorizontal: 24,
+    flexDirection: 'column',
+  },
+  questionContainer: {
+    backgroundColor: 'white',
+    borderBottomColor: '#D9D9D9',
+    borderBottomWidth: 1,
+    paddingVertical: 12,
+    paddingLeft: 12,
   },
   question: {
     fontSize: 24,
@@ -86,13 +85,6 @@ const styles = StyleSheet.create({
   },
   answer: {
     fontSize: 16,
-  },
-  image: {
-    width: 120,
-    height: 120,
-    marginTop: 5,
-    position: 'absolute', right: 0, top: 0,
-    alignSelf: 'flex-end'
   },
 });
 
