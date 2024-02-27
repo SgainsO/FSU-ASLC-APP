@@ -3,13 +3,15 @@ import { Dimensions } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-const cardWidth = screenWidth * .43
 const infoHeight = 85
-console.log(cardWidth)
 
 const cardHeight = 250;
 
 const EventCard = (props) => {
+
+  const cardWidth = screenWidth * props.SizePerc
+  console.log(cardWidth)
+
   const cardImageStyle = {
     marginRight: 10,
     marginBottom: 20,
@@ -63,7 +65,6 @@ const EventCard = (props) => {
   const ProfileImageHolder =
   {
       borderWidth: 3,
-
       borderColor: 'black',
       position: 'absolute',
       left: 5,
