@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "expo": "^50.0.7",
     "ionicons": "^7.2.2"
+  },
+  "devDependencies": {
+    "metro": "^0.80.6"
   }
 }
