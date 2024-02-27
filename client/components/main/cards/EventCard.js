@@ -59,6 +59,23 @@ const EventCard = (props) => {
 
   }
 
+
+  const ProfileImageHolder =
+  {
+      borderWidth: 3,
+
+      borderColor: 'black',
+      position: 'absolute',
+      left: 5,
+      top: 5,
+      width: 40,
+      height: 40,
+      resizeMode: 'contain',
+      overflow: 'hidden',
+      borderRadius: 40,
+  }
+
+
   function formatNumber(num) {
     if (num >= 1000)
         return (num / 1000).toFixed(1) + 'K';
@@ -107,8 +124,10 @@ const EventCard = (props) => {
   return (
     <View style={cardImageStyle}>
       <View style={ImageHolderStyle}>
-        <Image source={ require("./bob.jpg")} style = {ImageStyle}/>
+        <Image source={ require("./bob.jpg")} style = {ImageStyle}/>        
         </View>
+      
+        <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/>
       <View style={overlayStyle}>
         <Text style={{ fontSize: 10, fontWeight: 600 }}>{dateString}</Text>
         <Text style={{ fontSize: 10, fontWeight: 600 }}>{timeString}</Text>
