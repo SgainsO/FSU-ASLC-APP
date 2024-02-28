@@ -1,5 +1,8 @@
-import { Text, View, Image } from 'react-native';
+import {useState} from 'react'
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -19,13 +22,15 @@ const EventCard = (props) => {
     paddingHorizontal: 30,
     width: cardWidth,
     height: cardHeight,
-    borderRadius: 10,
+    border: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     backgroundColor: '#D9D9D9',
     shadowColor: 'rgba(0,0,0, 0.25)',
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 4,
-    elevation: 4
+    elevation: 4,
   };
 
   const overlayStyle = {
@@ -38,8 +43,7 @@ const EventCard = (props) => {
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'left',
-    borderBottomLeftRadius: 10, // Match the border radius of the parent View
-    borderBottomRightRadius: 10,
+
   };
 
   const ImageHolderStyle = {
@@ -74,6 +78,25 @@ const EventCard = (props) => {
       resizeMode: 'contain',
       overflow: 'hidden',
       borderRadius: 40,
+  }
+
+  const BookMarkButton =
+  {
+    position: 'absolute',
+    right:5,
+    bottom:90,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+  
+  const [BookmarkColor, ChangeBookmarkColor] = useState('white')     //Allows button to change from white to another color
+
+  function HandleBookmarkPress()
+  {
+    console.log("Bookmark button pressed")
+    ChangeBookmarkColor(BookmarkColor === "white"? "yellow" : "white")
   }
 
 
@@ -127,7 +150,9 @@ const EventCard = (props) => {
       <View style={ImageHolderStyle}>
         <Image source={ require("./bob.jpg")} style = {ImageStyle}/>        
         </View>
-      
+        <TouchableOpacity style={BookMarkButton} onPress={() => HandleBookmarkPress()}>
+          <Icon name='star' size = {30} color={BookmarkColor}/>
+        </TouchableOpacity>
         <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/>
       <View style={overlayStyle}>
         <Text style={{ fontSize: 10, fontWeight: 600 }}>{dateString}</Text>

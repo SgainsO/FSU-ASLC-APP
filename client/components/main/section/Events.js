@@ -6,7 +6,7 @@ import SearchBar from '../SearchBar';
 
 import Card from '../cards/EventCard';
 
-const Events = () => {
+const Events = (props) => {
   const filters = [
     { id: 0, type: 'All' },
     { id: 1, type: 'Club' },
@@ -33,6 +33,8 @@ const Events = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
+  const eventScreenName = props.Title === undefined ? "Title" : props.Title;     // Define a defualt in case alternative title was not passed
+
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
     item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
@@ -47,6 +49,7 @@ const Events = () => {
 
   return (
     <View style={styles.container}>
+        <Text style = {styles.Title}>{eventScreenName}</Text>
       <View style={styles.topContainer}>
         <SearchBar
           dropdownType={dropdownType}
@@ -78,8 +81,15 @@ const styles = StyleSheet.create({
     flex: 12,
     backgroundColor: 'white',
   },
-  topContainer: {
-    height: 80,
+  Title:
+  {
+    paddingTop: 10,
+    fontSize: 40,
+    fontWeight: '600',
+    alignSelf: 'center'
+  },
+  topContainer: {                        //Container holding the search
+    height: 60,
     backgroundColor: 'white',
     shadowColor: 'rgba(60,60,67, 0.29)',
     shadowOpacity: 0.5,
