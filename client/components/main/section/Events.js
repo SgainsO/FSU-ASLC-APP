@@ -6,7 +6,7 @@ import SearchBar from '../SearchBar';
 
 import Card from '../cards/EventCard';
 
-const Events = (props) => {
+const Events = ({route}) => {
   const filters = [
     { id: 0, type: 'All' },
     { id: 1, type: 'Club' },
@@ -33,8 +33,9 @@ const Events = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
-  const eventScreenName = props.Title === undefined ? "Title" : props.Title;     // Define a defualt in case alternative title was not passed
-
+  const {title} = route.params
+  const eventScreenName = title === undefined ? "Title Here" : title;     // Define a defualt in case alternative title was not passed
+  console.log(eventScreenName)
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
     item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||

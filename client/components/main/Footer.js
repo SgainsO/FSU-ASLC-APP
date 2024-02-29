@@ -59,7 +59,7 @@ const Footer = () => {
                 iconSource={activeIcon === 'Events' ? require('../../assets/events_filled.png') : require('../../assets/events_outline.png')}
                 text="Events"
                 textColor={activeIcon === 'Events' ? '#CEB888' : 'white'}
-                onPress={() => handleIconPress('Events', 'Events')}
+                onPress={() => handleIconPress('Events', 'GoToEvents')}
                 iconStyle={iconStyle}
             />
             <Icon

@@ -92,11 +92,13 @@ const EventCard = (props) => {
   }
   
   const [BookmarkColor, ChangeBookmarkColor] = useState('white')     //Allows button to change from white to another color
+  const [BookmarkState, ChangeBookmarkState] = useState('star-outline') //Allows button to
 
   function HandleBookmarkPress()
   {
     console.log("Bookmark button pressed")
-    ChangeBookmarkColor(BookmarkColor === "white"? "yellow" : "white")
+    ChangeBookmarkColor(BookmarkColor === "white"? "#CEB888" : "white")
+    ChangeBookmarkState(BookmarkState === "star-outline"? "star" : "star-outline")
   }
 
 
@@ -151,7 +153,7 @@ const EventCard = (props) => {
         <Image source={ require("./bob.jpg")} style = {ImageStyle}/>        
         </View>
         <TouchableOpacity style={BookMarkButton} onPress={() => HandleBookmarkPress()}>
-          <Icon name='star' size = {30} color={BookmarkColor}/>
+          <Icon name={BookmarkState} size = {30} color={BookmarkColor}/>
         </TouchableOpacity>
         <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/>
       <View style={overlayStyle}>

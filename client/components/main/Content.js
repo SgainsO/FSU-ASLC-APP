@@ -1,3 +1,4 @@
+import React from 'react';
 import { View } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,7 +9,7 @@ import Post from './section//Post';
 import Events from './section/Events';
 import Rewards from './section/Rewards';
 import FAQs from './section/FAQs';
-
+import goToEvent from './section/GoToEvent';
 const Stack = createNativeStackNavigator();
 
 const Content = ({ navigation }) => {
@@ -21,6 +22,11 @@ const Content = ({ navigation }) => {
     <NavigationContext.Provider value={navigation}>
       <View style={containerStyle}>
           <Stack.Navigator initialRouteName="Home" screenOptions={{animation: 'none'}}>
+            <Stack.Screen
+              name="GoToEvents"
+              component={goToEvent}
+              options={{ headerShown: false }}
+              />
             <Stack.Screen
               name="Home"
               component={Home}
