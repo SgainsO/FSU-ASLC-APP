@@ -8,6 +8,12 @@ import Post from './section//Post';
 import Events from './section/Events';
 import Rewards from './section/Rewards';
 import FAQs from './section/FAQs';
+import Sett from './dropdown/Sett'
+import Account from './dropdown/settings/Account'
+import Display from './dropdown/settings/Display'
+import Interaction from './dropdown/settings/Interaction'
+import Notifications from './dropdown/settings/Notifications'
+import ContactUs from './dropdown/settings/ContactUs'
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +57,36 @@ const Content = ({ navigation }) => {
               component={FAQs}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="Sett"
+              component={Sett}
+              options={{headerShown: false }}
+              />
+              <Stack.Screen
+              name="Account"
+              component={Account}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="Display"
+              component={Display}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="Notifications"
+              component={Notifications}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="Interaction"
+              component={Interaction}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="ContactUs"
+              component={ContactUs}
+              options={{headerShown: false}}
+              />
           </Stack.Navigator>
       </View>
     </NavigationContext.Provider>
