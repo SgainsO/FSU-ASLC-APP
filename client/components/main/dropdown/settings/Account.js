@@ -41,10 +41,10 @@ const Account = () => {
       <View style={styles.centeredContainer}>
       <Text style={styles.Title}>Account</Text>
         {/* First Image */}
-        <Image source={require('../../../assets/daniel.png')} style={styles.image} />
+        <Image source={require('../../../../assets/daniel.png')} style={styles.image} />
 
         {/* Second Image (Overlayed) */}
-        <Image source={require('../../../assets/pencil.png')} style={[styles.image, styles.overlay]} />
+        <Image source={require('../../../../assets/pencil.png')} style={[styles.image, styles.overlay]} />
       </View>
 
       <View>

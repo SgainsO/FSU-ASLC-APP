@@ -44,7 +44,7 @@ const Sett = () => {
     <View style={styles.Title}>
             <Text style={styles.Title}>Settings</Text>
             <Image
-        source={require('../../assets/gear.png')} 
+        source={require('../../../assets/gear.png')} 
         style={styles.image}
         />
         </View>
