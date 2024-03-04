@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, Image, View, TouchableWithoutFeedback, StyleSheet, KeyboardAvoidingView, Platform, Button, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
+import Animatable from 'react-native-animatable';
 
 import Icon from './Icon'
 
@@ -45,7 +46,7 @@ const Header = () => {
     }
 
     return (
-        <View style={barStyle}>
+        <Animatable.View style={barStyle}>
             <Image source={require('../assets/fsu_logo.png')} style={{ width: 50, height: 50, margin: 4 }} />
             <Text style={{ color: 'white', fontSize: 30, fontWeight: 600, marginBottom: 8 }}>ASLC Connect</Text>
             <Icon
@@ -54,7 +55,7 @@ const Header = () => {
                 onPress={() => setModalVisible(true)}
             />
 
-            <Modal
+            <Animatable.Modal
                 animationIn="slideInLeft"
                 animationOut="slideOutRight"
                 visible = {isModalVisible}
@@ -77,8 +78,8 @@ const Header = () => {
                     </TouchableOpacity>
                     </View>
                     </KeyboardAvoidingView>
-            </Modal>
-        </View>
+            </Animatable.Modal>
+        </Animatable.View>
     );
 };
 
