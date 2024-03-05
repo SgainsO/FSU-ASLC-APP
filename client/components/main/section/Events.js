@@ -6,6 +6,8 @@ import SearchBar from '../SearchBar';
 
 import Card from '../cards/EventCard';
 
+
+
 const Events = ({route}) => {
   const filters = [
     { id: 0, type: 'All' },
@@ -33,9 +35,23 @@ const Events = ({route}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
-  const {title} = route.params
+  const {title, dbLink} = route.params
   const eventScreenName = title === undefined ? "Title Here" : title;     // Define a defualt in case alternative title was not passed
   console.log(eventScreenName)
+
+  function GetAllEventData()                                 //ROUTE MUST LOOK LIKE THIS 
+  {
+    const response = axios.get('http://localhost:8080/api/' + dbLink + '/events')
+      .then(response => {                    //Error Catching
+        console.log("Get Request Succesful")
+        return response.data;})
+      .catch(error => {
+        console.error("Get Request Failed", error)
+      })
+  
+    
+  }
+
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
     item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
