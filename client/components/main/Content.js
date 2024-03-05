@@ -9,6 +9,13 @@ import Post from './section//Post';
 import Events from './section/Events';
 import Rewards from './section/Rewards';
 import FAQs from './section/FAQs';
+import goToEvent from './section/GoToEvent';
+import Sett from './dropdown/Sett'
+import Account from './dropdown/settings/Account'
+import Display from './dropdown/settings/Display'
+import Interaction from './dropdown/settings/Interaction'
+import Notifications from './dropdown/settings/Notifications'
+import ContactUs from './dropdown/settings/ContactUs'
 
 const Stack = createNativeStackNavigator();
 
