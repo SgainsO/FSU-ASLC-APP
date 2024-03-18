@@ -1,63 +1,137 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const router = express.Router();
+const dbConfig = require("../db.config.js");
+const { Pool } = require('pg');
 
+const router = express.Router();             //Allows us to use the express framework
 
-const eventSchema = require('../models/model');
-const Event = mongoose.model('Event', eventSchema);
+const pool = new Pool({ 
+  user: dbConfig.USER,
+  host: dbConfig.HOST,
+  database: dbConfig.DB,
+  password: dbConfig.PASSWORD,
+  port: 5432
+});                          //Connects to the PostSQL database
 
-// GET ALL DATA
-router.get('/events', async (req, res) => {
-    try {
-        // Returns all events from the database
-        const events = await Event.find({});
-        console.log("Get Command Success",res.body);
-        res.status(200).json(events);
-    } catch (error) {
-        console.error('Error Retrieving events: ', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+// REQUEST TYPE: GET
+// REQUEST URL: /events/health
+router.get('/health', (req, res) => {
+  res.status(200);
 });
 
-// POST 
-router.post('/create', async (req, res) => {
-    try {
-        // Parse data from the req.bodys
-        const { id, title, club, date_begin, date_end, interested} = req.body;
+// REQUEST TYPE: GET
+// REQUEST URL: /events/getAllEvents
+// RESPONSE: JSON
+router.get('/getAllEvents', async (req, res) => { 
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM events');
+    const events = result.rows;
+    client.release();
 
-        // Create a new instance of event from our eventScheme with mongoose
-        const newEvent = new Event({id, title, club, date_begin, date_end, interested});
+    res.status(200).json({data: events, total: events.length})
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(404).json({data: {}, message: "Internal Error", total: events.lengths})
+  }
+});
 
-        // Save the event to the database
-        await newEvent.save();
+// REQUEST TYPE: GET
+// REQUEST URL: /events/getAllCategories
+// RESPONSE: JSON
+router.get('/getAllCategories', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM event_categories');
+    const categories = result.rows;
+    client.release();
 
-        // Return status 200 and json message
-        res.status(200).json({ message: "Event created successfully", event: newEvent });
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({ message: "Internal server error" });
-    }
+    res.status(200).json({data: categories, message: "", total: categories.length})
+    res.json(categories);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({data: {}, message: "Internal Error", total: categories.length});
+  }    
 })
 
-// DELETE by id param
-router.delete('/remove/:id', async (req, res) => {
-    try {
-        // Parse the id from params
-        const eventID = req.params.id
+// REQUEST TYPE: GET
+// REQUEST URL: /events/getEvent/1
+// REQUEST PARMS: id
+// RESPONSE: JSON
+router.get('getEvent/:id', async (req, res) => {
+  const id = req.params.id;
 
-        const deletedEvent = await Event.findOneAndDelete({id: eventID});
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM events WHERE id = $1', [id]);
+    const events = result.rows;
+    client.release();
 
-        if (!deletedEvent) {
-            return res.status(404).json({ error: "Event not found in database." });
-        }
-
-        res.status(200).send()
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({ message: "Internal server error" });
+    // Checks if event exists
+    if (events.length === 0) {
+      res.status(404).json({data: {}, message: "Event not found", total: events.length});
     }
-})
+
+    res.status(200).json({data: events[0], message: "", total: events.length});
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({data: {}, message: "Internal Error", total: events.length});
+  }
+});
+
+// REQUEST TYPE: GET
+// REQUEST URL: /events/getCategory/social
+// REQUEST PARMS: category
+router.get('getCategory/:id', async (req, res) => {
+    const category = req.params.category;
+  
+    try {
+      const client = await pool.connect();
+      const result = await client.query('SELECT * FROM events WHERE category = $1', [category]);
+      const events = result.rows;
+      client.release();
+
+      res.status(200).json({data: events, message: "", total: events.length})
+    } catch (err) {
+      console.error('Error executing query', err);
+      res.status(500).json({data: {}, message: "Internal Error", total: events.length});
+    }
+  });
+
+
+
+router.post('/postEvent', async (req, res) => {
+    const { title, club, type, startDate, endDate, interested, category } = req.body;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('INSERT INTO events (title, club, type, startDate, endDate, interested, category) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [title, club, type, startDate, endDate, interested, category]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+    console.log(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error creating event');
+  }
+});
+
+//id, name, type
+router.post('/postEventCat', async (req, res) => {
+    const {id, events_header, category_type } = req.body;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('INSERT INTO event_categories (id, events_header, category_type) VALUES ($1, $2, $3) RETURNING *',
+      [id, events_header, category_type]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error creating event');
+  }
+});
+
 
 module.exports = router;

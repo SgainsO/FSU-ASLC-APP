@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
-const eventsRouter = require('./routes/events');
+const eventRoutes = require('./routes/routes');
 const PORT = process.env.PORT || 3000; 
 const Axios = require('axios');
 
 console.log('Starting server')
 app.use(express.json());
 
-app.use('/events', eventsRouter);
+app.use('/api', eventRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
@@ -24,6 +24,3 @@ catch(err) {
 console.error(err);
 }
 }
-
-//Test()
-console.log('exited axios test')
