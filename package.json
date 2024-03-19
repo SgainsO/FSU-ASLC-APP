@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "expo": "^50.0.7",
-    "ionicons": "^7.2.2"
+    "ionicons": "^7.2.2",
+    "pg-promise": "^11.5.4"
   },
   "devDependencies": {
     "metro": "^0.80.6"
