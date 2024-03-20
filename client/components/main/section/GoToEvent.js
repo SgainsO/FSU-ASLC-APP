@@ -1,7 +1,8 @@
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import CategoryHolder from '../cards/CategoryHolder.js'; 
+//props {imageLink(image that will be cover), toNav(the screen that will be navigated to) }
 import Events from './Events.js'
 
 const goToEvents = ({ navigation: { navigate } }) => {
@@ -9,6 +10,20 @@ const goToEvents = ({ navigation: { navigate } }) => {
 //Title will be what is actually displayed while dbLink woll be for connecting to the data base
 
 const dbLink = "Category Name In Route"  //category name where the event will be stored
+
+const styles = StyleSheet.create({
+  container: 
+  {
+    flex: 1,
+    flexWrap: true,
+    justifyContent: "space-between",
+    padding: 10
+  }
+
+
+
+})
+
 
 function GetTitleAndRoute()
 {
@@ -21,7 +36,7 @@ function GetTitleAndRoute()
     })
 
 }
-
+/*
 return(
     <View>
         <TouchableOpacity onPress={() =>
@@ -31,6 +46,15 @@ return(
     </View>
 
 )
+*/
+return(
+
+  <View style={styles.container}>
+    <CategoryHolder url = 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_479,q_75,w_600/v1/clients/lascrucesnm/WEB_rio_grande_stage_2_1657190b-8b35-45fd-8407-dc6492631380.jpg' 
+        title = 'Movies'  dbLink = 'default' />
+  </View>
+)
+
 
 
 }
