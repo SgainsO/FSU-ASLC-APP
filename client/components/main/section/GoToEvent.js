@@ -1,6 +1,5 @@
-import { View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import { NavigationContext } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, ScrollView, Text, StyleSheet} from 'react-native';
+
 import CategoryHolder from '../cards/CategoryHolder.js'; 
 //props {imageLink(image that will be cover), toNav(the screen that will be navigated to) }
 import Events from './Events.js'
@@ -15,9 +14,14 @@ const styles = StyleSheet.create({
   container: 
   {
     flex: 1,
-    flexWrap: true,
-    justifyContent: "space-between",
     padding: 10
+  },
+  content:
+  {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: '10px',
   }
 
 
@@ -36,23 +40,26 @@ function GetTitleAndRoute()
     })
 
 }
-/*
-return(
-    <View>
-        <TouchableOpacity onPress={() =>
-         navigate('Events', { title: 'Event Category Name',  dbLink:dbLink})}>
-            <Text>1st event types</Text>
-        </TouchableOpacity>
-    </View>
 
-)
-*/
+
 return(
 
-  <View style={styles.container}>
+  <ScrollView contenteContainerStyle={styles.container}>
+    <View style = {styles.content}>
     <CategoryHolder url = 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_479,q_75,w_600/v1/clients/lascrucesnm/WEB_rio_grande_stage_2_1657190b-8b35-45fd-8407-dc6492631380.jpg' 
         title = 'Movies'  dbLink = 'default' />
-  </View>
+    <CategoryHolder url = 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_479,q_75,w_600/v1/clients/lascrucesnm/WEB_rio_grande_stage_2_1657190b-8b35-45fd-8407-dc6492631380.jpg' 
+        title = 'Movies'  dbLink = 'default' />
+    <CategoryHolder url = 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_479,q_75,w_600/v1/clients/lascrucesnm/WEB_rio_grande_stage_2_1657190b-8b35-45fd-8407-dc6492631380.jpg' 
+      title = 'Movies'  dbLink = 'default' />
+    <CategoryHolder url = 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_479,q_75,w_600/v1/clients/lascrucesnm/WEB_rio_grande_stage_2_1657190b-8b35-45fd-8407-dc6492631380.jpg' 
+      title = 'Movies'  dbLink = 'default' />  
+    <CategoryHolder url = 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_479,q_75,w_600/v1/clients/lascrucesnm/WEB_rio_grande_stage_2_1657190b-8b35-45fd-8407-dc6492631380.jpg' 
+      title = 'Movies'  dbLink = 'default' />
+    <CategoryHolder url = 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_479,q_75,w_600/v1/clients/lascrucesnm/WEB_rio_grande_stage_2_1657190b-8b35-45fd-8407-dc6492631380.jpg' 
+      title = 'Movies'  dbLink = 'default' />  
+      </View>
+  </ScrollView>
 )
 
 

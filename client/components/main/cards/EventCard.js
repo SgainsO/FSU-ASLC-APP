@@ -16,8 +16,7 @@ const EventCard = (props) => {
   console.log(cardWidth)
 
   const cardImageStyle = {
-    marginRight: 10,
-    marginBottom: 20,
+    marginHorizontal: 10,
     paddingVertical: 100,
     paddingHorizontal: 30,
     width: cardWidth,

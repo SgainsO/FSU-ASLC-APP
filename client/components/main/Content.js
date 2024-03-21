@@ -96,11 +96,6 @@ const Content = ({ navigation }) => {
               component={ContactUs}
               options={{headerShown: false}}
               />
-              <Stack.Screen
-              name='CategoryHolder'
-              component={CategoryHolder}
-              options={{headerShown: false}}
-              />
               
           </Stack.Navigator>
       </View>

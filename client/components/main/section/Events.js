@@ -139,9 +139,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flex: 1,
-    justifyContent: "space-between",
-    marginHorizontal: 25,
-    marginBottom: 0,
+    margin: 5
   },
 });
 

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Dimensions, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import  {useNavigation} from '@react-navigation/native'
+
 //import { ImageBackground, TouchableOpacity } from 'react-native-web';
 const {width, height} = Dimensions.get('window');
 
 //Back Color is used to keep the holder the same color as callers background
-PostWidth = width * 1/2 - 20;
+PostWidth = width * 3/8;
 iconHolderWidth = PostWidth * 1/5;
 iconWidth = iconHolderWidth * 1/2;
 //const Icons = [require("../assets/Like.png"), require("../assets/message.png"),
@@ -35,7 +37,10 @@ const CategoryHolder = (props) => {
             shadowOpacity: 0.8,
             shadowRadius: 10,
             shadowColor: '#000',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            margin: '3%',
+     //       marginLeft: '5%',
+
         },
         RightButtonStyle: {
             height: '100%',
@@ -90,7 +95,7 @@ const CategoryHolder = (props) => {
 */
     });
 
-    const {navigation} = props;
+    const navigation = useNavigation();
     function NavigateToEvent()
     {
         navigation.navigate('Events', {title: props.title, dbLink: props.dbLink});
@@ -103,7 +108,7 @@ const CategoryHolder = (props) => {
 
 
 return (
-    <TouchableOpacity style = {Styles.PostHolderStyle} onPress={() => NavigateToEvent}>
+    <TouchableOpacity style = {Styles.PostHolderStyle} onPress={() => navigation.navigate('Events', {title: props.title, dbLink: props.dbLink})}>
         <Image
         style = {Styles.ImageStyle}
         source = {{uri: props.url}}
