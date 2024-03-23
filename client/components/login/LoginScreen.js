@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+// TEMP BUTTON TO SEE NOTIFS
+import Notification from '../notifications/Notification';
+
 const {width, height} = Dimensions.get('window');
 
 const LoginScreen = () => {
@@ -57,9 +60,14 @@ const LoginScreen = () => {
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText} onPress={() => navigate('Main')}>Temp Go To Home</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigate('Main')}>
+        <Text style={styles.buttonText}>Temp Go To Home</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button}>
+        <Notification />
+      </TouchableOpacity>
+      
     </View>
   )
 };
