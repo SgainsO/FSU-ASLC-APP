@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Events from './Events.js'
 
-const goToEvents = ({ navigation: { navigate } }) => {
+const GoToEvents = ({ navigation: { navigate } }) => {
 
 //Title will be what is actually displayed while dbLink woll be for connecting to the data base
 
@@ -35,4 +35,4 @@ return(
 
 }
 
-export default goToEvents;
+export default GoToEvents;
