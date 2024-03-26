@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 const MainScreen = () => {
   const navigation = useContext(NavigationContext);
 
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   // setIsAdmin(...); SET ADMIN BASED OFF FIREBASE AUTH
 
   return (
