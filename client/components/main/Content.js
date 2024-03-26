@@ -16,6 +16,8 @@ import Display from './dropdown/settings/Display'
 import Interaction from './dropdown/settings/Interaction'
 import Notifications from './dropdown/settings/Notifications'
 import ContactUs from './dropdown/settings/ContactUs'
+import Categories from './section/Categories';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -92,6 +94,11 @@ const Content = ({ navigation }) => {
               <Stack.Screen
               name="ContactUs"
               component={ContactUs}
+              options={{headerShown: false}}
+              />
+              <Stack.Screen
+              name="Categories"
+              component={Categories}
               options={{headerShown: false}}
               />
           </Stack.Navigator>

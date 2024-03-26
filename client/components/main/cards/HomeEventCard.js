@@ -1,10 +1,12 @@
-import { Text, View, ImageBackground, StyleSheet } from 'react-native';
+import { Text, View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+import { BlurView } from '@react-native-community/blur';
+import {useNavigation} from '@react-navigation/native'
 
-const Card = ({ title, backgroundImage, interested, details }) => {
+const Card = (props) => {
   const randomColor = () => {
     return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
       Math.random() * 256
-    )}, ${Math.floor(Math.random() * 256)}, 0.8)`; // Adjust opacity (last value) for desired tint
+    )}, ${Math.floor(Math.random() * 256)}, 0.6)`; // Adjust opacity (last value) for desired tint
   };
   
   const cardStyle = {
@@ -67,29 +69,47 @@ const Card = ({ title, backgroundImage, interested, details }) => {
     borderRadius: 5,
   };
 
+  const blur = {
+    flex: 1,
+    ...StyleSheet.absoluteFillObject    
+  }
+
   const interestedStyle = {
     fontSize: 14,
     color: 'white',
   };
 
+  const navigation = useNavigation();
+
+    function NavigateToEvent()
+    {
+        navigation.navigate('Events', {title: props.title, dbLink: props.dbLink});
+    }
+  const image = {uri : props.image_link}
+    
   return (
-    <View style={cardStyle}>
-      <ImageBackground source={backgroundImage} style={{ flex: 1 }} resizeMode='cover'>
-        <View style={[overlayStyle]}>
+    <TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Events', {title: props.title, dbLink: props.dbLink})}>
+      <ImageBackground source={image} style={{ flex: 1 }} blurRadius = {10}  resizeMode='cover'>
+         <View style={[overlayStyle]}>
           <View style={titleContainerStyle}>
-            <Text style={titleStyle}>{title}</Text>
+            <Text style={titleStyle}>{props.title}</Text>
+            </View>
           </View>
+      </ImageBackground>
+    </TouchableOpacity>
+  );
+};
+
+/*
           <View style={detailsContainerStyle}>
             <Text style={detailsStyle}>{details}</Text>
           </View>
           <View style={interestedContainerStyle}>
             <Text style={interestedStyle}>{interested}</Text>
           </View>
-        </View>
-      </ImageBackground>
-    </View>
-  );
-};
+*/
+
+
 
 export default Card;
 
