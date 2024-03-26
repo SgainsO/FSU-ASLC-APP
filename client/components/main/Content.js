@@ -17,6 +17,7 @@ import Interaction from './dropdown/settings/Interaction'
 import Notifications from './dropdown/settings/Notifications'
 import ContactUs from './dropdown/settings/ContactUs'
 import Categories from './section/Categories';
+import AdminHome from './section/AdminHome';
 import AdminClubs from './section/AdminClubs';
 import AdminEvents from './section/AdminEvents';
 import AdminUsers from './section/AdminUsers';
@@ -32,7 +33,7 @@ const Content = ({ navigation, isAdmin }) => {
   return (
     <NavigationContext.Provider value={navigation}>
       <View style={containerStyle}>
-          <Stack.Navigator initialRouteName={isAdmin ? "AdminUsers" : "Home"} screenOptions={{animation: 'none'}}>
+          <Stack.Navigator initialRouteName={isAdmin ? "AdminHome" : "Home"} screenOptions={{animation: 'none'}}>
             <Stack.Screen
               name="GoToEvents"
               component={goToEvent}
@@ -116,6 +117,11 @@ const Content = ({ navigation, isAdmin }) => {
             <Stack.Screen
               name="AdminUsers"
               component={AdminUsers}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AdminHome"
+              component={AdminHome}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

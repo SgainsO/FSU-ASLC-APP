@@ -34,6 +34,7 @@ const Footer = (props) => {
 
     if (props.isAdmin) {
         icons = [
+            { name: 'Home', navigateTo: 'AdminHome', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
             { name: 'Users', navigateTo: 'AdminUsers', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
             { name: 'Events', navigateTo: 'AdminEvents', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
             { name: 'Clubs', navigateTo: 'AdminClubs', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
