@@ -7,7 +7,7 @@ import Icon from './Icon';
 
 const windowWidth = Dimensions.get('window').width;
 
-const Footer = () => {
+const Footer = (props) => {
     const barStyle = {
         flex: 1,
         flexDirection: 'row',
@@ -29,24 +29,25 @@ const Footer = () => {
     const navigation = useNavigation();
     
     const [activeIcon, setActiveIcon] = useState("Home");
-    const [isAdmin, setIsAdmin] = useState(false);
 
-    const userIcons = [
-        { name: 'Home', navigateTo: 'Home', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
-        { name: 'Search', navigateTo: 'Search', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
-        { name: 'Post', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
-        { name: 'Events', navigateTo: 'Categories', activeImage: require('../../assets/events_filled.png'), inactiveImage: require('../../assets/events_outline.png') },
-        { name: 'Rewards', navigateTo: 'Rewards', activeImage: require('../../assets/rewards_filled.png'), inactiveImage: require('../../assets/rewards_outline.png') },
-    ]
+    icons = [];
 
-    const adminIcons = [
-        { name: 'Users', navigateTo: 'Home', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
-        { name: 'Events', navigateTo: 'Search', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
-        { name: 'Clubs', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
-    ];
-
-    // set icons based off of user type
-    const icons = isAdmin ? adminIcons : userIcons;
+    if (props.isAdmin) {
+        icons = [
+            { name: 'Users', navigateTo: 'AdminUsers', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Events', navigateTo: 'AdminEvents', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
+            { name: 'Clubs', navigateTo: 'AdminClubs', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
+        ];
+    }
+    else {
+        icons = [
+            { name: 'Home', navigateTo: 'Home', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Search', navigateTo: 'Search', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
+            { name: 'Post', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
+            { name: 'Events', navigateTo: 'Categories', activeImage: require('../../assets/events_filled.png'), inactiveImage: require('../../assets/events_outline.png') },
+            { name: 'Rewards', navigateTo: 'Rewards', activeImage: require('../../assets/rewards_filled.png'), inactiveImage: require('../../assets/rewards_outline.png') },
+        ]
+    }
 
     const handleIconPress = (iconName, navigateTo) => {
         setActiveIcon(iconName);
