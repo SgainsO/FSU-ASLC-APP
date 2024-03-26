@@ -70,37 +70,37 @@ const Content = ({ navigation }) => {
               name="Sett"
               component={Sett}
               options={{headerShown: false }}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Account"
               component={Account}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Display"
               component={Display}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Notifications"
               component={Notifications}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Interaction"
               component={Interaction}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="ContactUs"
               component={ContactUs}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Categories"
               component={Categories}
               options={{headerShown: false}}
-              />
+            />
           </Stack.Navigator>
       </View>
     </NavigationContext.Provider>

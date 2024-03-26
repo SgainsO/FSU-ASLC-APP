@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './login/LoginScreen';
 import MainScreen from './main/MainScreen';
-import SettingsScreen from './settings/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,11 +25,6 @@ const ScreenHandler = () => {
         <Stack.Screen
           name="Main"
           component={MainScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Settings"
-          component={SettingsScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

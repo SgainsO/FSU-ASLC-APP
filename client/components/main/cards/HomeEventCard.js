@@ -1,5 +1,4 @@
 import { Text, View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
 import {useNavigation} from '@react-navigation/native'
 
 const Card = (props) => {
