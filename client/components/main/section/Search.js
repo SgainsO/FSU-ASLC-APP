@@ -55,7 +55,6 @@ keyExtractor={item => item.id}
 numColumns={2}
 columnWrapperStyle={rowStyle}
 />
-<Text> Search </Text>
 </View>
 );
 };
