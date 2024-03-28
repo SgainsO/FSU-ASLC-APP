@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 
@@ -16,12 +16,15 @@ const styles = StyleSheet.create({
 const MainScreen = () => {
   const navigation = useContext(NavigationContext);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  // setIsAdmin(...); SET ADMIN BASED OFF FIREBASE AUTH
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
       <Header navigation={navigation}/>
-      <Content navigation={navigation}/>
-      <Footer navigation={navigation}/>
+      <Content navigation={navigation} isAdmin={isAdmin}/>
+      <Footer navigation={navigation} isAdmin={isAdmin}/>
     </View>
   );
 };

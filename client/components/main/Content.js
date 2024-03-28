@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,11 +17,14 @@ import Interaction from './dropdown/settings/Interaction'
 import Notifications from './dropdown/settings/Notifications'
 import ContactUs from './dropdown/settings/ContactUs'
 import Categories from './section/Categories';
-
+import AdminHome from './section/AdminHome';
+import AdminClubs from './section/AdminClubs';
+import AdminEvents from './section/AdminEvents';
+import AdminUsers from './section/AdminUsers';
 
 const Stack = createNativeStackNavigator();
 
-const Content = ({ navigation }) => {
+const Content = ({ navigation, isAdmin }) => {
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
@@ -30,7 +33,7 @@ const Content = ({ navigation }) => {
   return (
     <NavigationContext.Provider value={navigation}>
       <View style={containerStyle}>
-          <Stack.Navigator initialRouteName="Home" screenOptions={{animation: 'none'}}>
+          <Stack.Navigator initialRouteName={isAdmin ? "AdminHome" : "Home"} screenOptions={{animation: 'none'}}>
             <Stack.Screen
               name="GoToEvents"
               component={goToEvent}
@@ -70,37 +73,57 @@ const Content = ({ navigation }) => {
               name="Sett"
               component={Sett}
               options={{headerShown: false }}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Account"
               component={Account}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Display"
               component={Display}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Notifications"
               component={Notifications}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Interaction"
               component={Interaction}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="ContactUs"
               component={ContactUs}
               options={{headerShown: false}}
-              />
-              <Stack.Screen
+            />
+            <Stack.Screen
               name="Categories"
               component={Categories}
               options={{headerShown: false}}
-              />
+            />
+            <Stack.Screen
+              name="AdminClubs"
+              component={AdminClubs}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AdminEvents"
+              component={AdminEvents}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AdminUsers"
+              component={AdminUsers}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="AdminHome"
+              component={AdminHome}
+              options={{headerShown: false}}
+            />
           </Stack.Navigator>
       </View>
     </NavigationContext.Provider>

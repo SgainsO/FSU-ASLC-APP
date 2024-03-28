@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Dimensions } from 'react-native';
 
 import Icon from './Icon';
 
-const Footer = () => {
+const windowWidth = Dimensions.get('window').width;
+
+const Footer = (props) => {
     const barStyle = {
         flex: 1,
         flexDirection: 'row',
@@ -15,8 +18,8 @@ const Footer = () => {
     };
 
     const iconStyle = {
-        width: 30,
-        height: 30,
+        width: windowWidth * 0.06,
+        height: windowWidth * 0.06,
         borderRadius: 0,
         marginTop: 12,
         marginHorizontal: 28,
@@ -27,48 +30,51 @@ const Footer = () => {
     
     const [activeIcon, setActiveIcon] = useState("Home");
 
+    icons = [];
+
+    if (props.isAdmin) {
+        icons = [
+            { name: 'Home', navigateTo: 'AdminHome', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Users', navigateTo: 'AdminUsers', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Events', navigateTo: 'AdminEvents', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
+            { name: 'Clubs', navigateTo: 'AdminClubs', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
+        ];
+    }
+    else {
+        icons = [
+            { name: 'Home', navigateTo: 'Events', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Search', navigateTo: 'Search', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
+            { name: 'Post', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
+            { name: 'Events', navigateTo: 'Categories', activeImage: require('../../assets/events_filled.png'), inactiveImage: require('../../assets/events_outline.png') },
+            { name: 'Rewards', navigateTo: 'Rewards', activeImage: require('../../assets/rewards_filled.png'), inactiveImage: require('../../assets/rewards_outline.png') },
+        ]
+    }
+
     const handleIconPress = (iconName, navigateTo) => {
         setActiveIcon(iconName);
+        if(navigateTo !== "Events") 
+        {
         navigation.navigate(navigateTo);
+        }
+        else
+        {
+            navigation.navigate(navigateTo, {title: "All Events", dbLink: "ALL"});         //All indicates returning all events from the database
+        }
+        
     };
 
     return (
         <View style={barStyle}>
-            <Icon
-                iconSource={activeIcon === 'Home' ? require('../../assets/home_filled.png') : require('../../assets/home_outline.png')}
-                text="Home"
-                textColor={activeIcon === 'Home' ? '#CEB888' : 'white'}
-                onPress={() => handleIconPress('Home', 'Home')}
-                iconStyle={iconStyle}
-            />
-            <Icon
-                iconSource={activeIcon === 'Search' ? require('../../assets/search_filled.png') : require('../../assets/search_outline.png')}
-                text="Search"
-                textColor={activeIcon === 'Search' ? '#CEB888' : 'white'}
-                onPress={() => handleIconPress('Search', 'Search')}
-                iconStyle={iconStyle}
-            />
-            <Icon
-                iconSource={activeIcon === 'Post' ? require('../../assets/post_filled.png') : require('../../assets/post_outline.png')}
-                text="Post"
-                textColor={activeIcon === 'Post' ? '#CEB888' : 'white'}
-                onPress={() => handleIconPress('Post', 'Post')}
-                iconStyle={iconStyle}
-            />
-            <Icon
-                iconSource={activeIcon === 'Events' ? require('../../assets/events_filled.png') : require('../../assets/events_outline.png')}
-                text="Events"
-                textColor={activeIcon === 'Events' ? '#CEB888' : 'white'}
-                onPress={() => handleIconPress('Events', 'Categories')}
-                iconStyle={iconStyle}
-            />
-            <Icon
-                iconSource={activeIcon === 'Rewards' ? require('../../assets/rewards_filled.png') : require('../../assets/rewards_outline.png')}
-                text="Rewards"
-                textColor={activeIcon === 'Rewards' ? '#CEB888' : 'white'}
-                onPress={() => handleIconPress('Rewards', 'Rewards')}
-                iconStyle={iconStyle}
-            />
+            {icons.map((icon, index) => (
+                <Icon
+                    key={index}
+                    iconSource={activeIcon === icon.name ? icon.activeImage : icon.inactiveImage}
+                    text={icon.name}
+                    textColor={activeIcon === icon.name ? '#CEB888' : 'white'}
+                    onPress={() => handleIconPress(icon.name, icon.navigateTo)}
+                    iconStyle={iconStyle}
+                />
+            ))}
         </View>
     );
 };

@@ -1,5 +1,4 @@
 import { Text, View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
 import {useNavigation} from '@react-navigation/native'
 
 const Card = (props) => {
@@ -87,9 +86,10 @@ const Card = (props) => {
     }
   const image = {uri : props.image_link}
     
+  //NOTE: On implementation make sure 'ALL' gets all events from the database
   return (
-    <TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Events', {title: props.title, dbLink: props.dbLink})}>
-      <ImageBackground source={image} style={{ flex: 1 }} blurRadius = {10}  resizeMode='cover'>
+    <TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Events', {title: props.title, dbLink: props.dbLink})}>        
+      <ImageBackground source={image} style={{ flex: 1 }} blurRadius = {4}  resizeMode='cover'>
          <View style={[overlayStyle]}>
           <View style={titleContainerStyle}>
             <Text style={titleStyle}>{props.title}</Text>
