@@ -42,7 +42,7 @@ const Footer = (props) => {
     }
     else {
         icons = [
-            { name: 'Home', navigateTo: 'Home', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Home', navigateTo: 'Events', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
             { name: 'Search', navigateTo: 'Search', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
             { name: 'Post', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
             { name: 'Events', navigateTo: 'Categories', activeImage: require('../../assets/events_filled.png'), inactiveImage: require('../../assets/events_outline.png') },
@@ -52,7 +52,15 @@ const Footer = (props) => {
 
     const handleIconPress = (iconName, navigateTo) => {
         setActiveIcon(iconName);
+        if(navigateTo !== "Events") 
+        {
         navigation.navigate(navigateTo);
+        }
+        else
+        {
+            navigation.navigate(navigateTo, {title: "All Events", dbLink: "ALL"});         //All indicates returning all events from the database
+        }
+        
     };
 
     return (
