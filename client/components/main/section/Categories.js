@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Button, FlatList, Text } from 'react-native';
+import { View, Button, FlatList, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Card from '../cards/HomeEventCard';
 import CommentSection from '../modal/Comments';
+import { useColorSchemeContext } from '../ColorSchemeContext';
 
 const Categories = () => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   const getTodayDate = () => {
     const currentDate = new Date();
     const format = { weekday: 'long', month: '2-digit', day: '2-digit', year: '2-digit' };
@@ -43,8 +45,8 @@ const Categories = () => {
   }
 
   return (
-    <View style={containerStyle}>
-      <Text style={textStyle}>
+    <View style={[containerStyle,colorScheme === 'dark' && styles.darkContainer ]}>
+      <Text style={[textStyle, colorScheme === 'dark' && styles.darkText]}>
         Categories
       </Text>
       <FlatList
@@ -62,5 +64,14 @@ const Categories = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  darkContainer: {
+    backgroundColor: '#121212',
+  },
+  darkText: {
+    color: '#FFFFFF',
+  },
+});
 
 export default Categories;

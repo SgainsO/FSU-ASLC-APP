@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useColorSchemeContext } from '../../../main/ColorSchemeContext';
 
 const Account = () => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   const navigation = useNavigation();
 
   const [activeIcon, setActiveIcon] = useState("Home");
@@ -16,30 +18,32 @@ const Account = () => {
         <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.wordB}>{word}</Text>
-        <View style={styles.line} />
+        <View style={[styles.line, colorScheme === 'dark' && styles.whiteLine]} />
       </View>
       </TouchableOpacity>
     );
   };
   const WordWithLineRed = ({ word, onPress }) => {
     return (
+      <View style={styles.container}>
         <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.wordR}>{word}</Text>
-        <View style={styles.line} />
+        <View style={[styles.line, colorScheme === 'dark' && styles.whiteLine]} />
       </View>
       </TouchableOpacity>
+      </View>
     );
   };
   return (
     
-    <View>
+    <View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
       <TouchableOpacity onPress={() => handleIconPress('Sett', 'Sett')} >
         <Text style={styles.back}>{'< Back'}</Text>
       </TouchableOpacity>
     
       <View style={styles.centeredContainer}>
-      <Text style={styles.Title}>Account</Text>
+      <Text style={[styles.Title, colorScheme === 'dark' && styles.darkText]}>Account</Text>
         {/* First Image */}
         <Image source={require('../../../../assets/daniel.png')} style={styles.image} />
 
@@ -118,6 +122,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     width: '100%', // Adjust the width of the line as needed
     marginVertical: 10,
+  },
+  whiteLine: {
+    height: 1,
+    backgroundColor: 'white',
+    width: '100%', // Adjust the width of the line as needed
+    marginVertical: 10,
+  },
+  darkContainer: {
+    flex: 1,
+    backgroundColor: '#121212',
+  },
+  darkText: {
+    color: '#FFFFFF',
   },
 });
 

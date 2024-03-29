@@ -1,9 +1,10 @@
 import { View, FlatList, Text, Image, StyleSheet, ScrollView } from 'react-native';
-
+import { useColorSchemeContext } from '../ColorSchemeContext';
 import RewardsCard from '../cards/RewardsCard';
 import RoundedBox from '../cards/RewardsRoundedBox';
 
 const Rewards = () => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
@@ -64,22 +65,31 @@ const Rewards = () => {
       fontWeight: '600',
       paddingLeft: '14%',
       paddingTop: 17
-    }
+    },
+    darkContainer: {
+      backgroundColor: '#121212',
+    },
+    darkContainer2: {
+      backgroundColor: '#171717'
+    },
+    darkText: {
+      color: '#FFFFFF',
+    },
   });
 
   return (
-    <View style={containerStyle}>
-      <View style={styles.header}>
+    <View style={[{containerStyle}, colorScheme === 'dark' && styles.darkContainer2]}>
+      <View style={[styles.header, colorScheme === 'dark' && styles.darkContainer]}>
         <Image source={require('../../../assets/fsu_coins.png')} style={styles.icon} />
-        <Text style={styles.RewardsAmount}>180</Text>
-        <Text style={styles.RewardsHistory}>Rewards History {'>'}</Text>
+        <Text style={[styles.RewardsAmount,  colorScheme === 'dark' && styles.darkText]}>180</Text>
+        <Text style={[styles.RewardsHistory,  colorScheme === 'dark' && styles.darkText]}>Rewards History {'>'}</Text>
       </View>
       <ScrollView style={{paddingTop: 10}}>
-        <Text style={{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 5}}>MY REWARDS</Text>
+        <Text style={[{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 5},  colorScheme === 'dark' && styles.darkText]}>MY REWARDS</Text>
         <View style={styles.centeredBox}>
           <RoundedBox />
         </View>
-        <Text style={{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 15}}>REWARDS STORE</Text>
+        <Text style={[{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 15},colorScheme === 'dark' && styles.darkText ]}>REWARDS STORE</Text>
         <FlatList
           data ={data}
           renderItem ={({item}) => <RewardsCard {...item} />}
