@@ -33,7 +33,7 @@ const Display = () => {
 
     
       <Text style={[styles.text, colorScheme === 'dark' && styles.darkText]}>
-        Hello, World!
+        
       </Text>
     
       </View>
