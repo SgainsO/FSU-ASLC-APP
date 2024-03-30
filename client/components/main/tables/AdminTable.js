@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-reanimated-table';
 
 export default class AdminTable extends Component {
@@ -15,7 +15,7 @@ export default class AdminTable extends Component {
   render() {
     const state = this.state;
     const element = (data, index) => (
-        <>
+        <View style={{padding: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
             <TouchableOpacity onPress={() => this._alertIndex(index)}>
                 <View style={styles.btn}>
                     <Text style={styles.btnText}>edit</Text>
@@ -25,35 +25,37 @@ export default class AdminTable extends Component {
                     <Text style={styles.btnText}>delete</Text>
                 </View>
             </TouchableOpacity>
-        </>
+        </View>
     );
 
     return (
       <View style={styles.container}>
-        <Table borderStyle={{borderColor: 'black', borderWidth: 1}}>
-          <Row data={state.tableHead} style={styles.head} textStyle={styles.text} widthArr={state.widthArr}/>
-          {
-            state.tableData.map((rowData, index) => (
-              <TableWrapper key={index} style={styles.row} widthArr={state.widthArr}>
-                {
-                  rowData.map((cellData, cellIndex) => (
-                    <Cell key={cellIndex} data={cellIndex === 2 ? element(cellData, index) : cellData} textStyle={styles.text}/>
-                  ))
-                }
-              </TableWrapper>
-            ))
-          }
-        </Table>
+        <ScrollView>
+          <Table borderStyle={{borderColor: 'transparent'}}>
+            <Row data={state.tableHead} style={styles.head} textStyle={styles.text} widthArr={state.widthArr}/>
+            {
+              state.tableData.map((rowData, index) => (
+                <TableWrapper key={index} style={styles.row} widthArr={state.widthArr}>
+                  {
+                    rowData.map((cellData, cellIndex) => (
+                      <Cell key={cellIndex} data={cellIndex === 2 ? element(cellData, index) : cellData} textStyle={styles.text}/>
+                    ))
+                  }
+                </TableWrapper>
+              ))
+            }
+          </Table>
+        </ScrollView>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: { height: 40, backgroundColor: '#fff', color: '#782F40' },
+  container: { flex: 1, paddingTop: 30, backgroundColor: '#fff' },
+  head: { height: 40, backgroundColor: '#D9D9D9', color: '#782F40' },
   text: { margin: 6, color: 'black'},
-  row: { flexDirection: 'row', backgroundColor: '#D9D9D9' },
-  btn: { width: 58, height: 18, backgroundColor: '#78B7BB',  borderRadius: 2 },
+  row: { flexDirection: 'row', backgroundColor: '#fff' },
+  btn: { width: 50, height: 25, backgroundColor: '#78B7BB',  borderRadius: 2 },
   btnText: { textAlign: 'center', color: '#fff' }
 });
