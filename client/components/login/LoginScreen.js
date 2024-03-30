@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 // TEMP BUTTON TO SEE NOTIFS
 import Notification from '../notifications/Notification';
 
+import { useAuth } from '../AuthProvider';
+
 const {width, height} = Dimensions.get('window');
 
 const LoginScreen = () => {
@@ -26,6 +28,8 @@ const LoginScreen = () => {
   const navigate = (navigateTo) => {
     navigation.navigate(navigateTo);
   }
+
+  const { setIsAdmin } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -62,6 +66,14 @@ const LoginScreen = () => {
 
       <TouchableOpacity style={styles.button} onPress={() => navigate('Main')}>
         <Text style={styles.buttonText}>Temp Go To Home</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => setIsAdmin(false)}>
+        <Text style={styles.buttonText}>Set Admin False</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => setIsAdmin(true)}>
+        <Text style={styles.buttonText}>Set Admin True</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>
