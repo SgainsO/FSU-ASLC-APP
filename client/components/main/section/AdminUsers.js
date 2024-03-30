@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { View, Button, FlatList, Text } from 'react-native';
+import React, { useState, } from 'react';
+import { View, StyleSheet, Button, FlatList, Text } from 'react-native';
 
 import AdminTable from '../tables/AdminTable';
+import SearchBar from '../SearchBar';
 
 const AdminUsers = () => {
-  const containerStyle = {
-    flex: 1,
-    backgroundColor: 'white',
-    //paddingHorizontal: 16,
-  };
-  
+    // Search bar consts
+    const [searchPhrase, setSearchPhrase] = useState("");
+    const [clicked, setClicked] = useState(false);
+    // Dropdown filter consts
+    const [dropdownType, setdropdownType] = useState(null);
+    const [isFocus, setIsFocus] = useState(false);
+    
   state = {
     tableHead: ['UUID', 'Name', 'Actions'],
     tableData: [
@@ -43,10 +45,66 @@ const AdminUsers = () => {
   }
 
   return (
-    <View style={containerStyle}>
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <SearchBar
+          isFocus={isFocus}
+          setIsFocus={setIsFocus}
+          searchPhrase={searchPhrase}
+          setSearchPhrase={setSearchPhrase}
+          clicked={clicked}
+          setClicked={setClicked}
+        />
+      </View>
       <AdminTable state={state}/>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  darkContainer: {
+    backgroundColor: '#121212',
+  },
+  darkText: {
+    color: '#FFFFFF',
+  },
+  topContainer: {
+    height: 60,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    shadowColor: 'rgba(60,60,67, 0.29)',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 1,
+    elevation: 1,
+    alignItems: 'center',
+  },
+  searchContainer: {
+    height: 40,
+    backgroundColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderTopColor: 'transparent',
+  },
+  searchBox: {
+    width: 300,
+    height: 25,
+    backgroundColor: '#D9D9D9',
+    borderRadius: 18,
+  },
+  searchInput: {
+    fontSize: 16,
+    color: '#3C3C4399',
+  },
+  row: {
+    flex: 1,
+    justifyContent: "space-between",
+    marginHorizontal: 25,
+    marginBottom: 0,
+  },
+});
 
 export default AdminUsers;

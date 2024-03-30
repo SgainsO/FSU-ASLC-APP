@@ -6,8 +6,6 @@ import { useColorSchemeContext } from '../ColorSchemeContext';
 
 import Card from '../cards/EventCard';
 
-
-
 const Events = ({route}) => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext()
 
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     alignSelf: 'center'
   },
-  topContainer: {                        //Container holding the search
+  topContainer: {
     height: 60,
     backgroundColor: 'white',
     shadowColor: 'rgba(60,60,67, 0.29)',

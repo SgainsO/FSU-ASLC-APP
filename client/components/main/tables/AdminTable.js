@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-reanimated-table';
 
+import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+
 export default class AdminTable extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +18,20 @@ export default class AdminTable extends Component {
   render() {
     const state = this.state;
     const element = (data, index) => (
-        <View style={{padding: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <TouchableOpacity onPress={() => this._alertIndex(index)}>
-                <View style={styles.btn}>
-                    <Text style={styles.btnText}>edit</Text>
-                </View>
-            </TouchableOpacity><TouchableOpacity onPress={() => this._alertIndex(index)}>
-                <View style={styles.btn}>
-                    <Text style={styles.btnText}>delete</Text>
-                </View>
-            </TouchableOpacity>
-        </View>
+      <View style={{padding: 5, flexDirection: 'row', justifyContent: 'flex-start'}}>
+        <TouchableOpacity onPress={() => this._alertIndex(index)}>
+          <View style={styles.btn}>
+            <Feather name="edit" size={24} color="black" />
+            <Text style={styles.btnText}>edit</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this._alertIndex(index)}>
+          <View style={styles.btn}>
+            <AntDesign name="delete" size={24} color="black" />
+            <Text style={styles.btnText}>delete</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
 
     return (
@@ -37,9 +43,16 @@ export default class AdminTable extends Component {
               state.tableData.map((rowData, index) => (
                 <TableWrapper key={index} style={styles.row} widthArr={state.widthArr}>
                   {
-                    rowData.map((cellData, cellIndex) => (
-                      <Cell key={cellIndex} data={cellIndex === 2 ? element(cellData, index) : cellData} textStyle={styles.text}/>
-                    ))
+                    rowData.map((cellData, cellIndex) => {
+                      // Dynamically determine if the current cell should contain the buttons
+                      // by checking if it's the last cell in the row
+                      const isLastCell = cellIndex === rowData.length - 1;
+                      const cellContent = isLastCell ? element(cellData, index) : cellData;
+    
+                      return (
+                        <Cell key={cellIndex} data={cellContent} textStyle={styles.text}/>
+                      );
+                    })
                   }
                 </TableWrapper>
               ))
@@ -47,7 +60,7 @@ export default class AdminTable extends Component {
           </Table>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 
@@ -56,6 +69,6 @@ const styles = StyleSheet.create({
   head: { height: 40, backgroundColor: '#D9D9D9', color: '#782F40' },
   text: { margin: 6, color: 'black'},
   row: { flexDirection: 'row', backgroundColor: '#fff' },
-  btn: { width: 50, height: 25, backgroundColor: '#78B7BB',  borderRadius: 2 },
+  btn: { width: 25, height: 25, backgroundColor: 'white' },
   btnText: { textAlign: 'center', color: '#fff' }
 });
