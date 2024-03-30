@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView,  TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useColorSchemeContext } from '../../../main/ColorSchemeContext';
 
 const ContactUs = () => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
         const navigation = useNavigation();
         
         const [activeIcon, setActiveIcon] = useState("Home");
@@ -12,10 +14,14 @@ const ContactUs = () => {
             navigation.navigate(navigateTo);
         };
     return (
-<View>
+<View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
 <TouchableOpacity onPress={() => handleIconPress('Sett', 'Sett')} >
     <Text style={styles.back}> {'< Back'}  </Text>
     </TouchableOpacity>
+    
+    <Text style={[styles.text, colorScheme === 'dark' && styles.darkText]}>
+        Hello, World!
+      </Text>
 </View>
         );
 };
@@ -51,7 +57,14 @@ const styles = StyleSheet.create({
         , marginLeft: 5,
         fontWeight: 'bold',
         marginTop: 5,
-      }
+      },
+      darkContainer: {
+        flex: 1,
+        backgroundColor: '#121212',
+      },
+      darkText: {
+        color: '#FFFFFF',
+      },
 });
 
 export default ContactUs;

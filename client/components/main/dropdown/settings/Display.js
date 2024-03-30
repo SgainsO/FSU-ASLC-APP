@@ -1,8 +1,17 @@
+import { useColorSchemeContext } from '../../../main/ColorSchemeContext';
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView,  TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+
+  
 const Display = () => {
+        
+        const { colorScheme, toggleColorScheme } = useColorSchemeContext(); // Get colorScheme and toggleColorScheme from the context
+        
+          const handleToggle = () => {
+            toggleColorScheme(); // Call toggleColorScheme to toggle dark mode
+          };
         const navigation = useNavigation();
         
         const [activeIcon, setActiveIcon] = useState("Home");
@@ -12,11 +21,25 @@ const Display = () => {
             navigation.navigate(navigateTo);
         };
     return (
-<View>
+<View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
+  
 <TouchableOpacity onPress={() => handleIconPress('Sett', 'Sett')} >
     <Text style={styles.back}> {'< Back'}  </Text>
     </TouchableOpacity>
+   <View style={styles.toggle}>
+    <TouchableOpacity onPress={() => handleToggle()} >
+    <Text style={[styles.toggle, colorScheme === 'dark' && styles.darkText]}> {'Toggle Dark Mode'}  </Text>
+    </TouchableOpacity>
+
+    
+      <Text style={[styles.text, colorScheme === 'dark' && styles.darkText]}>
+        
+      </Text>
+    
+      </View>
 </View>
+
+
         );
 };
 
@@ -51,7 +74,19 @@ const styles = StyleSheet.create({
         , marginLeft: 5,
         fontWeight: 'bold',
         marginTop: 5,
-      }
+      },
+      toggle: {
+        fontSize: 24,
+        justifyContent: 'center', // Center vertically
+        alignItems: 'center',
+      },
+      darkContainer: {
+        flex: 1,
+        backgroundColor: '#121212',
+      },
+      darkText: {
+        color: '#FFFFFF',
+      },
 });
 
 export default Display;

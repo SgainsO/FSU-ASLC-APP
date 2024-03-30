@@ -4,7 +4,7 @@
     "slug": "aslc-connect",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/aslc_logo.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.danieltdang.aslcconnect"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a5842bcb-d2e7-41fa-968e-efa35bcc342a"
+      }
+    },
+    "owner": "danieltdang"
   }
 }

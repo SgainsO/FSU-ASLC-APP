@@ -28,6 +28,8 @@ npx expo login
 
 ```bash
 npx expo start
+### If that doesn't work use
+npx expo start --tunnel
 ```
 
 ### Back-end

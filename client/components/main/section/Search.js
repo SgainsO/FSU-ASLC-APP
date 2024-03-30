@@ -2,13 +2,12 @@ import { View, FlatList, Text, StyleSheet, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import SearchBar from '../SearchBar';
 import SearchCard from '../cards/SearchCard';
+import { useColorSchemeContext } from '../ColorSchemeContext';
 
 const Search = () => {
+const { colorScheme, toggleColorScheme } = useColorSchemeContext();
 
-const containerStyle = {
-flex: 12,
-backgroundColor: 'white',
-};
+
 
 const rowStyle = {
 flex: 1,
@@ -39,7 +38,7 @@ const data = [
 ];
 
 return (
-<View style={containerStyle}>
+<View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
 <View style={searchBarContainerStyle}>
 <SearchBar
 searchPhrase={searchText}
@@ -47,7 +46,7 @@ setSearchPhrase={handleSearch}
 />
 </View>
 <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
-<Text style={{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5}}>Browse Categories</Text>
+<Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
 <FlatList
 data ={data}
 renderItem ={({item}) => <SearchCard {...item} />}
@@ -55,9 +54,21 @@ keyExtractor={item => item.id}
 numColumns={2}
 columnWrapperStyle={rowStyle}
 />
-<Text> Search </Text>
 </View>
 );
 };
+
+const styles = StyleSheet.create({
+container: {
+        flex: 12,
+        backgroundColor: 'white',
+        },
+darkContainer: {
+    backgroundColor: '#121212',
+  },
+  darkText: {
+    color: '#FFFFFF',
+  },
+});
 
 export default Search;

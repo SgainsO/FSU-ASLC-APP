@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
-
+import { useColorSchemeContext } from '../ColorSchemeContext';
 const RoundedBox = () => {
+    const { colorScheme, toggleColorScheme } = useColorSchemeContext();
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
             <View style={styles.content}>
                 <Image source={require('../../../assets/fsu_coins.png')} style={{width: 20, height: 20}}/>
-                <Text style={styles.text}>Unlocked Rewards will appear here.</Text>
+                <Text style={[styles.text, colorScheme === 'dark' && styles.darkText]}>Unlocked Rewards will appear here.</Text>
             </View>
         </View>
     )
@@ -28,7 +29,14 @@ const styles = StyleSheet.create({
     },
     text: {
         marginLeft: 10,
-    }
+    },
+    darkContainer: {
+        borderColor: 'white',
+        backgroundColor: '#2b2b2b'
+      },
+      darkText: {
+        color: '#FFFFFF',
+      },
 });
 
 export default RoundedBox
