@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import { Text, TextInput, Image, View, KeyboardAvoidingView, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { useForm, Controller } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
@@ -61,110 +61,112 @@ const AdminUser = (props) => {
   return (
     <View style={styles.container}>
       <Modal style={styles.modal} isVisible={props.isModalVisible} onBackdropPress={toggleModal}>
-        <View style={styles.modalContent}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>Create User</Text>
-            <Entypo 
-              name="cross" 
-              size={28} 
-              color="#fff" 
-              style={{ position: 'absolute', right: 10 }} 
-              onPress={toggleModal}
-            />
-          </View>
-          <View style={styles.imageSection}>
-            <TouchableOpacity style={ styles.imagePicker } onPress={pickImage}>
-              <FontAwesome6 name="image" size={20} color="black" />
-              <Text style={{ marginLeft: 5, fontWeight: 600 }}>Add</Text>
-            </TouchableOpacity>
-            {image && <Image source={{ uri: image }} style={styles.image} />}
-          </View>
-          <View style={styles.form}>
-            <View>
-              <View style={styles.formLabelContainer}>
-                <View style={{ flexDirection: 'row'}}>
-                  <Text style={styles.formLabel}>First Name </Text>
-                  <Text style={{ color: 'red' }}>*</Text>
-                </View>
-                {errors.firstName && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
-              </View>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    placeholder="First name"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    style={[styles.formInput,
-                      { borderColor: errors.firstName ? "red" : "black", borderWidth: 1, color: errors.firstName ? "red" : "black" }
-                    ]}
-                  />
-                )}
-                name="firstName"
-              />
-              
-              <View style={styles.formLabelContainer}>
-                <View style={{ flexDirection: 'row'}}>
-                  <Text style={styles.formLabel}>Last Name </Text>
-                  <Text style={{ color: 'red' }}>*</Text>
-                </View>
-                {errors.lastName && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
-              </View>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    placeholder="Last name"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    style={[styles.formInput,
-                      { borderColor: errors.lastName ? "red" : "black", borderWidth: 1, color: errors.lastName ? "red" : "black" }
-                    ]}
-                  />
-                )}
-                name="lastName"
-              />
-
-              <View style={styles.formLabelContainer}>
-                <View style={{ flexDirection: 'row'}}>
-                  <Text style={styles.formLabel}>Email </Text>
-                  <Text style={{ color: 'red' }}>*</Text>
-                </View>
-                {errors.email && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
-              </View>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    placeholder="Email"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    style={[styles.formInput,
-                      { borderColor: errors.email ? "red" : "black", borderWidth: 1, color: errors.email ? "red" : "black" }
-                    ]}
-                  />
-                )}
-                name="email"
+        <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}>
+          <View style={styles.modalContent}>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>Create User</Text>
+              <Entypo 
+                name="cross" 
+                size={28} 
+                color="#fff" 
+                style={{ position: 'absolute', right: 10 }} 
+                onPress={toggleModal}
               />
             </View>
+            <View style={styles.imageSection}>
+              <TouchableOpacity style={ styles.imagePicker } onPress={pickImage}>
+                <FontAwesome6 name="image" size={20} color="black" />
+                <Text style={{ marginLeft: 5, fontWeight: 600 }}>Add</Text>
+              </TouchableOpacity>
+              {image && <Image source={{ uri: image }} style={styles.image} />}
+            </View>
+            <View style={styles.form}>
+              <View>
+                <View style={styles.formLabelContainer}>
+                  <View style={{ flexDirection: 'row'}}>
+                    <Text style={styles.formLabel}>First Name </Text>
+                    <Text style={{ color: 'red' }}>*</Text>
+                  </View>
+                  {errors.firstName && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
+                </View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder="First name"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      style={[styles.formInput,
+                        { borderColor: errors.firstName ? "red" : "black", borderWidth: 1, color: errors.firstName ? "red" : "black" }
+                      ]}
+                    />
+                  )}
+                  name="firstName"
+                />
+                
+                <View style={styles.formLabelContainer}>
+                  <View style={{ flexDirection: 'row'}}>
+                    <Text style={styles.formLabel}>Last Name </Text>
+                    <Text style={{ color: 'red' }}>*</Text>
+                  </View>
+                  {errors.lastName && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
+                </View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder="Last name"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      style={[styles.formInput,
+                        { borderColor: errors.lastName ? "red" : "black", borderWidth: 1, color: errors.lastName ? "red" : "black" }
+                      ]}
+                    />
+                  )}
+                  name="lastName"
+                />
 
-            <TouchableOpacity style={styles.formSubmit} onPress={handleSubmit(onSubmit)}>
-              <Text style={styles.formSubmitText}>Create User</Text>
-            </TouchableOpacity>
+                <View style={styles.formLabelContainer}>
+                  <View style={{ flexDirection: 'row'}}>
+                    <Text style={styles.formLabel}>Email </Text>
+                    <Text style={{ color: 'red' }}>*</Text>
+                  </View>
+                  {errors.email && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
+                </View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder="Email"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      style={[styles.formInput,
+                        { borderColor: errors.email ? "red" : "black", borderWidth: 1, color: errors.email ? "red" : "black" }
+                      ]}
+                    />
+                  )}
+                  name="email"
+                />
+              </View>
+
+              <TouchableOpacity style={styles.formSubmit} onPress={handleSubmit(onSubmit)}>
+                <Text style={styles.formSubmitText}>Create User</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );
