@@ -44,7 +44,8 @@ const AdminUsers = () => {
       ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '23', 'Peyton Chris', 'temp@gmail.com', null],
       ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '24', 'Kai Morgan', 'temp@gmail.com', null],
     ],
-    widthPercents: [15, 15, 22, 28, 20]
+    widthPercents: [15, 15, 22, 28, 20],
+    type: 'User'
   }
 
   const [isModalVisible, setModalVisible] = useState(false);

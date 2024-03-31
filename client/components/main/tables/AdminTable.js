@@ -1,25 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, Dimensions } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
-export default class AdminTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = props.state;
-  }
+import AdminDeletion from '../modal/AdminDeletion';
 
-  _isImageUrl(url) {
+const AdminTable = (props) => {
+  const state = props.state;
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState([]);
+
+  const isImageUrl = (url) => {
     return typeof url === 'string' && url.match(/^http.*\.(jpeg|jpg|gif|png)$/);
   }
 
+  const toggleModal = (data) => {
+    setModalVisible(!isModalVisible);
+    setData(data);
+  };
+
   actionButtons = (data, index) => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 5 }}>
-      <TouchableOpacity onPress={() => this._alertIndex(index)}>
+      <TouchableOpacity onPress={() => toggleModal(data)}>
         <View style={styles.btn}>
           <MaterialIcons name="edit" size={30} color="#CEB888" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => this._alertIndex(index)}>
+      <TouchableOpacity onPress={() => toggleModal(data)}>
         <View style={styles.btn}>
           <Fontisto name="trash" size={24} color="#782F40" />
         </View>
@@ -31,12 +38,12 @@ export default class AdminTable extends Component {
     return (
       <View style={[styles.row, index % 2 === 1 && styles.alternateRow]}>
         {item.map((cellData, cellIndex) => {
-          const cellWidth = this.state.widthPercents[cellIndex];
+          const cellWidth = state.widthPercents[cellIndex];
           const isLastCell = cellIndex === item.length - 1;
           const isFirstCell = cellIndex === 0;
           const isSecondCell = cellIndex === 1;
-          const cellContent = isLastCell ? this.actionButtons(cellData, index) :
-            this._isImageUrl(cellData) ?
+          const cellContent = isLastCell ? this.actionButtons(state.tableData[index], index) :
+            isImageUrl(cellData) ?
               <Image source={{ uri: cellData }} style={styles.img} /> :
               <Text style={styles.text}>{cellData}</Text>;
 
@@ -54,7 +61,7 @@ export default class AdminTable extends Component {
     return (
       <View style={styles.head}>
         {this.state.tableHead.map((headerItem, index) => (
-          <Text key={index} style={[styles.headerText, { width: `${this.state.widthPercents[index]}%` }]}>
+          <Text key={index} style={[styles.headerText, { width: `${state.widthPercents[index]}%` }]}>
             {headerItem}
           </Text>
         ))}
@@ -62,18 +69,17 @@ export default class AdminTable extends Component {
     );
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.renderHeader()}
-        <FlatList
-          data={this.state.tableData}
-          renderItem={this.renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      {renderHeader()}
+      <AdminDeletion isModalVisible={isModalVisible} setModalVisible={setModalVisible} data={data} type={props.state.type} />
+      <FlatList
+        data={state.tableData}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -86,3 +92,5 @@ const styles = StyleSheet.create({
   img: { marginVertical: 5, width: 35, height: 35, borderRadius: 25 },
   btn: { width: 34, height: 34, justifyContent: 'center', alignItems: 'center', borderRadius: 5, backgroundColor: 'transparent' },
 });
+
+export default AdminTable;
