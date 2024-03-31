@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
-import { Dimensions } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, Dimensions } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
 export default class AdminTable extends Component {
@@ -29,13 +28,10 @@ export default class AdminTable extends Component {
   );
 
   renderItem = ({ item, index }) => {
-    const screenWidth = Dimensions.get('window').width;
-    const widthArr = this.state.widthPercents.map(percent => (screenWidth * percent) / 100);
-
     return (
       <View style={[styles.row, index % 2 === 1 && styles.alternateRow]}>
         {item.map((cellData, cellIndex) => {
-          const cellWidth = widthArr[cellIndex];
+          const cellWidth = this.state.widthPercents[cellIndex];
           const isLastCell = cellIndex === item.length - 1;
           const isFirstCell = cellIndex === 0;
           const isSecondCell = cellIndex === 1;
@@ -45,7 +41,7 @@ export default class AdminTable extends Component {
               <Text style={styles.text}>{cellData}</Text>;
 
           return (
-            <View key={cellIndex} style={[styles.cell, { width: cellWidth }, (isFirstCell || isSecondCell || isLastCell) && { alignItems: 'center' }]}>
+            <View key={cellIndex} style={[styles.cell, { width: `${cellWidth}%` }, (isFirstCell || isSecondCell || isLastCell) && { alignItems: 'center' }]}>
               {cellContent}
             </View>
           );
@@ -54,14 +50,11 @@ export default class AdminTable extends Component {
     );
   };
 
-
   renderHeader = () => {
-    const screenWidth = Dimensions.get('window').width;
-    const widthArr = this.state.widthPercents.map(percent => (screenWidth * percent) / 100);
     return (
       <View style={styles.head}>
         {this.state.tableHead.map((headerItem, index) => (
-          <Text key={index} style={[styles.headerText, { width: widthArr[index], }]}>
+          <Text key={index} style={[styles.headerText, { width: `${this.state.widthPercents[index]}%` }]}>
             {headerItem}
           </Text>
         ))}

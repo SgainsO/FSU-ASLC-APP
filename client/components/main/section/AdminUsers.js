@@ -1,6 +1,7 @@
 import React, { useState, } from 'react';
-import { View, StyleSheet, Button, FlatList, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Button, FlatList, Text } from 'react-native';
 
+import AdminUser from '../modal/AdminUser';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
 
@@ -43,11 +44,17 @@ const AdminUsers = () => {
       ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '23', 'Peyton Chris', 'temp@gmail.com', null],
       ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '24', 'Kai Morgan', 'temp@gmail.com', null],
     ],
-    widthPercents: [15, 15, 25, 25, 20]
+    widthPercents: [15, 15, 22, 28, 20]
   }
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   return (
     <View style={styles.container}>
+      <AdminUser isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
       <View style={styles.topContainer}>
         <SearchBar
           isFocus={isFocus}
@@ -57,7 +64,9 @@ const AdminUsers = () => {
           clicked={clicked}
           setClicked={setClicked}
         />
-        <Entypo name="squared-plus" size={40} color="#27ae60" />
+        <TouchableOpacity onPress={() => toggleModal()}>
+          <Entypo name="squared-plus" size={40} color="#27ae60" />
+        </TouchableOpacity>
       </View>
       <AdminTable state={state}/>
     </View>
