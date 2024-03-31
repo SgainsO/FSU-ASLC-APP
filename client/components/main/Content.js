@@ -22,13 +22,17 @@ import AdminClubs from './section/AdminClubs';
 import AdminEvents from './section/AdminEvents';
 import AdminUsers from './section/AdminUsers';
 
+import { useAuth } from '../AuthProvider';
+
 const Stack = createNativeStackNavigator();
 
-const Content = ({ navigation, isAdmin }) => {
+const Content = ({ navigation }) => {
   const containerStyle = {
     flex: 12,
     backgroundColor: 'white',
   };
+
+  const { isAdmin } = useAuth();
 
   return (
     <NavigationContext.Provider value={navigation}>

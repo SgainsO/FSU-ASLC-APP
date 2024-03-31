@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Keyboard, Button } from "react-native";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { Dropdown } from 'react-native-element-dropdown';
+import { useColorSchemeContext } from './ColorSchemeContext';
 
 const SearchBar = (props) => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   return (
-    <View style={styles.container}>
-      <View style={ !props.clicked ? styles.searchBar__unclicked : styles.searchBar__clicked }>
+    <View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
+
+      <View style={ [!props.clicked ? styles.searchBar__unclicked : styles.searchBar__clicked,] }>
         <Ionicons
           name="search"
           size={16}
@@ -55,6 +58,10 @@ const styles = StyleSheet.create({
     width: "84%",
     maxWidth: 360,
     height: 35,
+    
+  },
+  darkContainer: {
+    backgroundColor: 'black',
   },
   searchBar__unclicked: {
     padding: 10,
@@ -64,6 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     alignItems: "center",
     height: 35,
+    
   },
   searchBar__clicked: {
     padding: 10,

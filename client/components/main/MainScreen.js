@@ -16,15 +16,12 @@ const styles = StyleSheet.create({
 const MainScreen = () => {
   const navigation = useContext(NavigationContext);
 
-  const [isAdmin, setIsAdmin] = useState(false);
-  // setIsAdmin(...); SET ADMIN BASED OFF FIREBASE AUTH
-
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
       <Header navigation={navigation}/>
-      <Content navigation={navigation} isAdmin={isAdmin}/>
-      <Footer navigation={navigation} isAdmin={isAdmin}/>
+      <Content navigation={navigation}/>
+      <Footer navigation={navigation}/>
     </View>
   );
 };

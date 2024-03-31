@@ -2,13 +2,15 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { ButtonGroup } from '@rneui/themed';
 import SearchBar from '../SearchBar';
-
+import { useColorSchemeContext } from '../ColorSchemeContext';
 
 import Card from '../cards/EventCard';
 
 
 
 const Events = ({route}) => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext()
+
   const filters = [
     { id: 0, type: 'All' },
     { id: 1, type: 'Club' },
@@ -65,9 +67,9 @@ const Events = ({route}) => {
   };
 
   return (
-    <View style={styles.container}>
-        <Text style = {styles.Title}>{eventScreenName}</Text>
-      <View style={styles.topContainer}>
+    <View style={colorScheme === 'dark' ? styles.darkContainer : styles.container}>
+        <Text style = {[styles.Title, colorScheme === 'dark' && styles.darkText]}>{eventScreenName}</Text>
+      <View style={[styles.topContainer, colorScheme === 'dark' && styles.darkContainer]}>
         <SearchBar
           dropdownType={dropdownType}
           setdropdownType={setdropdownType}
@@ -86,7 +88,7 @@ const Events = ({route}) => {
         keyExtractor={item => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}
-        ListHeaderComponent={() => <Text style={styles.title}>DISCOVER EVENTS</Text>}
+        ListHeaderComponent={() => <Text style={[styles.title, colorScheme === 'dark' && styles.darkText]}>DISCOVER EVENTS</Text>}
         ListEmptyComponent={() => <Text style={{}}>NO MATCHES FOUND</Text>}
       />
     </View>
@@ -97,6 +99,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 12,
     backgroundColor: 'white',
+  },
+  darkContainer: {
+    backgroundColor: '#121212',
+  },
+  darkText: {
+    color: '#FFFFFF',
   },
   Title:
   {

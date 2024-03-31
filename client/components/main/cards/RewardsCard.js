@@ -1,7 +1,10 @@
-import { Text, View } from 'react-native';
 
+
+import { Text, View, StyleSheet } from 'react-native';
+import { useColorSchemeContext } from '../ColorSchemeContext';
 
 const Card = ({ title, icon, rewardAmount}) => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   const cardImageStyle = {
     marginHorizontal: 10,
     marginBottom: 20,
@@ -33,13 +36,20 @@ const Card = ({ title, icon, rewardAmount}) => {
   };
 
    return (
-    <View style={cardImageStyle}>
-      <View style={overlayStyle}>
-        <Text style={{ fontSize: 16, fontWeight: 600 }}>{title}</Text>
-        <Text style={{ fontSize: 16, color: '#455154' }}>{icon} {rewardAmount}</Text>
+    <View style={[cardImageStyle]}>
+      <View style={[overlayStyle, colorScheme === 'dark' && styles.darkContainer]}>
+        <Text style={[{ fontSize: 16, fontWeight: 600 },colorScheme === 'dark' && styles.darkText]}>{title}</Text>
+        <Text style={[{ fontSize: 16, color: '#455154' },colorScheme === 'dark' && styles.darkText]}>{icon} {rewardAmount}</Text>
       </View>
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  darkContainer: {
+    backgroundColor: '#121212',
+  },
+  darkText: {
+    color: '#FFFFFF',
+  },
+});
 export default Card;

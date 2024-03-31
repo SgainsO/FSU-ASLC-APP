@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 
 import Icon from './Icon';
+import { useAuth } from '../AuthProvider';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -29,10 +30,11 @@ const Footer = (props) => {
     const navigation = useNavigation();
     
     const [activeIcon, setActiveIcon] = useState("Home");
+    const { isAdmin } = useAuth();
 
     icons = [];
 
-    if (props.isAdmin) {
+    if (isAdmin) {
         icons = [
             { name: 'Home', navigateTo: 'AdminHome', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
             { name: 'Users', navigateTo: 'AdminUsers', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
