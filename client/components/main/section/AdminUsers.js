@@ -4,6 +4,8 @@ import { View, StyleSheet, Button, FlatList, Text } from 'react-native';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
 
+import { Entypo } from '@expo/vector-icons';
+
 const AdminUsers = () => {
     // Search bar consts
     const [searchPhrase, setSearchPhrase] = useState("");
@@ -13,36 +15,35 @@ const AdminUsers = () => {
     const [isFocus, setIsFocus] = useState(false);
     
   state = {
-    tableHead: ['Avatar', 'UUID', 'Name', 'Actions'],
+    tableHead: ['Avatar', 'ID', 'Name', 'Email', 'Actions'],
     tableData: [
-      ['https://c.stocksy.com/a/bBo600/z9/1622887.jpg', '0', 'Daniel Dang', null],
-      ['https://i.pinimg.com/originals/80/fb/8d/80fb8d8390601bfe5ba4c52b4dc79b8a.jpg', '1', 'Zachary De Aguiar', null],
-      ['https://i.pinimg.com/236x/47/51/48/475148587abdbdd81cc3d09fdbcbab16.jpg', '2', 'Jas Chawla', null],
-      ['https://th.bing.com/th/id/R.57529fe941352b6a608aa0c77cacc099?rik=ja%2f2y3qTNUZQVQ&riu=http%3a%2f%2fwww.pak101.com%2ffunnypictures%2fFunny%2f2011%2f7%2f22%2f5_cjlxs.jpg&ehk=8WobPJQV0XRZ0iGg7UzDSOJbCsygoHpsoYYUz7WoF9o%3d&risl=&pid=ImgRaw&r=0.jpg', '3', 'Ryan Nageer', null],
-      ['https://th.bing.com/th/id/OIP.3GZTipqj8i7LniAr6IgDdwAAAA?rs=1&pid=ImgDetMain.jpg', '4', 'Matthew Echenique', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '5', 'Alex Morgan', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '6', 'Jordan Casey', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '8', 'Jamie Park', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '7', 'Taylor Reed', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '9', 'Casey Lee', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '10', 'Riley Quinn', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '11', 'Dakota Ellis', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '12', 'Parker Grey', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '13', 'Morgan Bailey', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '14', 'Quinn Avery', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '15', 'Charlie Jordan', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '16', 'Skyler Pat', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '17', 'Robin Blake', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '18', 'Jesse Cameron', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '19', 'Avery Sam', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '20', 'Rowan Alex', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '21', 'Drew Jordan', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '22', 'Sawyer Lee', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '23', 'Peyton Chris', null],
-      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '24', 'Kai Morgan', null],
-    ]
-
-    //widthArr: [50, 60, 80]
+      ['https://c.stocksy.com/a/bBo600/z9/1622887.jpg', '0', 'Daniel Dang', 'dtd21b@fsu.edu', null],
+      ['https://i.pinimg.com/originals/80/fb/8d/80fb8d8390601bfe5ba4c52b4dc79b8a.jpg', '1', 'Zachary De Aguiar', 'zzd21@fsu.edu', null],
+      ['https://i.pinimg.com/236x/47/51/48/475148587abdbdd81cc3d09fdbcbab16.jpg', '2', 'Jas Chawla', 'jsc21b@fsu.edu', null],
+      ['https://th.bing.com/th/id/R.57529fe941352b6a608aa0c77cacc099?rik=ja%2f2y3qTNUZQVQ&riu=http%3a%2f%2fwww.pak101.com%2ffunnypictures%2fFunny%2f2011%2f7%2f22%2f5_cjlxs.jpg&ehk=8WobPJQV0XRZ0iGg7UzDSOJbCsygoHpsoYYUz7WoF9o%3d&risl=&pid=ImgRaw&r=0.jpg', '3', 'Ryan Nageer', 'rfn22@fsu.edu', null],
+      ['https://th.bing.com/th/id/OIP.3GZTipqj8i7LniAr6IgDdwAAAA?rs=1&pid=ImgDetMain.jpg', '4', 'Matthew Echenique', 'mme21a@fsu.edu', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '5', 'Alex Morgan', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '6', 'Jordan Casey', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '8', 'Jamie Park', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '7', 'Taylor Reed', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '9', 'Casey Lee', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '10', 'Riley Quinn', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '11', 'Dakota Ellis', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '12', 'Parker Grey', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '13', 'Morgan Bailey', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '14', 'Quinn Avery', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '15', 'Charlie Jordan', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '16', 'Skyler Pat', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '17', 'Robin Blake', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '18', 'Jesse Cameron', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '19', 'Avery Sam', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '20', 'Rowan Alex', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '21', 'Drew Jordan', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '22', 'Sawyer Lee', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '23', 'Peyton Chris', 'temp@gmail.com', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '24', 'Kai Morgan', 'temp@gmail.com', null],
+    ],
+    widthPercents: [15, 15, 25, 25, 23]
   }
 
   return (
@@ -56,6 +57,7 @@ const AdminUsers = () => {
           clicked={clicked}
           setClicked={setClicked}
         />
+        <Entypo name="squared-plus" size={40} color="#27ae60" />
       </View>
       <AdminTable state={state}/>
     </View>
@@ -82,6 +84,8 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     elevation: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   searchContainer: {
     height: 40,
