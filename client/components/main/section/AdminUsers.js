@@ -13,34 +13,35 @@ const AdminUsers = () => {
     const [isFocus, setIsFocus] = useState(false);
     
   state = {
-    tableHead: ['UUID', 'Name', 'Actions'],
+    tableHead: ['Avatar', 'UUID', 'Name', 'Actions'],
     tableData: [
-      ['0', 'Daniel Dang', '',],
-      ['1', 'Zachary De Aguiar', '',],
-      ['2', 'Jas Chawla', '',],
-      ['3', 'Ryan Nageer', '',],
-      ['4', 'Matthew Echenique', '',],
-      ['5', 'Alex Morgan', '',],
-      ['6', 'Jordan Casey', '',],
-      ['7', 'Taylor Reed', '',],
-      ['8', 'Jamie Park', '',],
-      ['9', 'Casey Lee', '',],
-      ['10', 'Riley Quinn', '',],
-      ['11', 'Dakota Ellis', '',],
-      ['12', 'Parker Grey', '',],
-      ['13', 'Morgan Bailey', '',],
-      ['14', 'Quinn Avery', '',],
-      ['15', 'Charlie Jordan', '',],
-      ['16', 'Skyler Pat', '',],
-      ['17', 'Robin Blake', '',],
-      ['18', 'Jesse Cameron', '',],
-      ['19', 'Avery Sam', '',],
-      ['20', 'Rowan Alex', '',],
-      ['21', 'Drew Jordan', '',],
-      ['22', 'Sawyer Lee', '',],
-      ['23', 'Peyton Chris', '',],
-      ['24', 'Kai Morgan', '',],
-    ],
+      ['https://c.stocksy.com/a/bBo600/z9/1622887.jpg', '0', 'Daniel Dang', null],
+      ['https://i.pinimg.com/originals/80/fb/8d/80fb8d8390601bfe5ba4c52b4dc79b8a.jpg', '1', 'Zachary De Aguiar', null],
+      ['https://i.pinimg.com/236x/47/51/48/475148587abdbdd81cc3d09fdbcbab16.jpg', '2', 'Jas Chawla', null],
+      ['https://th.bing.com/th/id/R.57529fe941352b6a608aa0c77cacc099?rik=ja%2f2y3qTNUZQVQ&riu=http%3a%2f%2fwww.pak101.com%2ffunnypictures%2fFunny%2f2011%2f7%2f22%2f5_cjlxs.jpg&ehk=8WobPJQV0XRZ0iGg7UzDSOJbCsygoHpsoYYUz7WoF9o%3d&risl=&pid=ImgRaw&r=0.jpg', '3', 'Ryan Nageer', null],
+      ['https://th.bing.com/th/id/OIP.3GZTipqj8i7LniAr6IgDdwAAAA?rs=1&pid=ImgDetMain.jpg', '4', 'Matthew Echenique', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '5', 'Alex Morgan', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '6', 'Jordan Casey', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '8', 'Jamie Park', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '7', 'Taylor Reed', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '9', 'Casey Lee', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '10', 'Riley Quinn', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '11', 'Dakota Ellis', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '12', 'Parker Grey', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '13', 'Morgan Bailey', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '14', 'Quinn Avery', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '15', 'Charlie Jordan', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '16', 'Skyler Pat', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '17', 'Robin Blake', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '18', 'Jesse Cameron', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '19', 'Avery Sam', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '20', 'Rowan Alex', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '21', 'Drew Jordan', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '22', 'Sawyer Lee', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '23', 'Peyton Chris', null],
+      ['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png', '24', 'Kai Morgan', null],
+    ]
+
     //widthArr: [50, 60, 80]
   }
 
@@ -73,8 +74,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   topContainer: {
-    height: 60,
-    marginBottom: 10,
+    height: 50,
     backgroundColor: 'white',
     shadowColor: 'rgba(60,60,67, 0.29)',
     shadowOpacity: 0.5,
@@ -98,12 +98,6 @@ const styles = StyleSheet.create({
   searchInput: {
     fontSize: 16,
     color: '#3C3C4399',
-  },
-  row: {
-    flex: 1,
-    justifyContent: "space-between",
-    marginHorizontal: 25,
-    marginBottom: 0,
   },
 });
 
