@@ -6,3 +6,5 @@ module.exports =
  USER: "postgres",
  PASSWORD: "lightsync",
  DB: "event-related",
+ dialect: "postgres"
+}
