@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 
+
 const Card = ({ title, icon, rewardAmount}) => {
   const cardImageStyle = {
     marginHorizontal: 10,

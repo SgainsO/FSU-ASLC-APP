@@ -1,6 +1,9 @@
-import { Text, View, ImageBackground, StyleSheet } from 'react-native';
+import { Text, View, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+import {useNavigation} from '@react-navigation/native'
 
-const Card = ({ title, backgroundImage }) => {
+
+
+const Card = ({ title, backgroundImage, dbLink }) => {
 const cardStyle = {
 marginHorizontal: 10,
 width: 150,
@@ -37,16 +40,18 @@ fontWeight: '600',
 color: 'rgba(206, 184, 136, 1)',
 };
 
+const navigation = useNavigation();
+
 return (
-<View style={cardStyle}>
-<ImageBackground source={backgroundImage} style = {{flex: 1}} resizeMode='cover'>
+<TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Events', {title: title, dbLink: dbLink})}>
+<ImageBackground source={backgroundImage} style = {{flex: 1}} resizeMode='cover'>        
 <View style={[overlayStyle]}>
 <View style={titleContainerStyle}>
 <Text style={titleStyle}>{title}</Text>
 </View>
 </View>
 </ImageBackground>
-</View>
+</TouchableOpacity>
 );
 };
 

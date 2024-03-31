@@ -38,6 +38,8 @@ const data = [
 { id: 7, title: 'FAQ', backgroundImage: require('../../../assets/faq_guy.png') },
 ];
 
+const dbLink = 1;     //In application we will actually recieve this value from the database
+
 return (
 <View style={containerStyle}>
 <View style={searchBarContainerStyle}>
