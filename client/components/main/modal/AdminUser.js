@@ -10,7 +10,7 @@ const modalWidth = Dimensions.get('window').width * 0.8;
 const modalheight = Dimensions.get('window').height * 0.5;
 
 const AdminUser = (props) => {
-  const [image, setImage] = useState('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+  const [image, setImage] = useState(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -27,7 +27,7 @@ const AdminUser = (props) => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     } else {
-      setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setImage(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
     }
   };
 
@@ -40,7 +40,7 @@ const AdminUser = (props) => {
         email: "",
       });
   
-      setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setImage(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
     }
 
     props.setModalVisible(!props.isModalVisible);

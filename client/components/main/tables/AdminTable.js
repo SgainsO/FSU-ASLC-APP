@@ -1,7 +1,8 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
+import AdminUser from '../modal/AdminUser';
 import AdminDeletion from '../modal/AdminDeletion';
 
 const AdminTable = (props) => {
@@ -39,23 +40,25 @@ const AdminTable = (props) => {
       <View style={[styles.row, index % 2 === 1 && styles.alternateRow]}>
         {item.map((cellData, cellIndex) => {
           const cellWidth = state.widthPercents[cellIndex];
-          const isLastCell = cellIndex === item.length - 1;
           const isFirstCell = cellIndex === 0;
-          const isSecondCell = cellIndex === 1;
-          const cellContent = isLastCell ? this.actionButtons(state.tableData[index], index) :
-            isImageUrl(cellData) ?
+          const cellContent = isImageUrl(cellData) ?
               <Image source={{ uri: cellData }} style={styles.img} /> :
               <Text style={styles.text}>{cellData}</Text>;
-
+  
           return (
-            <View key={cellIndex} style={[styles.cell, { width: `${cellWidth}%` }, (isFirstCell || isSecondCell || isLastCell) && { alignItems: 'center' }]}>
+            <View key={cellIndex} style={[styles.cell, { width: `${cellWidth}%` }, isFirstCell && { alignItems: 'center' }]}>
               {cellContent}
             </View>
           );
         })}
+        {/* Add action buttons as an additional cell */}
+        <View style={[styles.cell, { width: `${state.widthPercents[state.widthPercents.length - 1]}%`, justifyContent: 'center', alignItems: 'center' }]}>
+          {this.actionButtons(item, index)}
+        </View>
       </View>
     );
   };
+  
 
   renderHeader = () => {
     return (
