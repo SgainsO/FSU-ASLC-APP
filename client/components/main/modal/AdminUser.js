@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { useForm, Controller } from "react-hook-form"
@@ -10,6 +10,8 @@ const modalWidth = Dimensions.get('window').width * 0.8;
 const modalheight = Dimensions.get('window').height * 0.5;
 
 const AdminUser = (props) => {
+  const isEditMode = !!props.data;
+  
   const [image, setImage] = useState(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
 
   const pickImage = async () => {
@@ -26,8 +28,10 @@ const AdminUser = (props) => {
     // Set the selected image URI, or keep the default image URI if canceled
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setValue('avatar', result.assets[0].uri);
     } else {
       setImage(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setValue('avatar', result.assets[0].uri);
     }
   };
 
@@ -46,15 +50,31 @@ const AdminUser = (props) => {
     props.setModalVisible(!props.isModalVisible);
   };
 
-  const { control, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: {
+  const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm({ defaultValues: {
     firstName: "",
     lastName: "",
     email: "",
     },
   })
 
+  useEffect(() => {
+    if (props.data) {
+      setValue('firstName', props.data[2] || "");
+      setValue('lastName', props.data[2] || "");
+      setValue('email', props.data[3] || "");
+      setImage(props.data[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setValue('avatar', props.data[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+    }
+  }, [props.data, setValue]);
+
   const onSubmit = (data) => {
-    console.log(data);
+    if (isEditMode) {
+      console.log("Edited user", data);
+    }
+    else {
+      console.log("Created new user", data);
+    }
+    
     toggleModal();
   }
 
@@ -64,7 +84,7 @@ const AdminUser = (props) => {
         <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}>
           <View style={styles.modalContent}>
             <View style={styles.header}>
-              <Text style={styles.headerText}>Create User</Text>
+              <Text style={styles.headerText}>{isEditMode ? "Edit" : "Create"} User</Text>
               <Entypo 
                 name="cross" 
                 size={28} 
@@ -162,7 +182,7 @@ const AdminUser = (props) => {
               </View>
 
               <TouchableOpacity style={styles.formSubmit} onPress={handleSubmit(onSubmit)}>
-                <Text style={styles.formSubmitText}>Create User</Text>
+                <Text style={styles.formSubmitText}>{isEditMode ? "Update" : "Create"} User</Text>
               </TouchableOpacity>
             </View>
           </View>

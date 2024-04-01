@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
@@ -8,26 +8,32 @@ import AdminDeletion from '../modal/AdminDeletion';
 const AdminTable = (props) => {
   const state = props.state;
 
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [data, setData] = useState([]);
+  const [isItemVisible, setItemVisible] = useState(false);
+  const [isDeletionVisible, setDeletionVisible] = useState(false);
+  const [itemData, setItem] = useState([]);
 
   const isImageUrl = (url) => {
     return typeof url === 'string' && url.match(/^http.*\.(jpeg|jpg|gif|png)$/);
   }
 
-  const toggleModal = (data) => {
-    setModalVisible(!isModalVisible);
-    setData(data);
+  const toggleItemModal = (data) => {
+    setItem(data);
+    setItemVisible(!isItemVisible);
+  };
+
+  const toggleDeletionModal = (data) => {
+    setItem(data);
+    setDeletionVisible(!isDeletionVisible);
   };
 
   actionButtons = (data, index) => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 5 }}>
-      <TouchableOpacity onPress={() => toggleModal(data)}>
+      <TouchableOpacity onPress={() => toggleItemModal(data)}>
         <View style={styles.btn}>
           <MaterialIcons name="edit" size={30} color="#CEB888" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => toggleModal(data)}>
+      <TouchableOpacity onPress={() => toggleDeletionModal(data)}>
         <View style={styles.btn}>
           <Fontisto name="trash" size={24} color="#782F40" />
         </View>
@@ -75,7 +81,8 @@ const AdminTable = (props) => {
   return (
     <View style={styles.container}>
       {renderHeader()}
-      <AdminDeletion isModalVisible={isModalVisible} setModalVisible={setModalVisible} data={data} type={props.state.type} />
+      <AdminUser data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} />
+      <AdminDeletion data={itemData} isModalVisible={isDeletionVisible} setModalVisible={setDeletionVisible} type={props.state.type} />
       <FlatList
         data={state.tableData}
         renderItem={renderItem}
