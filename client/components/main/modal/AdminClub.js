@@ -12,7 +12,8 @@ const modalheight = Dimensions.get('window').height * 0.5;
 const AdminClub = (props) => {
   const isEditMode = !!props.data;
   
-  const [image, setImage] = useState(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+  const defaultImg = 'https://clipartcraft.com/images/no-logo-placeholder-2.png';
+  const [image, setImage] = useState(props.data?.[0] ?? defaultImg);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -30,7 +31,7 @@ const AdminClub = (props) => {
       setImage(result.assets[0].uri);
       setValue('avatar', result.assets[0].uri);
     } else {
-      setImage(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setImage(props.data?.[0] ?? defaultImg);
       setValue('avatar', result.assets[0].uri);
     }
   };
@@ -39,12 +40,12 @@ const AdminClub = (props) => {
     // Reset form fields to default values
     if (props.isModalVisible) {
       reset({
-        firstName: "",
-        lastName: "",
-        email: "",
+        name: "",
+        category: "",
+        socials: "",
       });
   
-      setImage(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setImage(props.data?.[0] ?? defaultImg);
     }
 
     props.setModalVisible(!props.isModalVisible);
@@ -59,11 +60,11 @@ const AdminClub = (props) => {
 
   useEffect(() => {
     if (props.data) {
-      setValue('firstName', props.data[2] || "");
-      setValue('lastName', props.data[2] || "");
-      setValue('email', props.data[3] || "");
-      setImage(props.data[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
-      setValue('avatar', props.data[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setValue('name', props.data[3] || "");
+      setValue('type', props.data[2] || "");
+      setValue('socials', props.data[4] || "");
+      setImage(props.data[0] || defaultImg);
+      setValue('avatar', props.data[0] || defaultImg);
     }
   }, [props.data, setValue]);
 
@@ -104,10 +105,10 @@ const AdminClub = (props) => {
               <View>
                 <View style={styles.formLabelContainer}>
                   <View style={{ flexDirection: 'row'}}>
-                    <Text style={styles.formLabel}>First Name </Text>
+                    <Text style={styles.formLabel}>Club Name </Text>
                     <Text style={{ color: 'red' }}>*</Text>
                   </View>
-                  {errors.firstName && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
+                  {errors.name && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
                 </View>
                 <Controller
                   control={control}
@@ -116,24 +117,24 @@ const AdminClub = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="First name"
+                      placeholder="Club Name"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
                       style={[styles.formInput,
-                        { borderColor: errors.firstName ? "red" : "black", borderWidth: 1, color: errors.firstName ? "red" : "black" }
+                        { borderColor: errors.name ? "red" : "black", borderWidth: 1, color: errors.name ? "red" : "black" }
                       ]}
                     />
                   )}
-                  name="firstName"
+                  name="name"
                 />
                 
                 <View style={styles.formLabelContainer}>
                   <View style={{ flexDirection: 'row'}}>
-                    <Text style={styles.formLabel}>Last Name </Text>
+                    <Text style={styles.formLabel}>Club Category </Text>
                     <Text style={{ color: 'red' }}>*</Text>
                   </View>
-                  {errors.lastName && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
+                  {errors.type && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
                 </View>
                 <Controller
                   control={control}
@@ -142,24 +143,24 @@ const AdminClub = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="Last name"
+                      placeholder="Club Category"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
                       style={[styles.formInput,
-                        { borderColor: errors.lastName ? "red" : "black", borderWidth: 1, color: errors.lastName ? "red" : "black" }
+                        { borderColor: errors.type ? "red" : "black", borderWidth: 1, color: errors.type ? "red" : "black" }
                       ]}
                     />
                   )}
-                  name="lastName"
+                  name="type"
                 />
 
                 <View style={styles.formLabelContainer}>
                   <View style={{ flexDirection: 'row'}}>
-                    <Text style={styles.formLabel}>Email </Text>
+                    <Text style={styles.formLabel}>Socials </Text>
                     <Text style={{ color: 'red' }}>*</Text>
                   </View>
-                  {errors.email && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
+                  {errors.socials && <Text style={{color: "red", fontStyle: 'italic' }}>Required</Text>}
                 </View>
                 <Controller
                   control={control}
@@ -168,16 +169,16 @@ const AdminClub = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="Email"
+                      placeholder="Socials"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
                       style={[styles.formInput,
-                        { borderColor: errors.email ? "red" : "black", borderWidth: 1, color: errors.email ? "red" : "black" }
+                        { borderColor: errors.socials ? "red" : "black", borderWidth: 1, color: errors.socials ? "red" : "black" }
                       ]}
                     />
                   )}
-                  name="email"
+                  name="socials"
                 />
               </View>
 

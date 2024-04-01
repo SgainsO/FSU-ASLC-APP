@@ -11,8 +11,9 @@ const modalheight = Dimensions.get('window').height * 0.5;
 
 const AdminUser = (props) => {
   const isEditMode = !!props.data;
-  
-  const [image, setImage] = useState(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+
+  const defaultImg = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png';
+  const [image, setImage] = useState(props.data?.[0] ?? defaultImg);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -30,7 +31,7 @@ const AdminUser = (props) => {
       setImage(result.assets[0].uri);
       setValue('avatar', result.assets[0].uri);
     } else {
-      setImage(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setImage(props.data?.[0] ?? defaultImg);
       setValue('avatar', result.assets[0].uri);
     }
   };
@@ -44,7 +45,7 @@ const AdminUser = (props) => {
         email: "",
       });
   
-      setImage(props.data?.[0] ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setImage(props.data?.[0] ?? defaultImg);
     }
 
     props.setModalVisible(!props.isModalVisible);
@@ -59,11 +60,11 @@ const AdminUser = (props) => {
 
   useEffect(() => {
     if (props.data) {
-      setValue('firstName', props.data[2] || "");
-      setValue('lastName', props.data[2] || "");
-      setValue('email', props.data[3] || "");
-      setImage(props.data[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
-      setValue('avatar', props.data[0] || 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/600px-Placeholder_no_text.svg.png');
+      setValue('name', props.data[2] || "");
+      setValue('type', props.data[2] || "");
+      setValue('socials', props.data[3] || "");
+      setImage(props.data[0] || defaultImg);
+      setValue('avatar', props.data[0] || defaultImg);
     }
   }, [props.data, setValue]);
 
@@ -125,7 +126,7 @@ const AdminUser = (props) => {
                       ]}
                     />
                   )}
-                  name="firstName"
+                  name="name"
                 />
                 
                 <View style={styles.formLabelContainer}>
@@ -151,7 +152,7 @@ const AdminUser = (props) => {
                       ]}
                     />
                   )}
-                  name="lastName"
+                  name="type"
                 />
 
                 <View style={styles.formLabelContainer}>
@@ -177,7 +178,7 @@ const AdminUser = (props) => {
                       ]}
                     />
                   )}
-                  name="email"
+                  name="socials"
                 />
               </View>
 
