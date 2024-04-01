@@ -8,12 +8,12 @@ import SearchBar from '../SearchBar';
 import { Entypo } from '@expo/vector-icons';
 
 const AdminUsers = () => {
-    // Search bar consts
-    const [searchPhrase, setSearchPhrase] = useState("");
-    const [clicked, setClicked] = useState(false);
-    // Dropdown filter consts
-    const [dropdownType, setdropdownType] = useState(null);
-    const [isFocus, setIsFocus] = useState(false);
+  // Search bar consts
+  const [searchPhrase, setSearchPhrase] = useState("");
+  const [clicked, setClicked] = useState(false);
+  // Dropdown filter consts
+  const [dropdownType, setdropdownType] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
     
   state = {
     tableHead: ['Avatar', 'ID', 'Name', 'Email', 'Actions'],

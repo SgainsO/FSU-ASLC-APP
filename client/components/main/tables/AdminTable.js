@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
@@ -13,7 +13,7 @@ const AdminTable = (props) => {
   const [itemData, setItem] = useState([]);
 
   const isImageUrl = (url) => {
-    return typeof url === 'string' && url.match(/^http.*\.(jpeg|jpg|gif|png)$/);
+    return typeof url === 'string' && url.match(/^http.*\.(jpeg|jpg|gif|png|JPG)$/);
   }
 
   const toggleItemModal = (data) => {
