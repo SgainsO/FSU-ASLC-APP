@@ -1,5 +1,8 @@
+
+
 import { Text, View, StyleSheet } from 'react-native';
 import { useColorSchemeContext } from '../ColorSchemeContext';
+
 const Card = ({ title, icon, rewardAmount}) => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   const cardImageStyle = {
