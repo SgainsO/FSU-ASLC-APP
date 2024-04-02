@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
-import AdminUser from '../modal/AdminUser';
+import AdminCreation from '../modal/AdminCreation';
 import AdminDeletion from '../modal/AdminDeletion';
 
 const AdminTable = (props) => {
@@ -13,7 +13,7 @@ const AdminTable = (props) => {
   const [itemData, setItem] = useState([]);
 
   const isImageUrl = (url) => {
-    return typeof url === 'string' && url.match(/^http.*\.(jpeg|jpg|gif|png)$/);
+    return typeof url === 'string' && url.match(/^http.*\.(jpeg|jpg|gif|png|JPG)$/);
   }
 
   const toggleItemModal = (data) => {
@@ -81,7 +81,7 @@ const AdminTable = (props) => {
   return (
     <View style={styles.container}>
       {renderHeader()}
-      <AdminUser data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} />
+      <AdminCreation data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} type={props.state.type} />
       <AdminDeletion data={itemData} isModalVisible={isDeletionVisible} setModalVisible={setDeletionVisible} type={props.state.type} />
       <FlatList
         data={state.tableData}

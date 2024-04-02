@@ -17,6 +17,38 @@ const AdminDeletion = (props) => {
     toggleModal();
   }
 
+  // Function to render form content based on the type
+  const renderFormContent = () => {
+    switch (props.type) {
+      case 'User':
+        return (
+          <Text>
+            <Text style={styles.formLabel}>ID:</Text> {props.data[1]}
+            <Text style={styles.formLabel}>{'\n'}Name:</Text> {props.data[2]}
+            <Text style={styles.formLabel}>{'\n'}Email:</Text> {props.data[3]}
+          </Text>
+        );
+      case 'Club':
+        return (
+          <Text>
+            <Text style={styles.formLabel}>ID:</Text> {props.data[1]}
+            <Text style={styles.formLabel}>{'\n'}Type ID:</Text> {props.data[2]}
+            <Text style={styles.formLabel}>{'\n'}Name:</Text> {props.data[3]}
+            <Text style={styles.formLabel}>{'\n'}Socials:</Text> {props.data[4]}
+          </Text>
+        );
+      case 'Event':
+        return (
+          <Text>
+            <Text style={styles.formLabel}>ID:</Text> {props.data[1]}
+            <Text style={styles.formLabel}>{'\n'}Type ID:</Text> {props.data[2]}
+            <Text style={styles.formLabel}>{'\n'}Time:</Text> {props.data[3]}
+            <Text style={styles.formLabel}>{'\n'}Interested:</Text> {props.data[4]}
+          </Text>
+        );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Modal style={styles.modal} isVisible={props.isModalVisible} onBackdropPress={toggleModal}>
@@ -33,15 +65,7 @@ const AdminDeletion = (props) => {
           </View>
           <View style={styles.form}>
             <Text style={{ fontWeight: '600' }}>Are you sure you want to delete this {props.type}?</Text>
-            <Text>
-              <Text style={styles.formLabel}>ID:</Text> {props.data[1]}
-            </Text>
-            <Text>
-              <Text style={styles.formLabel}>Name:</Text> {props.data[2]}
-            </Text>
-            <Text>
-              <Text style={styles.formLabel}>Email:</Text> {props.data[3]}
-            </Text>
+            {renderFormContent()}
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <TouchableOpacity style={styles.formDelete} onPress={deleteItem}>
                 <Text style={styles.formDeleteText}>Delete</Text>
