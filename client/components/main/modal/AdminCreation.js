@@ -142,12 +142,28 @@ const AdminCreation = (props) => {
     toggleModal();
   }
 
+  // derived from https://nolecentral.dsa.fsu.edu/organizations
   const [isDropdownFocus, setDropdownFocus] = useState(false);
   const typeData = [
-    { label: 'Committee Meetings', value: '0' },
-    { label: 'Department Meetings', value: '1' },
-    { label: 'Movies', value: '2' },
-    { label: 'Events', value: '3' },
+    { label: 'Academic/Honorary', value: '0' },
+    { label: 'Community Service', value: '1' },
+    { label: 'Department', value: '2' },
+    { label: 'Departmental Affiliate', value: '3' },
+    { label: 'Graduate', value: '4' },
+    { label: 'Greek', value: '5' },
+    { label: 'Health/Wellness', value: '6' },
+    { label: 'Multicultural', value: '7' },
+    { label: 'Performance', value: '8' },
+    { label: 'Political', value: '9' },
+    { label: 'Professional', value: '10' },
+    { label: 'Recreational/Sport', value: '11' },
+    { label: 'Religious/Spiritual', value: '12' },
+    { label: 'SGA Affiliate', value: '13' },
+    { label: 'Social', value: '14' },
+    { label: 'Special Interest', value: '15' },
+    { label: 'Sport Club', value: '16' },
+    { label: 'Student Academic Program', value: '17' },
+    { label: 'Umbrella', value: '18' },
   ];
 
   // Dynamically renders form based off props.type

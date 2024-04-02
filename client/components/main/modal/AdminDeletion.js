@@ -13,7 +13,7 @@ const AdminDeletion = (props) => {
   };
 
   const deleteItem = () => {
-    console.log("Implement delete on ID", props.data[1]);
+    console.log(`Implement delete on ${props.type} ID`, props.data[1]);
     toggleModal();
   }
 
