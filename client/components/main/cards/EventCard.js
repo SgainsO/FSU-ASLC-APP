@@ -1,8 +1,8 @@
 import {useState} from 'react'
-import { Text, View, Image, TouchableOpacity, StyleSheet, } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useColorSchemeContext } from '../ColorSchemeContext';
+
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -11,7 +11,6 @@ const infoHeight = 85
 const cardHeight = 250;
 
 const EventCard = (props) => {
-  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
 
   const cardWidth = screenWidth * props.SizePerc
   console.log(cardWidth)
@@ -45,18 +44,6 @@ const EventCard = (props) => {
     justifyContent: 'center',
     alignItems: 'left',
 
-  };
-
-  const darkOverlayStyle = {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: infoHeight,
-    paddingHorizontal: 8,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'left',
   };
 
   const ImageHolderStyle = {
@@ -169,36 +156,15 @@ const EventCard = (props) => {
           <Icon name={BookmarkState} size = {30} color={BookmarkColor}/>
         </TouchableOpacity>
         <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/>
-      <View style= {[overlayStyle, colorScheme === 'dark' && darkOverlayStyle]}>
-        <Text style={[styles.textStyle1, colorScheme === 'dark' && styles.darkTextStyle1]}>{dateString}</Text>
-        <Text style={[styles.textStyle1, colorScheme === 'dark' && styles.darkTextStyle1]}>{timeString}</Text>
-        <Text style={ [styles.textStyle2, colorScheme === 'dark' && styles.darkTextStyle2] }>{props.title}</Text>
-        <Text style={[styles.textStyle3, colorScheme === 'dark' && styles.darkTextStyle3]}>{props.club}</Text>
-        <Text style={[styles.textStyle3, colorScheme === 'dark' && styles.darkTextStyle3]}>{formatNumber(props.interested)} interested</Text>
+      <View style={overlayStyle}>
+        <Text style={{ fontSize: 10, fontWeight: 600 }}>{dateString}</Text>
+        <Text style={{ fontSize: 10, fontWeight: 600 }}>{timeString}</Text>
+        <Text style={{ fontSize: 12, fontWeight: 600 }}>{props.title}</Text>
+        <Text style={{ fontSize: 12, color: '#455154' }}>{props.club}</Text>
+        <Text style={{ fontSize: 12, color: '#455154' }}>{formatNumber(props.interested)} interested</Text>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  textStyle1: {
-    fontSize: 10, fontWeight: 600
-  },
-  textStyle2: {
-    fontSize: 12, fontWeight: 600
-  },
-  darkTextStyle1: {
-    fontSize: 10, fontWeight: 600, color: 'white',
-  },
-  darkTextStyle2: {
-    fontSize: 12, fontWeight: 600, color: 'white',
-  },
-  textStyle3: {
-    fontSize: 12, color: '#455154'
-  },
-  darkTextStyle3: {
-    fontSize: 12, color: '#D3D3D3',
-  },
-});
 
 export default EventCard;
