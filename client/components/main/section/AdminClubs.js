@@ -1,7 +1,7 @@
 import React, { useState, } from 'react';
 import { View, StyleSheet, TouchableOpacity, Button, FlatList, Text } from 'react-native';
 
-import AdminClub from '../modal/AdminClub';
+import AdminCreation from '../modal/AdminCreation';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
 
@@ -55,7 +55,7 @@ const AdminClubs = () => {
 
   return (
     <View style={styles.container}>
-      <AdminClub isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
+      <AdminCreation isModalVisible={isModalVisible} setModalVisible={setModalVisible} type={state.type} />
       <View style={styles.topContainer}>
         <SearchBar
           isFocus={isFocus}

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
-import AdminUser from '../modal/AdminUser';
-import AdminClub from '../modal/AdminClub';
+import AdminCreation from '../modal/AdminCreation';
 import AdminDeletion from '../modal/AdminDeletion';
 
 const AdminTable = (props) => {
@@ -79,24 +78,10 @@ const AdminTable = (props) => {
     );
   };
 
-  // Dynamically choose the component based on the type
-  let ModalComponent;
-  switch (props.state.type) {
-    case 'User':
-      ModalComponent = AdminUser;
-      break;
-    case 'Club':
-      ModalComponent = AdminClub;
-      break;
-    case 'Event':
-      ModalComponent = AdminEvent;
-      break;
-  }
-
   return (
     <View style={styles.container}>
       {renderHeader()}
-      <ModalComponent data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} />
+      <AdminCreation data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} type={props.state.type} />
       <AdminDeletion data={itemData} isModalVisible={isDeletionVisible} setModalVisible={setDeletionVisible} type={props.state.type} />
       <FlatList
         data={state.tableData}

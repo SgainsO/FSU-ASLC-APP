@@ -56,7 +56,7 @@ const Footer = (props) => {
         setActiveIcon(iconName);
         if(navigateTo !== "Events") 
         {
-        navigation.navigate(navigateTo);
+            navigation.navigate(navigateTo);
         }
         else
         {

@@ -1,11 +1,11 @@
 import React, { useState, } from 'react';
-import { View, StyleSheet, TouchableOpacity, Button, FlatList, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import AdminUser from '../modal/AdminUser';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
 
 import { Entypo } from '@expo/vector-icons';
+import AdminCreation from '../modal/AdminCreation';
 
 const AdminUsers = () => {
   // Search bar consts
@@ -55,7 +55,7 @@ const AdminUsers = () => {
 
   return (
     <View style={styles.container}>
-      <AdminUser isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
+      <AdminCreation isModalVisible={isModalVisible} setModalVisible={setModalVisible} type={state.type} />
       <View style={styles.topContainer}>
         <SearchBar
           isFocus={isFocus}
