@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import SearchBar from '../SearchBar';
 import SearchCard from '../cards/SearchCard';
 import { useColorSchemeContext } from '../ColorSchemeContext';
+import * as api from '../APIUse';
 
-const Search = () => {
+const Search = async () => {
 const { colorScheme, toggleColorScheme } = useColorSchemeContext();
-
 
 
 const rowStyle = {
@@ -26,6 +26,10 @@ const handleSearch = (text) => {
 setSearchText(text);
 }
 
+
+const serverData = await api.getCategories();
+
+
 const data = [
 { id: 0, title: 'Today\'s Events', backgroundImage: require('../../../assets/calendar.png') },
 { id: 1, title: 'Upcoming Events', backgroundImage: require('../../../assets/save_the_date.png') },
@@ -38,6 +42,7 @@ const data = [
 ];
 
 const dbLink = 1;     //In application we will actually recieve this value from the database
+console.log("serverData: " + serverData);
 
 return (
 <View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
@@ -50,7 +55,7 @@ setSearchPhrase={handleSearch}
 <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
 <Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
 <FlatList
-data ={data}
+data ={await api.getCategories()}                              //PUT DATA HERE
 renderItem ={({item}) => <SearchCard {...item} />}
 keyExtractor={item => item.id}
 numColumns={2}

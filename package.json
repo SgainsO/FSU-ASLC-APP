@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "expo": "^50.0.7",
+    "expo": "~50.0.14",
     "ionicons": "^7.2.2",
     "pg-promise": "^11.5.4"
   },
