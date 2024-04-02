@@ -3,8 +3,9 @@ import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, StyleShee
 import Modal from 'react-native-modal';
 import { useForm, Controller } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
+import { Dropdown } from 'react-native-element-dropdown';
 
-import { FontAwesome6, Entypo } from '@expo/vector-icons';
+import { AntDesign, FontAwesome6, Entypo } from '@expo/vector-icons';
 
 const modalWidth = Dimensions.get('window').width * 0.8;
 const modalheight = Dimensions.get('window').height * 0.5;
@@ -78,6 +79,13 @@ const AdminClub = (props) => {
     
     toggleModal();
   }
+
+  const categoryData = [
+    { label: 'Committee Meetings', value: '0' },
+    { label: 'Department Meetings', value: '1' },
+    { label: 'Movies', value: '2' },
+    { label: 'Events', value: '3' },
+  ];
 
   return (
     <View style={styles.container}>
