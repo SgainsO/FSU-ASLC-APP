@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, Dimensions, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Modal from 'react-native-modal';
 import { useForm, Controller } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
 import { Dropdown, SelectCountry as SelectClub } from 'react-native-element-dropdown';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-import { FontAwesome6, Entypo } from '@expo/vector-icons';
+import { FontAwesome6, Entypo, Fontisto } from '@expo/vector-icons';
 
 const AdminCreation = (props) => {
   const modalWidth = Dimensions.get('window').width * 0.8;
@@ -156,11 +156,26 @@ const AdminCreation = (props) => {
   };
 
   const dateOptions = {
-    weekday: 'short',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   };
+
+  const timeOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+    dayPeriod: 'short',
+  };
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [showStartDate, setShowStartDate] = useState(false);
+  const [endDate, setEndDate] = useState(new Date());
+  const [showEndDate, setShowEndDate] = useState(false);
+
+  const [startTime, setStartTime] = useState(new Date());
+  const [showStartTime, setShowStartTime] = useState(false);
+  const [endTime, setEndTime] = useState(new Date());
+  const [showEndTime, setShowEndTime] = useState(false);
 
   const toggleModal = () => {
     // Reset form fields to default values
@@ -185,7 +200,7 @@ const AdminCreation = (props) => {
             club: "",
             type: "",
             title: "",
-            startDate: new Date().toLocaleDateString(undefined, dateOptions),
+            startDate: startDate.toLocaleDateString(undefined, dateOptions),
             endDate: "",
             startTime: "",
             endTime: "",
@@ -220,7 +235,7 @@ const AdminCreation = (props) => {
         club: "",
         type: "",
         title: "",
-        startDate: new Date().toLocaleDateString(undefined, dateOptions),
+        startDate: startDate.toLocaleDateString(undefined, dateOptions),
         endDate: "",
         startTime: "",
         endTime: "",
@@ -676,14 +691,28 @@ const AdminCreation = (props) => {
                       required: true,
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        placeholder="Enter start date"
-                        placeholderTextColor='gray'
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        style={getFormInputStyle(errors.startDate)}
-                      />
+                      <TouchableWithoutFeedback onPress={() => setShowStartDate(!showStartDate)}>
+                        <View  style={[getFormInputStyle(errors.startDate), {flexDirection: 'row', alignItems: 'center'}]}>
+                          <Fontisto name="date" size={16} color="gray" />
+                          <DateTimePickerModal
+                            isVisible={showStartDate}
+                            open={showStartDate}
+                            date={startDate}
+                            onConfirm={(selectedDate) => {
+                              const currentDate = selectedDate || startDate;
+                              setShowStartDate(!showStartDate);
+                              setStartDate(currentDate);
+                              onChange(currentDate.toLocaleDateString(undefined, dateOptions));
+                            }}
+                            onCancel={() => {
+                              setShowStartDate(!showStartDate);
+                            }}
+                          /> 
+                          <Text style={{marginLeft: 5, width: '80%', color: 'black'}} >
+                            {value || "Enter start date"}
+                          </Text>
+                        </View>
+                      </TouchableWithoutFeedback>
                     )}
                     name="startDate"
                   />
