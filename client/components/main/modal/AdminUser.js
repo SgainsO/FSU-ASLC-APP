@@ -58,6 +58,7 @@ const AdminUser = (props) => {
     },
   })
 
+  console.log(props.data)
   useEffect(() => {
     if (props.data) {
       setValue('name', props.data[2] || "");
@@ -117,7 +118,8 @@ const AdminUser = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="First name"
+                      placeholder="Enter first name"
+                      placeholderTextColor = 'gray'
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
@@ -143,7 +145,8 @@ const AdminUser = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="Last name"
+                      placeholder="Enter last name"
+                      placeholderTextColor = 'gray'
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
@@ -169,7 +172,8 @@ const AdminUser = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="Email"
+                      placeholder="Enter email"
+                      placeholderTextColor = 'gray'
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
@@ -277,6 +281,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: 'black',
     marginBottom: 10,
+    paddingLeft: 10,
+  },
+  formText: {
+    color: 'black',
+    fontSize: 14,
   },
   formSubmit: {
     width: '100%',

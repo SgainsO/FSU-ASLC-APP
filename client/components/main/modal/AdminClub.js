@@ -80,6 +80,7 @@ const AdminClub = (props) => {
     toggleModal();
   }
 
+  const [isDropdownFocus, setDropdownFocus] = useState(false);
   const categoryData = [
     { label: 'Committee Meetings', value: '0' },
     { label: 'Department Meetings', value: '1' },
@@ -125,10 +126,12 @@ const AdminClub = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="Club Name"
+                      placeholder="Enter club name"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
+                      inputStyle={styles.formText}
+                      placeholderTextColor = 'gray'
                       style={[styles.formInput,
                         { borderColor: errors.name ? "red" : "black", borderWidth: 1, color: errors.name ? "red" : "black" }
                       ]}
@@ -150,14 +153,30 @@ const AdminClub = (props) => {
                     required: true,
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                      placeholder="Club Category"
-                      onBlur={onBlur}
-                      onChangeText={onChange}
-                      value={value}
+                    <Dropdown
                       style={[styles.formInput,
-                        { borderColor: errors.type ? "red" : "black", borderWidth: 1, color: errors.type ? "red" : "black" }
+                        { borderColor: errors.name ? "red" : "black", borderWidth: 1, color: errors.name ? "red" : "black" }
                       ]}
+                      placeholderStyle={[styles.formText, { color: 'gray' }]}
+                      selectedTextStyle={styles.formText}
+                      inputSearchStyle={styles.formText}
+                      data={categoryData}
+                      search
+                      maxHeight={200}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={!isDropdownFocus ? 'Select category' : '...'}
+                      searchPlaceholder="Search..."
+                      value={value}
+                      onFocus={() => setDropdownFocus(true)}
+                      onBlur={() => {
+                        setDropdownFocus(false);
+                        onBlur(); // To ensure form validation
+                      }}
+                      onChange={(item) => {
+                        onChange(item.value);
+                        setDropdownFocus(false);
+                      }}
                     />
                   )}
                   name="type"
@@ -177,7 +196,8 @@ const AdminClub = (props) => {
                   }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      placeholder="Socials"
+                      placeholder="Enter socials"
+                      placeholderTextColor = 'gray'
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
@@ -285,6 +305,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: 'black',
     marginBottom: 10,
+    paddingLeft: 10,
+  },
+  formText: {
+    color: 'black',
+    fontSize: 14,
   },
   formSubmit: {
     width: '100%',
