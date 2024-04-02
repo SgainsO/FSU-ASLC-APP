@@ -155,6 +155,13 @@ const AdminCreation = (props) => {
     }
   };
 
+  const dateOptions = {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
   const toggleModal = () => {
     // Reset form fields to default values
     if (props.isModalVisible && !isEditMode) {
@@ -178,7 +185,7 @@ const AdminCreation = (props) => {
             club: "",
             type: "",
             title: "",
-            startDate: "",
+            startDate: new Date().toLocaleDateString(undefined, dateOptions),
             endDate: "",
             startTime: "",
             endTime: "",
@@ -213,7 +220,7 @@ const AdminCreation = (props) => {
         club: "",
         type: "",
         title: "",
-        startDate: "",
+        startDate: new Date().toLocaleDateString(undefined, dateOptions),
         endDate: "",
         startTime: "",
         endTime: "",
