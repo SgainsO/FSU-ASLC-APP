@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import { View, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
@@ -11,9 +11,6 @@ const AdminUsers = () => {
   // Search bar consts
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-  // Dropdown filter consts
-  const [dropdownType, setdropdownType] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
     
   state = {
     tableHead: ['Avatar', 'ID', 'Name', 'Email', 'Actions'],
@@ -58,8 +55,6 @@ const AdminUsers = () => {
       <AdminCreation isModalVisible={isModalVisible} setModalVisible={setModalVisible} type={state.type} />
       <View style={styles.topContainer}>
         <SearchBar
-          isFocus={isFocus}
-          setIsFocus={setIsFocus}
           searchPhrase={searchPhrase}
           setSearchPhrase={setSearchPhrase}
           clicked={clicked}
