@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, Dimensions, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, Dimensions, TouchableOpacity, Button, TouchableWithoutFeedback } from 'react-native';
 import Modal from 'react-native-modal';
 import { useForm, Controller, set } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
@@ -170,8 +170,6 @@ const AdminCreation = (props) => {
   const toggleModal = () => {
     // Reset form fields to default values
     if (props.isModalVisible && !isEditMode) {
-      setStartDate(new Date());
-      setEndDate(new Date());
       setEndDateEnabled(false);
 
       reset(defaultFormValues);
@@ -203,13 +201,13 @@ const AdminCreation = (props) => {
         club: "",
         type: "",
         title: "",
-        startDate: startDate,
+        startDate: new Date(),
         endDate: "",
       };
       break;
   }
 
-  const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm({ defaultValues: defaultFormValues})
+  const { control, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({ defaultValues: defaultFormValues})
 
   useEffect(() => {
     if (props.data) {
@@ -232,8 +230,8 @@ const AdminCreation = (props) => {
           setValue('club', props.data[2]);
           setValue('type', props.data[3]);
           setValue('title', props.data[4]);
-          setValue('startDate', new Date(props.data[5]).toLocaleString('en-US', dateTimeOptions));
-          setValue('endDate', new Date(props.data[6]).toLocaleString('en-US', dateTimeOptions));
+          setValue('startDate', new Date(props.data[5]));
+          setValue('endDate', new Date(props.data[6]));
           break;
       }
       
@@ -244,7 +242,7 @@ const AdminCreation = (props) => {
 
   const getFormInputStyle = (error) => ({
     width: '100%',
-    height: 30,
+    height: 40,
     borderColor: error ? "red" : "black",
     borderWidth: 1,
     color: error ? "red" : "black",
@@ -685,37 +683,62 @@ const AdminCreation = (props) => {
               />
 
               <View style={formLabelContainer}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={formLabel}>End Date </Text>
+                </View>
+                {errors.endDate && <Text style={{ color: "red", fontStyle: 'italic' }}>Must be after start date</Text>}
               </View>
               <Controller
                 control={control}
                 rules={{
                   required: false,
+                  validate: {
+                    isAfterStartDate: value => {
+                    if (endDateEnabled)
+                      return value > getValues("startDate") || "End date must be after start date";
+                    return true;
+                  }},
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TouchableWithoutFeedback onPress={() => setShowEndDate(!showEndDate)}>
-                    <View style={[getFormInputStyle(errors.endDate), {flexDirection: 'row', alignItems: 'center'}]}>
-                      <Fontisto name="date" size={16} color="gray" />
-                      <DateTimePickerModal
-                        mode="datetime"
-                        minimumDate={startDate}
-                        isVisible={showEndDate}
-                        open={showEndDate}
-                        date={endDate}
-                        onConfirm={(selectedDate) => {
-                          const currentDate = selectedDate || endDate;
-                          setEndDateEnabled(true);
-                          setShowEndDate(!showEndDate);
-                          setEndDate(currentDate);
-                          onChange(currentDate);
-                        }}
-                        onCancel={() => {
-                          setShowEndDate(!showEndDate);
-                        }}
-                      /> 
-                      <Text style={{marginLeft: 5, width: '80%', color: `${endDateEnabled ? 'black' : 'gray'}`}} >
-                        {value.toLocaleString('en-US', dateTimeOptions) || "Enter end date"}
-                      </Text>
+                    <View style={[getFormInputStyle(errors.endDate), {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}]}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', width: '85%' }}>
+                        <Fontisto name="date" size={16} color="gray" />
+                        <DateTimePickerModal
+                          mode="datetime"
+                          minimumDate={startDate}
+                          isVisible={showEndDate}
+                          open={showEndDate}
+                          date={endDate}
+                          onConfirm={(selectedDate) => {
+                            const currentDate = selectedDate || endDate;
+                            setEndDateEnabled(true);
+                            setShowEndDate(!showEndDate);
+                            setEndDate(currentDate);
+                            onChange(currentDate);
+                          }}
+                          onCancel={() => {
+                            setShowEndDate(!showEndDate);
+                          }}
+                        /> 
+                        <Text style={{marginLeft: 5, color: `${endDateEnabled ? 'black' : 'gray'}`}} >
+                          {endDateEnabled ? value.toLocaleString('en-US', dateTimeOptions) : "Enter end date"}
+                        </Text>
+                      </View>
+                      {endDateEnabled && (
+                        <Entypo 
+                          name="cross" 
+                          size={16} 
+                          color="#878787" 
+                          onPress={() => {
+                            const currentDate = new Date();
+                            setEndDate(currentDate);
+                            onChange(currentDate);
+                            setEndDateEnabled(false);
+                          }}
+                          style={{ marginRight: 5 }}
+                        />
+                      )}
                     </View>
                   </TouchableWithoutFeedback>
                 )}
