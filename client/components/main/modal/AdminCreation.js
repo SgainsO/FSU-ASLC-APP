@@ -71,8 +71,8 @@ const AdminCreation = (props) => {
   }
   const imageStyle = {
     width: modalHeight * 0.22,
-    height: props.type == 'Event' ? modalHeight * 0.22 * (14 / 13) : modalHeight * 0.22, // 13:14 aspect ratio for Event image
-    borderRadius: props.type == 'Event' ? 0 : modalHeight * 0.22
+    height: props.type === 'Event' ? modalHeight * 0.22 * (14 / 13) : modalHeight * 0.22, // 13:14 aspect ratio for Event image
+    borderRadius: props.type === 'Event' ? 0 : modalHeight * 0.22
   }
   const dropdownImage = {
     width: 20,
@@ -814,7 +814,7 @@ const AdminCreation = (props) => {
                 <FontAwesome6 name="image" size={20} color="black" />
                 <Text style={{ marginLeft: 5, fontWeight: 600 }}>Add</Text>
               </TouchableOpacity>
-              {image && <Image source={{ uri: image }} style={[imageStyle, {borderRadius: 0}]} />}
+              {image && <Image source={{ uri: image }} style={[imageStyle]} />}
             </View>
 
             {renderFormContent()}
