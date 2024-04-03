@@ -1,8 +1,9 @@
 import { View, FlatList, Text, StyleSheet, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../SearchBar';
 import SearchCard from '../cards/SearchCard';
 import { useColorSchemeContext } from '../ColorSchemeContext';
+import { getCategories } from '../APIUse';
 
 const Search = () => {
 const { colorScheme, toggleColorScheme } = useColorSchemeContext();
@@ -24,6 +25,7 @@ const handleSearch = (text) => {
   setSearchText(text);
 }
 
+
 const data = [
   { id: 0, title: 'Today\'s Events', backgroundImage: require('../../../assets/calendar.png') },
   { id: 1, title: 'Upcoming Events', backgroundImage: require('../../../assets/save_the_date.png') },
@@ -37,6 +39,34 @@ const data = [
 
 const dbLink = 1;     //In application we will actually recieve this value from the database
 
+
+const [serverData, newData] = useState([])
+const [page, setPage] = useState(0)
+const [loading, setLoading] = useState(false)
+
+useEffect(() =>{
+  fetchData();
+}, [page])
+
+
+fetchData = async () => 
+{
+  setLoading(true)
+  console.log('being called')
+  if (!serverData.isistEnd)
+  {
+  newData(await getCategories())
+  console.log(await serverData)
+  }
+  setLoading(false)
+};
+
+_listEmptyComponent = () => {
+  return (
+          <Text style = {{ textAlign: 'center', justifyContent: 'center'}}>No Events</Text>
+  )
+}
+
 return (
 <View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
   <View style={searchBarContainerStyle}>
@@ -48,11 +78,14 @@ return (
   <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
   <Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
   <FlatList
-    data ={data}
+    data ={data}           //Change to "ServerData" to run api command
     renderItem ={({item}) => <SearchCard {...item} />}
     keyExtractor={item => item.id}
     numColumns={2}
     columnWrapperStyle={rowStyle}
+    ListEmptyComponent={_listEmptyComponent}
+//    onEndReached={fetchData} 
+
   />
 </View>
 );

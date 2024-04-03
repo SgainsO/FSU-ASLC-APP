@@ -1,6 +1,7 @@
 const express = require('express');
 const dbConfig = require("../db.config.js");
 const { Pool } = require('pg');
+var cors = require('cors');
 
 const router = express.Router();             //Allows us to use the express framework
 
@@ -38,15 +39,15 @@ router.get('/getAllEvents', async (req, res) => {
 // REQUEST TYPE: GET
 // REQUEST URL: /events/getAllCategories
 // RESPONSE: JSON
-router.get('/getAllCategories', async (req, res) => {
+router.get('/getAllCategories', cors(), async (req, res) => {
+  console.log("entered getAllCategories")
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM event_categories');
-    const categories = result.rows;
+    const result = await client.query('SELECT * FROM cats');
+    const categories =  result.rows;
     client.release();
 
-    res.status(200).json({data: categories, message: "", total: categories.length})
-    res.json(categories);
+    res.status(200).json({data: categories, message: "Data Recieved", total: categories.length})
   } catch (err) {
     console.error('Error executing query', err);
     res.status(500).json({data: {}, message: "Internal Error", total: categories.length});
@@ -118,11 +119,11 @@ router.post('/postEvent', async (req, res) => {
 
 //id, name, type
 router.post('/postEventCat', async (req, res) => {
-    const {id, events_header, category_type } = req.body;
+    const {id, title, cat_query, imageurl } = req.body;
 
   try {
     const client = await pool.connect();
-    const result = await client.query('INSERT INTO event_categories (id, events_header, category_type) VALUES ($1, $2, $3) RETURNING *',
+    const result = await client.query('INSERT INTO event_categories (id, title, cat_query, imageurl) VALUES ($1, $2, $3, $4) RETURNING *',
       [id, events_header, category_type]);
     const newEvent = result.rows[0];
     client.release();

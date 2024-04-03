@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native'
 
 
 
-const Card = ({ title, backgroundImage, dbLink }) => {
+const Card = ({ title, imageurl, dbLink }) => {
 const cardStyle = {
 marginHorizontal: 10,
 width: 150,
@@ -44,7 +44,7 @@ const navigation = useNavigation();
 
 return (
 <TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Events', {title: title, dbLink: dbLink})}>
-<ImageBackground source={backgroundImage} style = {{flex: 1}} resizeMode='cover'>        
+<ImageBackground source={{uri: imageurl}} style = {{flex: 1}} resizeMode='cover'>        
 <View style={[overlayStyle]}>
 <View style={titleContainerStyle}>
 <Text style={titleStyle}>{title}</Text>
