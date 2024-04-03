@@ -48,7 +48,7 @@ const AdminTable = (props) => {
           const cellWidth = state.widthPercents[cellIndex];
           const isFirstCell = cellIndex === 0;
           const cellContent = isImageUrl(cellData) ?
-              <Image source={{ uri: cellData }} style={styles.img} /> :
+              <Image source={{ uri: cellData }} style={[styles.img, props.state.type == 'Event' && {borderRadius: 0,  width: 50, height: 50}]} /> :
               <Text style={styles.text}>{cellData}</Text>;
   
           return (
@@ -64,7 +64,6 @@ const AdminTable = (props) => {
       </View>
     );
   };
-  
 
   renderHeader = () => {
     return (

@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import { View, StyleSheet, TouchableOpacity, Button, FlatList, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, } from 'react-native';
 
 import AdminCreation from '../modal/AdminCreation';
 import AdminTable from '../tables/AdminTable';
@@ -11,12 +11,9 @@ const AdminClubs = () => {
   // Search bar consts
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-  // Dropdown filter consts
-  const [dropdownType, setdropdownType] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
     
   state = {
-    tableHead: ['Avatar', 'ID', 'Type', 'Name', 'Socials', 'Actions'],
+    tableHead: ['Image', 'ID', 'Type', 'Name', 'Socials', 'Actions'],
     tableData: [
       ['https://se-images.campuslabs.com/clink/images/3068826d-991b-4dcc-9865-e2798ee514d0971ee766-4888-4337-b212-498ad95eaaf2.png', '0', '1', 'Association for Computing Machinery', 'contact@fsu.acm.org'],
       ['https://se-images.campuslabs.com/clink/images/ebef7389-2a8f-47e8-a2cb-e4c98ed6eadf58eb52e3-1209-4b37-b472-f5bbd39e14a5.jpeg', '1', '2', 'Cybersecurity Club at Florida State University', 'https://www.instagram.com/fsucybersecurity/'],
@@ -58,8 +55,6 @@ const AdminClubs = () => {
       <AdminCreation isModalVisible={isModalVisible} setModalVisible={setModalVisible} type={state.type} />
       <View style={styles.topContainer}>
         <SearchBar
-          isFocus={isFocus}
-          setIsFocus={setIsFocus}
           searchPhrase={searchPhrase}
           setSearchPhrase={setSearchPhrase}
           clicked={clicked}
