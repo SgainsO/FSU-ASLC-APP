@@ -65,6 +65,11 @@ fetchData = async () =>
   setLoading(false)
 };
 
+_listEmptyComponent = () => {
+  return (
+          <Text style = {{ textAlign: 'center', justifyContent: 'center'}}>No Events</Text>
+  )
+}
 
 return (
 <View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
@@ -82,6 +87,7 @@ return (
     keyExtractor={item => item.id}
     numColumns={2}
     columnWrapperStyle={rowStyle}
+    ListEmptyComponent={_listEmptyComponent}
 //    onEndReached={fetchData} 
 
   />
