@@ -41,9 +41,10 @@ const AdminDeletion = (props) => {
         return (
           <Text>
             <Text style={styles.formLabel}>ID:</Text> {props.data[1]}
-            <Text style={styles.formLabel}>{'\n'}Type ID:</Text> {props.data[2]}
-            <Text style={styles.formLabel}>{'\n'}Time:</Text> {props.data[3]}
-            <Text style={styles.formLabel}>{'\n'}Interested:</Text> {props.data[4]}
+            <Text style={styles.formLabel}>{'\n'}Club:</Text> {props.data[2]}
+            <Text style={styles.formLabel}>{'\n'}Title:</Text> {props.data[4]}
+            <Text style={styles.formLabel}>{'\n'}Start Date:</Text> {props.data[5]}
+            <Text style={styles.formLabel}>{'\n'}End Date:</Text> {props.data[6]}
           </Text>
         );
     }
