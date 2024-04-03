@@ -28,7 +28,6 @@ const AdminCreation = (props) => {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    height: modalHeight,
     width: modalWidth,
     borderRadius: 15,
     borderTopLeftRadius: 16, // higher values to hide behind header
@@ -83,11 +82,8 @@ const AdminCreation = (props) => {
   }
   const form = {
     width: '100%',
-    maxWidth: '100%',
-    height: modalHeight * 0.65,
     paddingVertical: 20,
     paddingHorizontal: 20,
-    justifyContent: 'space-between',
   }
   const formLabelContainer = {
     flexDirection: 'row',
@@ -110,7 +106,7 @@ const AdminCreation = (props) => {
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginBottom: 10,
+    marginTop: 20,
   }
   const formSubmitText = {
     color: 'white',
