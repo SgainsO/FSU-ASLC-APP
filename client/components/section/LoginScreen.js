@@ -31,6 +31,17 @@ const LoginScreen = () => {
     .then((userCredential) => {
         console.log(userCredential)
         document.cookie = "authToken" + "=" + "Bearer " + userCredential.user.accessToken
+
+        axios.post('http://localhost:3000/api/syncUser', {
+          id: userCredential.user.uid,
+          email: email,
+          firstName: 'First Name',
+          lastName: 'Last Name'
+        })
+        .then((response) => {
+          console.log(response)
+        })
+
     })
     .catch((error) => {
         const errorCode = error.code;
