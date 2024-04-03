@@ -7,10 +7,6 @@ import { getCategories } from '../APIUse';
 
 const Search = () => {
 const { colorScheme, toggleColorScheme } = useColorSchemeContext();
-const fetchMoreData = () => {
-
-}
-
 
 const rowStyle = {
   flex: 1,
