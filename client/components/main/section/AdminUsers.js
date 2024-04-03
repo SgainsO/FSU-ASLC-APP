@@ -13,7 +13,7 @@ const AdminUsers = () => {
   const [clicked, setClicked] = useState(false);
     
   state = {
-    tableHead: ['Avatar', 'ID', 'Name', 'Email', 'Actions'],
+    tableHead: ['Image', 'ID', 'Name', 'Email', 'Actions'],
     tableData: [
       ['https://c.stocksy.com/a/bBo600/z9/1622887.jpg', '0', 'Daniel Dang', 'dtd21b@fsu.edu'],
       ['https://i.pinimg.com/originals/80/fb/8d/80fb8d8390601bfe5ba4c52b4dc79b8a.jpg', '1', 'Zachary De Aguiar', 'zzd21@fsu.edu'],

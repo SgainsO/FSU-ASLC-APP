@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, TextInput, Image, View, KeyboardAvoidingView, Platform, Dimensions, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import Modal from 'react-native-modal';
-import { useForm, Controller } from "react-hook-form"
+import { useForm, Controller, set } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
 import { Dropdown, SelectCountry as SelectClub } from 'react-native-element-dropdown';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -144,65 +144,37 @@ const AdminCreation = (props) => {
     // Set the selected image URI, or keep the default image URI if canceled
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      setValue('avatar', result.assets[0].uri);
+      setValue('image', result.assets[0].uri);
     } else {
       setImage(props.data?.[0] ?? defaultImg);
-      setValue('avatar', result.assets[0].uri);
+      setValue('image', result.assets[0].uri);
     }
   };
 
-  const dateOptions = {
+  const dateTimeOptions = {
+    weekday: 'short',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  };
-
-  const timeOptions = {
-    hour: '2-digit',
-    minute: '2-digit',
-    dayPeriod: 'short',
+    dayPeriod: 'narrow',
+  	hour: 'numeric',
+  	minute: 'numeric',
   };
 
   const [startDate, setStartDate] = useState(new Date());
   const [showStartDate, setShowStartDate] = useState(false);
   const [endDate, setEndDate] = useState(new Date());
   const [showEndDate, setShowEndDate] = useState(false);
-
-  const [startTime, setStartTime] = useState(new Date());
-  const [showStartTime, setShowStartTime] = useState(false);
-  const [endTime, setEndTime] = useState(new Date());
-  const [showEndTime, setShowEndTime] = useState(false);
+  const [endDateEnabled, setEndDateEnabled] = useState(false);
 
   const toggleModal = () => {
     // Reset form fields to default values
     if (props.isModalVisible && !isEditMode) {
-      switch (props.type) {
-        case 'User':
-          reset({
-            firstName: "",
-            lastName: "",
-            email: "",
-          });
-          break;
-        case 'Club':
-          reset({
-            name: "",
-            type: "",
-            socials: "",
-          });
-          break;
-        case 'Event':
-          reset({
-            club: "",
-            type: "",
-            title: "",
-            startDate: startDate.toLocaleDateString(undefined, dateOptions),
-            endDate: "",
-            startTime: "",
-            endTime: "",
-          });
-          break;
-      }
+      setStartDate(new Date());
+      setEndDate(new Date());
+      setEndDateEnabled(false);
+
+      reset(defaultFormValues);
   
       setImage(props.data?.[0] ?? defaultImg);
     }
@@ -231,10 +203,8 @@ const AdminCreation = (props) => {
         club: "",
         type: "",
         title: "",
-        startDate: startDate.toLocaleDateString(undefined, dateOptions),
+        startDate: startDate,
         endDate: "",
-        startTime: "",
-        endTime: "",
       };
       break;
   }
@@ -245,28 +215,30 @@ const AdminCreation = (props) => {
     if (props.data) {
       switch (props.type) {
         case 'User':
-          setValue('firstName', props.data[2] || "");
-          setValue('lastName', props.data[2] || "");
-          setValue('email', props.data[3] || "");
+          setValue('firstName', props.data[2]);
+          setValue('lastName', props.data[2]);
+          setValue('email', props.data[3]);
           break;
         case 'Club':
-          setValue('name', props.data[3] || "");
-          setValue('type', props.data[2] || "");
-          setValue('socials', props.data[4] || "");
+          setValue('name', props.data[3]);
+          setValue('type', props.data[2]);
+          setValue('socials', props.data[4]);
           break;
         case 'Event':
-          setValue('club', props.data[2] || "");
-          setValue('type', props.data[3] || "");
-          setValue('title', props.data[4] || "");
-          setValue('startDate', props.data[5] || "");
-          setValue('endDate', props.data[5] || "");
-          setValue('startTime', props.data[5] || "");
-          setValue('endTime', props.data[5] || "");
+          if (props.data[6]) {
+            setEndDateEnabled(true);
+          }
+
+          setValue('club', props.data[2]);
+          setValue('type', props.data[3]);
+          setValue('title', props.data[4]);
+          setValue('startDate', new Date(props.data[5]).toLocaleString('en-US', dateTimeOptions));
+          setValue('endDate', new Date(props.data[6]).toLocaleString('en-US', dateTimeOptions));
           break;
       }
       
       setImage(props.data[0] || defaultImg);
-      setValue('avatar', props.data[0] || defaultImg);
+      setValue('image', props.data[0] || defaultImg);
     }
   }, [props.data, setValue]);
 
@@ -672,118 +644,83 @@ const AdminCreation = (props) => {
                 name="type"
               />
 
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, }}>
-                <View style={{ width: '48%' }}>
-                  <View style={formLabelContainer}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text style={formLabel}>Start Date </Text>
-                      <Text style={{ color: 'red' }}>*</Text>
+              <View style={formLabelContainer}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={formLabel}>Start Date </Text>
+                  <Text style={{ color: 'red' }}>*</Text>
+                </View>
+                {errors.startDate && <Text style={{ color: "red", fontStyle: 'italic' }}>Required</Text>}
+              </View>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TouchableWithoutFeedback onPress={() => setShowStartDate(!showStartDate)}>
+                    <View style={[getFormInputStyle(errors.startDate), {flexDirection: 'row', alignItems: 'center'}]}>
+                      <Fontisto name="date" size={16} color="gray" />
+                      <DateTimePickerModal
+                        mode="datetime"
+                        isVisible={showStartDate}
+                        open={showStartDate}
+                        date={startDate}
+                        onConfirm={(selectedDate) => {
+                          const currentDate = selectedDate || startDate;
+                          setShowStartDate(!showStartDate);
+                          setStartDate(currentDate);
+                          onChange(currentDate);
+                        }}
+                        onCancel={() => {
+                          setShowStartDate(!showStartDate);
+                        }}
+                      /> 
+                      <Text style={{marginLeft: 5, width: '80%', color: 'black'}} >
+                        {value.toLocaleString('en-US', dateTimeOptions) || "Enter start date"}
+                      </Text>
                     </View>
-                    {errors.startDate && <Text style={{ color: "red", fontStyle: 'italic' }}>Required</Text>}
-                  </View>
-                  <Controller
-                    control={control}
-                    rules={{
-                      required: true,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TouchableWithoutFeedback onPress={() => setShowStartDate(!showStartDate)}>
-                        <View  style={[getFormInputStyle(errors.startDate), {flexDirection: 'row', alignItems: 'center'}]}>
-                          <Fontisto name="date" size={16} color="gray" />
-                          <DateTimePickerModal
-                            isVisible={showStartDate}
-                            open={showStartDate}
-                            date={startDate}
-                            onConfirm={(selectedDate) => {
-                              const currentDate = selectedDate || startDate;
-                              setShowStartDate(!showStartDate);
-                              setStartDate(currentDate);
-                              onChange(currentDate.toLocaleDateString(undefined, dateOptions));
-                            }}
-                            onCancel={() => {
-                              setShowStartDate(!showStartDate);
-                            }}
-                          /> 
-                          <Text style={{marginLeft: 5, width: '80%', color: 'black'}} >
-                            {value || "Enter start date"}
-                          </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    )}
-                    name="startDate"
-                  />
-                </View>
-                <View style={{ width: '48%' }}>
-                  <View style={formLabelContainer}>
-                      <Text style={formLabel}>End Date </Text>
-                  </View>
-                  <Controller
-                    control={control}
-                    rules={{
-                      required: false,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        placeholder="Enter end date"
-                        placeholderTextColor='gray'
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        style={getFormInputStyle(errors.endDate)}
-                      />
-                    )}
-                    name="endDate"
-                  />
-                </View>
-              </View>
+                  </TouchableWithoutFeedback>
+                )}
+                name="startDate"
+              />
 
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, }}>
-                <View style={{ width: '48%' }}>
-                  <View style={formLabelContainer}>
-                      <Text style={formLabel}>Start Time </Text>
-                  </View>
-                  <Controller
-                    control={control}
-                    rules={{
-                      required: false,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        placeholder="Enter start time"
-                        placeholderTextColor='gray'
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        style={getFormInputStyle(errors.startTime)}
-                      />
-                    )}
-                    name="startTime"
-                  />
-                </View>
-                <View style={{ width: '48%' }}>
-                  <View style={formLabelContainer}>
-                      <Text style={formLabel}>End Time </Text>
-                  </View>
-                  <Controller
-                    control={control}
-                    rules={{
-                      required: false,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        placeholder="Enter end time"
-                        placeholderTextColor='gray'
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        style={getFormInputStyle(errors.endTime)}
-                      />
-                    )}
-                    name="endTime"
-                  />
-                </View>
+              <View style={formLabelContainer}>
+                  <Text style={formLabel}>End Date </Text>
               </View>
-
+              <Controller
+                control={control}
+                rules={{
+                  required: false,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TouchableWithoutFeedback onPress={() => setShowEndDate(!showEndDate)}>
+                    <View style={[getFormInputStyle(errors.endDate), {flexDirection: 'row', alignItems: 'center'}]}>
+                      <Fontisto name="date" size={16} color="gray" />
+                      <DateTimePickerModal
+                        mode="datetime"
+                        minimumDate={startDate}
+                        isVisible={showEndDate}
+                        open={showEndDate}
+                        date={endDate}
+                        onConfirm={(selectedDate) => {
+                          const currentDate = selectedDate || endDate;
+                          setEndDateEnabled(true);
+                          setShowEndDate(!showEndDate);
+                          setEndDate(currentDate);
+                          onChange(currentDate);
+                        }}
+                        onCancel={() => {
+                          setShowEndDate(!showEndDate);
+                        }}
+                      /> 
+                      <Text style={{marginLeft: 5, width: '80%', color: `${endDateEnabled ? 'black' : 'gray'}`}} >
+                        {value.toLocaleString('en-US', dateTimeOptions) || "Enter end date"}
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                )}
+                name="endDate"
+              />
             </View>
 
             <TouchableOpacity style={formSubmit} onPress={handleSubmit(onSubmit)}>
