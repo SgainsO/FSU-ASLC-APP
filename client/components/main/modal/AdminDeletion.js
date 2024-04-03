@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    height: modalheight,
     width: modalWidth,
     borderRadius: 15,
     borderTopLeftRadius: 16, // higher values to hide behind header
@@ -119,7 +118,6 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '100%',
-    height: modalheight * 0.78,
     paddingVertical: 10,
     paddingHorizontal: 20,
     justifyContent: 'space-between',
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginBottom: 10,
+    marginTop: 20,
   },
   formDeleteText: {
     color: 'white',
@@ -156,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginBottom: 10,
+    marginTop: 20,
   },
   formCancelText: {
     color: 'black',
