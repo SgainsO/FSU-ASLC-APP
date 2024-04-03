@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import { MaterialIcons, Fontisto } from '@expo/vector-icons';
 
@@ -8,6 +8,7 @@ import AdminDeletion from '../modal/AdminDeletion';
 const AdminTable = (props) => {
   const state = props.state;
 
+  const [headerContent, setHeaderContent] = useState([]);
   const [isItemVisible, setItemVisible] = useState(false);
   const [isDeletionVisible, setDeletionVisible] = useState(false);
   const [itemData, setItem] = useState([]);
@@ -48,7 +49,7 @@ const AdminTable = (props) => {
           const cellWidth = state.widthPercents[cellIndex];
           const isFirstCell = cellIndex === 0;
           const cellContent = isImageUrl(cellData) ?
-              <Image source={{ uri: cellData }} style={[styles.img, props.state.type == 'Event' && {borderRadius: 0,  width: 50, height: 50}]} /> :
+              <Image source={{ uri: cellData }} style={[styles.img, state.type == 'Event' && {borderRadius: 0,  width: 50, height: 50}]} /> :
               <Text style={styles.text}>{cellData}</Text>;
   
           return (
@@ -65,23 +66,25 @@ const AdminTable = (props) => {
     );
   };
 
-  renderHeader = () => {
-    return (
-      <View style={styles.head}>
-        {this.state.tableHead.map((headerItem, index) => (
-          <Text key={index} style={[styles.headerText, { width: `${state.widthPercents[index]}%` }]}>
-            {headerItem}
-          </Text>
-        ))}
-      </View>
-    );
+  // Update header content when tableHead or widthPercents change
+  useEffect(() => {
+    const newHeaderContent = props.state.tableHead.map((headerItem, index) => (
+      <Text key={index} style={[styles.headerText, { width: `${props.state.widthPercents[index]}%` }]}>
+        {headerItem}
+      </Text>
+    ));
+    setHeaderContent(newHeaderContent);
+  }, [props.state.tableHead, props.state.widthPercents]); // Dependencies array, re-run this effect when these values change
+
+  const renderHeader = () => {
+    return <View style={styles.head}>{headerContent}</View>;
   };
 
   return (
     <View style={styles.container}>
       {renderHeader()}
-      <AdminCreation data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} type={props.state.type} />
-      <AdminDeletion data={itemData} isModalVisible={isDeletionVisible} setModalVisible={setDeletionVisible} type={props.state.type} />
+      <AdminCreation data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} type={state.type} />
+      <AdminDeletion data={itemData} isModalVisible={isDeletionVisible} setModalVisible={setDeletionVisible} type={state.type} />
       <FlatList
         data={state.tableData}
         renderItem={renderItem}
