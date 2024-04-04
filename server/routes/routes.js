@@ -20,6 +20,23 @@ router.get('/health', (req, res) => {
 });
 
 // REQUEST TYPE: GET
+// REQUEST URL: /api/getUsers
+// RESPONSE: JSON
+router.get('/getUsers', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM users');
+    const users = result.rows;
+    client.release();
+
+    res.status(200).json({data: users, total: users.length})
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({data: {}, message: "Internal Error", total: users.length});
+  }  
+});
+
+// REQUEST TYPE: GET
 // REQUEST URL: /events/getAllEvents
 // RESPONSE: JSON
 router.get('/getAllEvents', async (req, res) => { 
