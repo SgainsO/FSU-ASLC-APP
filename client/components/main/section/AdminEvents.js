@@ -1,5 +1,6 @@
-import React, { useState, } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import axios from 'axios';
 
 import AdminCreation from '../modal/AdminCreation';
 import AdminTable from '../tables/AdminTable';
@@ -11,19 +12,34 @@ const AdminEvents = () => {
   // Search bar consts
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-
-  state = {
+  const [eventData, setEventData] = useState({
     tableHead: ['Image', 'ID', 'Club', 'Type', 'Title', 'Start', 'End', 'Actions'],
-    tableData: [
-      ['https://live.staticflickr.com/4434/37031540756_7a686a22ac_b.jpg', '0', '1', '3', 'ACM Programming Contest', '2024-04-03T01:41:00.000Z',  '2024-04-03T01:42:00.000Z'],
-      ['https://th.bing.com/th/id/OIP.TMjzM_W0Yn61ahSvOtBD-QHaEP?rs=1&pid=ImgDetMain.jpeg', '1', '2', '2', 'The Big Rave', '2024-04-03T01:43:00.000Z',  '2024-04-03T01:44:00.000Z'],
-      ['https://th.bing.com/th/id/OIP.vikfs7CXQWAmevCktVY00AHaE8?rs=1&pid=ImgDetMain.jpeg', '2', '0', '1', 'Purplefest', '2024-04-03T01:45:00.000Z',  '2024-04-03T01:46:00.000Z'],
-      ['https://th.bing.com/th/id/R.b1009333f7318c65de313e30e748e6f3?rik=qFQ9k2BQn9wP7w&riu=http%3a%2f%2fimages.fineartamerica.com%2fimages-medium-large%2fflorida-state-fountain-at-the-westcott-building-larry-novey.jpg&ehk=hqJ8yHxQE42AptqT8pHfWe8u5sNkDeBzSiCC%2f8uzY8Q%3d&risl=&pid=ImgRaw&r=0.png', '3', '3', '0', 'Westcott Fountain Drinking', '2024-04-03T01:47:00.000Z',  '2024-04-03T01:48:00.000Z'],
-      ['https://clipartcraft.com/images/no-logo-placeholder-2.png', '4', '0', '5', 'Example Event', '2024-04-03T01:49:00.000Z',  '2024-04-03T01:50:00.000Z'],
-    ],
+    tableData: [],
     widthPercents: [15, 7, 8, 8, 17, 13, 13, 20],
     type: 'Event'
-  }
+  });
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/getEvents');
+        const formattedData = response.data.data.map(event => [
+          event.url, // TODO: FIX THIS
+          event.id.toString(),
+          event.club_id,
+          event.type,
+          event.title,
+          event.start_date,
+          event.end_date,
+        ]);
+        console.log('formattedData: ', formattedData);
+        setEventData(prevState => ({ ...prevState, tableData: formattedData }));
+      } catch (error) {
+        console.error('Error retrieving events: ', error);
+      }
+    }
+    fetchEvents();
+  }, []);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -32,7 +48,7 @@ const AdminEvents = () => {
 
   return (
     <View style={styles.container}>
-      <AdminCreation isModalVisible={isModalVisible} setModalVisible={setModalVisible} type={state.type} />
+      <AdminCreation isModalVisible={isModalVisible} setModalVisible={setModalVisible} type={'Event'} />
       <View style={styles.topContainer}>
         <SearchBar
           searchPhrase={searchPhrase}
@@ -44,7 +60,7 @@ const AdminEvents = () => {
           <Entypo name="squared-plus" size={40} color="#27ae60" />
         </TouchableOpacity>
       </View>
-      <AdminTable state={state}/>
+      <AdminTable state={eventData}/>
     </View>
   );
 };
