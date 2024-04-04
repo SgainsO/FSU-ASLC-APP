@@ -31,6 +31,7 @@
     "react-native-collapsible": "^1.6.1",
     "react-native-dimensions": "^0.0.1",
     "react-native-element-dropdown": "^2.10.4",
+    "react-native-image-picker": "^7.1.2",
     "react-native-modal": "^13.0.1",
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-reanimated-table": "^0.0.2",
