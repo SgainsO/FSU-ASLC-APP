@@ -39,7 +39,7 @@ router.get('/getUsers', async (req, res) => {
 // REQUEST TYPE: GET
 // REQUEST URL: /events/getAllEvents
 // RESPONSE: JSON
-router.get('/getAllEvents', async (req, res) => { 
+router.get('/getEvents', async (req, res) => { 
   try {
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM events');
