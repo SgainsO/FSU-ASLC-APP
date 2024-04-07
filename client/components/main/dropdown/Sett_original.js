@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView,  TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useColorSchemeContext } from '../ColorSchemeContext';
-import SettingScreen from '../modal/Comments.js'
+import { useColorSchemeContext } from '../../main/ColorSchemeContext';
     
 
 const WordWithLine = ({ word, onPress }) => {
