@@ -93,12 +93,24 @@ const EventCard = (props) => {
   
   const [BookmarkColor, ChangeBookmarkColor] = useState('white')     //Allows button to change from white to another color
   const [BookmarkState, ChangeBookmarkState] = useState('star-outline') //Allows button to
+  
+  let isBookmarked = 0;
 
   function HandleBookmarkPress()
   {
     console.log("Bookmark button pressed")
-    ChangeBookmarkColor(BookmarkColor === "white"? "#CEB888" : "white")
+    if (isBookmarked == 0)
+    isBookmarked = 1;
+    else
+    isBookmarked = 0;
+
+    
+    ChangeBookmarkColor(BookmarkColor === "white"? "#FFFF00" : "white")
     ChangeBookmarkState(BookmarkState === "star-outline"? "star" : "star-outline")
+  }
+
+  function getIsBookmarked() {
+    return isBookmarked;
   }
 
 
@@ -147,6 +159,8 @@ const EventCard = (props) => {
 
   const { dateString, timeString } = formatDateAndTime(props.startDate, props.endDate);
 
+  
+
   return (
     <View style={cardImageStyle}>
       <View style={ImageHolderStyle}>
@@ -164,6 +178,8 @@ const EventCard = (props) => {
         <Text style={{ fontSize: 12, color: '#455154' }}>{formatNumber(props.interested)} interested</Text>
       </View>
     </View>
+
+
   );
 };
 
