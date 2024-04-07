@@ -5,14 +5,15 @@ const width = Dimensions.get('window').width;
 const AdminStat = (props) => {
   const cardStyle = {
     marginHorizontal: 5,
+    marginVertical: 15,
     width: width * 0.28,
     height: 100,
     borderColor: '#D9D9D9',
     borderWidth: 1,
     borderRadius: 10,
-    backgroundColor: '#D9D9D920',
+    backgroundColor: '#fff',
     shadowColor: 'rgba(0,0,0, 0.25)',
-    shadowOpacity: 0.5,
+    shadowOpacity: 0,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 4,
     elevation: 4,
