@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, FlatList, Text, Dimensions } from 'react-native';
-import { VictoryChart, VictoryBar, VictoryAxis, VictoryStack } from "victory-native";
+import { VictoryChart, VictoryBar, VictoryAxis, VictoryStack, VictoryLegend } from "victory-native";
 
 import AdminStat from '../cards/AdminStat';
 
@@ -152,18 +152,33 @@ const AdminHome = () => {
               colorScale={"qualitative"}
             >
               <VictoryBar
+                name="Users"
                 style={{ data: { fill: "#c43a31" } }}
                 data={userData}
               />
               <VictoryBar
+                name="Clubs"
                 style={{ data: { fill: "#4c72b0" } }}
                 data={clubData}
               />
               <VictoryBar
+                name="Events"
                 style={{ data: { fill: "#55a868" } }}
                 data={eventData}
               />
             </VictoryStack>
+
+            <VictoryLegend
+              x={55} y={10}
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "white" }, title: {fontSize: 20 } }}
+              data={[
+                { name: "Users", symbol: { fill: "#c43a31" } },
+                { name: "Clubs", symbol: { fill: "#4c72b0" } },
+                { name: "Events", symbol: { fill: "#55a868" } }
+              ]}
+            />
           </VictoryChart>
         </View>
       </ScrollView>
