@@ -21,6 +21,8 @@ const Footer = (props) => {
     const iconStyle = {
         width: windowWidth * 0.06,
         height: windowWidth * 0.06,
+        maxHeight: 45,
+        maxWidth: 45,
         borderRadius: 0,
         marginTop: 12,
         marginHorizontal: 28,

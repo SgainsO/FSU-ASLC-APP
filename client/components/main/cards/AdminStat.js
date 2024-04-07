@@ -4,6 +4,7 @@ const width = Dimensions.get('window').width;
 
 const AdminStat = (props) => {
   const cardStyle = {
+    paddingHorizontal: 10,
     marginHorizontal: 5,
     marginVertical: 15,
     width: width * 0.28,
@@ -18,16 +19,16 @@ const AdminStat = (props) => {
     shadowRadius: 4,
     elevation: 4,
     justifyContent: 'center',
-    alignItems: 'center',
   };
 
   return (
     <View style={cardStyle}>
         <View>
             <Text style={{ fontSize: 12, fontWeight: 600, color: '#455154' }}>{props.title}</Text>
-            <Text style={{ fontSize: 24, fontWeight: 'bold', paddingVertical: 5, }}>{props.stat}</Text>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', paddingVertical: 5, }}>{Number(props.stat).toLocaleString()}</Text>
             <Text style={{ fontSize: 12, color: '#455154' }}>
-                <Text style={{ fontWeight: 600, color: '#22c55e' }}>+{props.increase}</Text> from last week
+                <Text style={{ fontWeight: 600, color: '#22c55e' }}>+{Number(props.increase).toLocaleString()}</Text>
+                {'\n'}from last week
             </Text>
         </View>
     </View>

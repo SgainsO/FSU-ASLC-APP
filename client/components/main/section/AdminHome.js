@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ScrollView, View, StyleSheet, Button, FlatList, Text, Dimensions } from 'react-native';
-import { VictoryLine, VictoryChart, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis } from "victory-native";
+import { ScrollView, View, FlatList, Text, Dimensions } from 'react-native';
+import { VictoryChart, VictoryBar, VictoryAxis, VictoryStack } from "victory-native";
 
 import AdminStat from '../cards/AdminStat';
 
@@ -15,7 +15,8 @@ const AdminHome = () => {
     paddingHorizontal: 15,
   };
   const chartStyle = {
-    paddingVertical: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
     marginHorizontal: 5,
     borderColor: '#D9D9D9',
     borderWidth: 1,
@@ -45,21 +46,54 @@ const AdminHome = () => {
     {
       id: 0,
       title: 'TOTAL USERS',
-      stat: '1000',
-      increase: '10',
+      stat: 1000,
+      increase: 10,
     },
     {
       id: 1,
       title: 'TOTAL CLUBS',
-      stat: '200',
-      increase: '5',
+      stat: 200,
+      increase: 5,
     },
     {
       id: 2,
       title: 'TOTAL EVENTS',
-      stat: '50',
-      increase: '2',
+      stat: 50,
+      increase: 2,
     },
+  ];
+
+  const userData = [
+    {x: new Date(2000, 1, 1), y: 125},
+    {x: new Date(2000, 1, 2), y: 257},
+    {x: new Date(2000, 1, 3), y: 345},
+    {x: new Date(2000, 1, 4), y: 515},
+    {x: new Date(2000, 1, 5), y: 132},
+    {x: new Date(2000, 1, 6), y: 305},
+    {x: new Date(2000, 1, 7), y: 270},
+    {x: new Date(2000, 1, 8), y: 470}
+  ];
+
+  const clubData = [
+    {x: new Date(2000, 1, 1), y: 25},
+    {x: new Date(2000, 1, 2), y: 57},
+    {x: new Date(2000, 1, 3), y: 145},
+    {x: new Date(2000, 1, 4), y: 215},
+    {x: new Date(2000, 1, 5), y: 232},
+    {x: new Date(2000, 1, 6), y: 305},
+    {x: new Date(2000, 1, 7), y: 370},
+    {x: new Date(2000, 1, 8), y: 420}
+  ];
+
+  const eventData = [
+    {x: new Date(2000, 1, 1), y: 225},
+    {x: new Date(2000, 1, 2), y: 357},
+    {x: new Date(2000, 1, 3), y: 445},
+    {x: new Date(2000, 1, 4), y: 515},
+    {x: new Date(2000, 1, 5), y: 632},
+    {x: new Date(2000, 1, 6), y: 705},
+    {x: new Date(2000, 1, 7), y: 870},
+    {x: new Date(2000, 1, 8), y: 970}
   ];
 
   const renderItem = ({ item }) => {
@@ -84,76 +118,52 @@ const AdminHome = () => {
         </View>
 
         <View style={chartStyle}>
+          <Text style={{fontSize: 18, fontWeight: 600, color: '#000', paddingLeft: 10, alignSelf:'flex-start' }}>Overview</Text>
           <VictoryChart
             width={width * 0.8}
-            height={300}
+            height={height * 0.4}
             scale={{x: "time"}}
-            containerComponent={
-              <VictoryZoomContainer responsive={false}
-                zoomDimension="x"
-                zoomDomain={zoomDomain}
-                onZoomDomainChange={handleZoom}
-              />
-            }
-          >
-            <VictoryLine
-              style={{
-                data: {stroke: "tomato"}
-              }}
-              data={[
-                {x: new Date(1982, 1, 1), y: 125},
-                {x: new Date(1987, 1, 1), y: 257},
-                {x: new Date(1993, 1, 1), y: 345},
-                {x: new Date(1997, 1, 1), y: 515},
-                {x: new Date(2001, 1, 1), y: 132},
-                {x: new Date(2005, 1, 1), y: 305},
-                {x: new Date(2011, 1, 1), y: 270},
-                {x: new Date(2015, 1, 1), y: 470}
-              ]}
-            />
-
-          </VictoryChart>
-
-          <VictoryChart
-            width={width * 0.8}
-            height={90}
-            scale={{x: "time"}}
-            padding={{top: 0, left: 50, right: 50, bottom: 30}}
-            containerComponent={
-              <VictoryBrushContainer responsive={false}
-                brushDimension="x"
-                brushDomain={selectedDomain}
-                onBrushDomainChange={handleBrush}
-              />
-            }
+            domainPadding={10}
           >
             <VictoryAxis
-              tickValues={[
-                new Date(1985, 1, 1),
-                new Date(1990, 1, 1),
-                new Date(1995, 1, 1),
-                new Date(2000, 1, 1),
-                new Date(2005, 1, 1),
-                new Date(2010, 1, 1),
-                new Date(2015, 1, 1)
-              ]}
-              tickFormat={(x) => new Date(x).getFullYear()}
-            />
-            <VictoryLine
+              tickFormat={(x) => `${new Date(x).getMonth()+1}/${new Date(x).getDate()}`}
               style={{
-                data: {stroke: "tomato"}
+                tickLabels: { angle: 45, textAnchor: 'start', fontSize: 10 },
               }}
-              data={[
-                {x: new Date(1982, 1, 1), y: 125},
-                {x: new Date(1987, 1, 1), y: 257},
-                {x: new Date(1993, 1, 1), y: 345},
-                {x: new Date(1997, 1, 1), y: 515},
-                {x: new Date(2001, 1, 1), y: 132},
-                {x: new Date(2005, 1, 1), y: 305},
-                {x: new Date(2011, 1, 1), y: 270},
-                {x: new Date(2015, 1, 1), y: 470}
-              ]}
+              tickCount={20}
             />
+            <VictoryAxis
+              dependentAxis
+              tickFormat={(y) => (`${y}`)}
+              style={{
+                axis: {stroke: "#756f6a"},
+                axisLabel: {fontSize: 20, padding: 30},
+                grid: {
+                  stroke: ({ tick }) => tick > 0 ? "grey" : "transparent",
+                  strokeDasharray: "4, 5"
+                },
+                ticks: {stroke: "grey", size: 5},
+                tickLabels: {fontSize: 15, padding: 5}
+              }}
+              tickCount={10}
+            />
+            <VictoryStack
+              offset={10}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                style={{ data: { fill: "#c43a31" } }}
+                data={userData}
+              />
+              <VictoryBar
+                style={{ data: { fill: "#4c72b0" } }}
+                data={clubData}
+              />
+              <VictoryBar
+                style={{ data: { fill: "#55a868" } }}
+                data={eventData}
+              />
+            </VictoryStack>
           </VictoryChart>
         </View>
       </ScrollView>
