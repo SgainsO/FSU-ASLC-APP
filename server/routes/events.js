@@ -29,6 +29,7 @@ router.get('/GetAllEvents', async (req, res) => {
 
 router.get('/GetAllEventCats', async (req, res) => {
    try{ 
+    print('trying to get all events')
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM event_categories');
     const events = result.rows;

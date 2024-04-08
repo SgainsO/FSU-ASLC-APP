@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useColorSchemeContext } from '../../../main/ColorSchemeContext';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
 
 const Account = () => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext();
@@ -13,6 +15,27 @@ const Account = () => {
     setActiveIcon(iconName);
     navigation.navigate(navigateTo);
   };
+
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      setValue('image', result.assets[0].uri);
+    } else {
+      setImage(props.data?.[0] ?? defaultImg);
+      setValue('image', result.assets[0].uri);
+    }
+  };
+
   const WordWithLineBlue = ({ word, onPress }) => {
     return (
         <TouchableOpacity onPress={onPress}>
@@ -43,12 +66,23 @@ const Account = () => {
       </TouchableOpacity>
     
       <View style={styles.centeredContainer}>
-      <Text style={[styles.Title, colorScheme === 'dark' && styles.darkText]}>Account</Text>
-        {/* First Image */}
-        <Image source={require('../../../../assets/daniel.png')} style={styles.image} />
+        <Text style={styles.Title}>Account</Text>
+        {/* Conditionally render the user-uploaded image if available */}
+
+        {image ? (
+          <TouchableOpacity onPress={pickImage}>
+            <Image source={{ uri: image }} style={styles.image} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={pickImage}>
+            <Image source={require('../../../../assets/daniel.png')} style={styles.image} />
+          </TouchableOpacity>
+        )}
+
 
         {/* Second Image (Overlayed) */}
         <Image source={require('../../../../assets/pencil.png')} style={[styles.image, styles.overlay]} />
+        
       </View>
 
       <View>
