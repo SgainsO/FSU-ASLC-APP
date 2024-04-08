@@ -14,7 +14,7 @@ const pool = new Pool({
 });                          //Connects to the PostSQL database
 
 // REQUEST TYPE: GET
-// REQUEST URL: /events/health
+// REQUEST URL: /api/health
 router.get('/health', (req, res) => {
   res.status(200);
 });
@@ -37,7 +37,7 @@ router.get('/getUsers', async (req, res) => {
 });
 
 // REQUEST TYPE: GET
-// REQUEST URL: /events/getAllEvents
+// REQUEST URL: /api/getAllEvents
 // RESPONSE: JSON
 router.get('/getEvents', async (req, res) => { 
   try {
@@ -54,7 +54,23 @@ router.get('/getEvents', async (req, res) => {
 });
 
 // REQUEST TYPE: GET
-// REQUEST URL: /events/getAllCategories
+// REQUEST URL: /api/getClubs
+// RESPONSE: JSON
+router.get('/getClubs', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM clubs');
+    const clubs = result.rows;
+    client.release();
+    
+    res.status(200).json({data: clubs, total: clubs.length})
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({data: {}, message: "Internal Error", total: clubs.length});
+  }
+});
+// REQUEST TYPE: GET
+// REQUEST URL: /api/getAllCategories
 // RESPONSE: JSON
 router.get('/getAllCategories', cors(), async (req, res) => {
   console.log("entered getAllCategories")
@@ -72,7 +88,7 @@ router.get('/getAllCategories', cors(), async (req, res) => {
 })
 
 // REQUEST TYPE: GET
-// REQUEST URL: /events/getEvent/1
+// REQUEST URL: /api/getEvent/1
 // REQUEST PARMS: id
 // RESPONSE: JSON
 router.get('getEvent/:id', async (req, res) => {
@@ -97,26 +113,28 @@ router.get('getEvent/:id', async (req, res) => {
 });
 
 // REQUEST TYPE: GET
-// REQUEST URL: /events/getCategory/social
+// REQUEST URL: /api/getCategory/social
 // REQUEST PARMS: category
 router.get('getCategory/:id', async (req, res) => {
-    const category = req.params.category;
-  
-    try {
-      const client = await pool.connect();
-      const result = await client.query('SELECT * FROM events WHERE category = $1', [category]);
-      const events = result.rows;
-      client.release();
+  const category = req.params.category;
 
-      res.status(200).json({data: events, message: "", total: events.length})
-    } catch (err) {
-      console.error('Error executing query', err);
-      res.status(500).json({data: {}, message: "Internal Error", total: events.length});
-    }
-  });
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM events WHERE category = $1', [category]);
+    const events = result.rows;
+    client.release();
+
+    res.status(200).json({data: events, message: "", total: events.length})
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({data: {}, message: "Internal Error", total: events.length});
+  }
+});
 
 
-
+// REQUEST TYPE: POST
+// REQUEST URL: /api/postEvent
+// REQUEST PARMS: title, club, type, startDate, endDate, interested, category
 router.post('/postEvent', async (req, res) => {
     const { title, club, type, startDate, endDate, interested, category } = req.body;
 
@@ -134,7 +152,9 @@ router.post('/postEvent', async (req, res) => {
   }
 });
 
-//id, name, type
+// REQUEST TYPE: POST
+// REQUEST URL: /api/postEventCat
+// REQUEST PARMS: id, title, cat_query, imageurl
 router.post('/postEventCat', async (req, res) => {
     const {id, title, cat_query, imageurl } = req.body;
 
