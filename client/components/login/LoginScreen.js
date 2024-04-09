@@ -46,11 +46,11 @@ const LoginScreen = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={styles.button} onPress={() => handleLogin(username, password)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={isLoggedIn}>
+      <TouchableOpacity style={styles.button} onPress={() => isLoggedIn()}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
