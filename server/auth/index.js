@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
 
 const verifyToken = (req, res, next) => {
     const token = req.header("userToken");
@@ -7,8 +8,8 @@ const verifyToken = (req, res, next) => {
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        req.user = verified;
-        next();
+        
+        res.status(200).json({ message: "Token has been authenticated."})
     } catch (err) {
         res.status(400).send("Invalid Token");
     }
@@ -19,7 +20,7 @@ const findToken = (req, res, next) => {
     if (!token) return res.status(401).send("Access Denied");
 
     try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
         req.user = verified;
         next();
     } catch (err) {
@@ -27,17 +28,10 @@ const findToken = (req, res, next) => {
     }
 }
 
-const signToken = (req, res, next) => {
-    const token = req.header("userToken");
-    if (!token) return res.status(401).send("Access Denied");
+const signToken = (userID) => {
+    console.log(userID)
 
-    try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        req.user = verified;
-        next();
-    } catch (err) {
-        res.status(400).send("Invalid Token");
-    }
+    return jwt.sign({ token: userID }, process.env.JWT_SECRET);
 }
 
-module.exports = { verifyToken, findToken };
+module.exports = { verifyToken, findToken, signToken};
