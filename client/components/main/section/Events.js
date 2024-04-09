@@ -1,91 +1,62 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { ButtonGroup } from '@rneui/themed';
 import SearchBar from '../SearchBar';
 import { useColorSchemeContext } from '../ColorSchemeContext';
 
 import Card from '../cards/EventCard';
 
+const Events = ({ route }) => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
 
+  const [data, setData] = useState({
+    tableHead: ['Image', 'ID', 'Club', 'Type', 'Title', 'Start', 'End', 'Actions'],
+    tableData: [],
+    widthPercents: [15, 7, 8, 8, 17, 13, 13, 20],
+    type: 'Event'
+  });
 
-const Events = ({route}) => {
-  const { colorScheme, toggleColorScheme } = useColorSchemeContext()
+  const { title } = route.params;
 
-  const filters = [
-    { id: 0, type: 'All' },
-    { id: 1, type: 'Club' },
-    { id: 2, type: 'Movie' },
-    { id: 3, type: 'University' },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/getEvents');
+        const formattedData = response.data.data.map(event => [
+          event.url,
+          event.id.toString(),
+          event.club_id,
+          event.type,
+          event.title,
+          event.start_date,
+          event.end_date,
+        ]);
+        console.log('formattedData: ', formattedData);
+        setData(prevState => ({ ...prevState, tableData: formattedData }));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-  const data = [
-    { id: 0, title: 'Event 1', club: 'Club 1', type: 3, startDate: new Date('2024-01-22T10:30:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 4942 },
-    { id: 1, title: 'Event 2', club: 'Club 2', type: 1, startDate: new Date('2024-01-24T11:30:00'), endDate: new Date('2024-01-26T18:30:00'), interested: 2245 },
-    { id: 2, title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632 },
-    { id: 3, title: 'Event 4', club: 'Club 4', type: 3, startDate: new Date('2024-01-28T22:30:00'), endDate: new Date('2024-01-29T1:00:00'), interested: 420 },
-    { id: 4, title: 'Event 5', club: 'Club 5', type: 1, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-24T12:15:00'), interested: 165 },
-    { id: 5, title: 'Event 6', club: 'Club 6', type: 2, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 42 },
-  ];
-
-  // Search bar consts
-  const [searchPhrase, setSearchPhrase] = useState("");
-  const [clicked, setClicked] = useState(false);
-  // Dropdown filter consts
-  const [dropdownType, setdropdownType] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  // Filter button consts
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedIndexes, setSelectedIndexes] = useState([]);
-
-  const {title, dbLink} = route.params
-  const eventScreenName = title === undefined ? "Title Here" : title;     // Define a defualt in case alternative title was not passed
-  console.log(eventScreenName)
-
-  function GetAllEventData()                                 //ROUTE MUST LOOK LIKE THIS 
-  {
-    const response = axios.get('http://localhost:8080/api/' + dbLink + '/events')
-      .then(response => {                    //Error Catching
-        console.log("Get Request Succesful")
-        return response.data;})
-      .catch(error => {
-        console.error("Get Request Failed", error)
-      })
-  
-    
-  }
+    fetchData();
+  }, []);
 
   const renderItem = ({ item }) => {
-    const isMatch = searchPhrase === "" ||
-    item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
-    item.club.toUpperCase().includes(searchPhrase.toUpperCase());
-
-    if (isMatch) {
-      return <Card title={item.title} club={item.club} type={item.type} startDate={item.startDate} endDate={item.endDate} interested={item.interested} SizePerc={.43}/>;
-    }
-
-    return null;
+    return <Card title={item.title} club={item.club} type={item.type} startDate={item.startDate} endDate={item.endDate} interested={item.interested} SizePerc={0.43} />;
   };
 
   return (
     <View style={colorScheme === 'dark' ? styles.darkContainer : styles.container}>
-        <Text style = {[styles.Title, colorScheme === 'dark' && styles.darkText]}>{eventScreenName}</Text>
+      <Text style={[styles.Title, colorScheme === 'dark' && styles.darkText]}><Text>{title}</Text></Text>
       <View style={[styles.topContainer, colorScheme === 'dark' && styles.darkContainer]}>
-        <SearchBar
-          dropdownType={dropdownType}
-          setdropdownType={setdropdownType}
-          isFocus={isFocus}
-          setIsFocus={setIsFocus}
-          searchPhrase={searchPhrase}
-          setSearchPhrase={setSearchPhrase}
-          clicked={clicked}
-          setClicked={setClicked}
-        />
+        {/*search bar*/}
       </View>
 
       <FlatList
-        data={data}
+        data={data} 
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()} 
         numColumns={2}
         columnWrapperStyle={styles.row}
         ListHeaderComponent={() => <Text style={[styles.title, colorScheme === 'dark' && styles.darkText]}>DISCOVER EVENTS</Text>}
@@ -106,14 +77,13 @@ const styles = StyleSheet.create({
   darkText: {
     color: '#FFFFFF',
   },
-  Title:
-  {
+  Title: {
     paddingTop: 10,
     fontSize: 40,
     fontWeight: '600',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
-  topContainer: {                        //Container holding the search
+  topContainer: {
     height: 60,
     backgroundColor: 'white',
     shadowColor: 'rgba(60,60,67, 0.29)',
