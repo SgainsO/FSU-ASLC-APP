@@ -1,15 +1,17 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ButtonGroup } from '@rneui/themed';
 import SearchBar from '../SearchBar';
 import { useColorSchemeContext } from '../ColorSchemeContext';
 import RoundedButton from '../cards/RoundedButton';
 import { getIsBookmarked } from '../cards/EventCard.js';
 import Card from '../cards/EventCard';
+import { GetSaved } from '../APIUse.js';
+
+
 
 const Events = ({route}) => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext()
-
   const filters = [
     { id: 0, type: 'All' },
     { id: 1, type: 'Club' },
@@ -28,6 +30,7 @@ const Events = ({route}) => {
 
   ];
   const originalData = [...data]; // Make a copy of the original data
+
 
 function sortByInterestedDescending(data) {
   return [...data].sort((a, b) => b.interested - a.interested); // sort without alterting data
@@ -64,9 +67,13 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
       .catch(error => {
         console.error("Get Request Failed", error)
       })
-  
-    
   }
+  let LikedInformation = {}
+
+  useEffect(() => {
+    LikedInformation = GetSaved();
+  }, []);
+
 
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
@@ -74,7 +81,7 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     item.club.toUpperCase().includes(searchPhrase.toUpperCase());
 
     if (isMatch) {
-      return <Card title={item.title} club={item.club} type={item.type} startDate={item.startDate} endDate={item.endDate} interested={item.interested} SizePerc={.43}/>;
+      return <Card title={item.title} club={item.club} type={item.type} startDate={item.startDate} endDate={item.endDate} interested={item.interested} SizePerc={.43} UserLiked={LikedInformation}/>;
     }
 
     return null;
