@@ -2,6 +2,7 @@ const express = require('express');
 const dbConfig = require("../db.config.js");
 const { Pool } = require('pg');
 var cors = require('cors');
+const { route } = require('./events.js');
 
 const router = express.Router();             //Allows us to use the express framework
 
@@ -18,6 +19,28 @@ const pool = new Pool({
 router.get('/health', (req, res) => {
   res.status(200);
 });
+
+// INPUT STRING
+// REQUEST TYPE: POST
+// REQUEST URL: /users/:userID/add-to-saveds
+router.post('/users/:userID/add-to-saved', async (req, res) => {
+  try{
+  const {PostID} = req.body;
+  const client = await pool.connect();
+  const result = await client.query('UPDATE users SET saved = array_append(saved, $1) WHERE id = $2', [PostID ,userID]);
+  const newEvent = result.rows[0];
+  res.json(newEvent); 
+
+  }catch(err){
+    console.error('Error executing update array q.', err);
+    res.status(500).send('Error creating event');
+  }
+
+});
+
+
+
+
 
 // REQUEST TYPE: GET
 // REQUEST URL: /api/getUsers
