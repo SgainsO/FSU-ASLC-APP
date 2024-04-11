@@ -1,7 +1,6 @@
 const express = require('express');
 const pool = require('../db/database');
 var cors = require('cors');
-const { route } = require('./events.js');
 
 const router = express.Router();             //Allows us to use the express framework
 
