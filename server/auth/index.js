@@ -35,4 +35,6 @@ const signToken = (userID) => {
     return jwt.sign({ token: userID }, process.env.JWT_SECRET, {expiresIn: '30d'});
 }
 
+// TODO: Add refresh logic so that the token can be refreshed to allow for lower expiresIN time
+
 module.exports = { verifyToken, findToken, signToken};
