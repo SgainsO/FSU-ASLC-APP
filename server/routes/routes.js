@@ -25,6 +25,7 @@ router.get('/health', (req, res) => {
 // REQUEST URL: /users/:userID/add-to-saveds
 router.post('/users/:userID/add-to-saved', async (req, res) => {
   try{
+    console.log('adding')
   const {PostID} = req.body;
   const userID = req.params.userID; 
   const client = await pool.connect();
@@ -44,6 +45,7 @@ router.post('/users/:userID/add-to-saved', async (req, res) => {
 // REQUEST URL: /users/:userID/add-to-saveds
 router.post('/users/:userID/remove-from-saved', async (req, res) => {
   try {
+    console.log("remove")
     const { PostID } = req.body;
     const userID = req.params.userID; 
     const client = await pool.connect();

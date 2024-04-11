@@ -21,7 +21,8 @@ export function GetSaved()
   return axios.get('http://localhost:3000/api/getSavedEvents/76d3aebd-5af3-496e-bd67-0d37c84bf28c') // Adjust the URL to match your local server
   .then(response => {
 
-    return response.data.data;
+    console.log(response.data.data[0].saved)
+    return response.data.data[0].saved;
   })
   .catch(error => {
     console.error('Error fetching data:', error);
@@ -30,11 +31,13 @@ export function GetSaved()
 
 }
 
-export function AddToSave(eventId)
+export async function AddToSave(eventId)
 {
-  axios.post(`/users/${userID}/add-to-saved`, eventId)
+  await console.log(eventId);
+  console.log('entered add')
+  axios.post(`http://localhost:3000/api/users/${userID}/add-to-saved`, {PostID: eventId})
   .then(response => {
-    console.log('Response:', response.data);
+    console.log('Response:', response);
     // Handle response data here
   })
   .catch(error => {
@@ -45,7 +48,7 @@ export function AddToSave(eventId)
 
 export function RemoveFromSave(eventId)
 {
-  axios.post(`/users/${userID}/remove-from-saved`, eventId)
+  axios.post(`http://localhost:3000/api/users/${userID}/remove-from-saved`, eventId)
   .then(response => {
     console.log('Response:', response.data);
     // Handle response data here
