@@ -48,7 +48,7 @@ export async function AddToSave(eventId)
 
 export function RemoveFromSave(eventId)
 {
-  axios.post(`http://localhost:3000/api/users/${userID}/remove-from-saved`, eventId)
+  axios.post(`http://localhost:3000/api/users/${userID}/remove-from-saved`, {PostID: eventId})
   .then(response => {
     console.log('Response:', response.data);
     // Handle response data here
