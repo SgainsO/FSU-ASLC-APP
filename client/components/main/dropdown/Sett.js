@@ -64,7 +64,7 @@ const Sett = () => {
       <WordWithLine word="Notifications                               >" onPress={() => handleIconPress('Notifications', 'Notifications')}/>
       <WordWithLine word="Interaction History                    >" onPress={() => handleIconPress('Interaction', 'Interaction')}/>
       <WordWithLine word="Contact Us                                  >" onPress={() => handleIconPress('ContactUs', 'ContactUs')}/>
-      <WordWithLineRed word="Log out                                         >" onPress={() => handleLogout()}/>
+      <WordWithLineRed word="Log out                                         >" onPress={() => [handleLogout(), handleIconPress('Login', 'Login')]}/>
       
 <View style={colorScheme === 'dark' && styles.blackBackground}>
 

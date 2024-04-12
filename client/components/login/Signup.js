@@ -9,7 +9,7 @@ import { useAuth } from '../AuthProvider';
 
 const {width, height} = Dimensions.get('window');
 
-const LoginScreen = () => {
+const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,9 +18,12 @@ const LoginScreen = () => {
   const navigate = (navigateTo) => {
     navigation.navigate(navigateTo);
   }
+
   const handleIconPress = (iconName, navigateTo) => {
+    setActiveIcon(iconName);
     navigation.navigate(navigateTo);
 };
+
   const { setIsAdmin, handleLogin, isLoggedIn} = useAuth();
 
   return (
@@ -48,28 +51,8 @@ const LoginScreen = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => handleLogin(username, password)}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => [isLoggedIn(), navigate("Signup")]}>
+      <TouchableOpacity style={styles.button} onPress={() => isLoggedIn()}>
         <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigate("Main")}>
-        <Text style={styles.buttonText}>Temp Go To Home</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => setIsAdmin(false)}>
-        <Text style={styles.buttonText}>Set Admin False</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => setIsAdmin(true)}>
-        <Text style={styles.buttonText}>Set Admin True</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button}>
-        <Notification />
       </TouchableOpacity>
       
     </View>
@@ -114,4 +97,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+export default Signup;

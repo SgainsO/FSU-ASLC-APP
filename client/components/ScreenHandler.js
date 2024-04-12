@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '../components/AuthProvider';
 import { useNavigation } from '@react-navigation/native';
 
-
+import Signup from './login/Signup'
 import LoginScreen from './login/LoginScreen';
 import MainScreen from './main/MainScreen';
 import { useEffect } from 'react';
@@ -28,7 +28,7 @@ const ScreenHandler = () => {
     if (userToken) {
       navigation.navigate('Main');
     } else {
-      navigation.navigate('Login');
+      navigation.navigate('Signup');
     }
   }, [userToken]);
 
@@ -43,6 +43,11 @@ const ScreenHandler = () => {
         <Stack.Screen
           name="Main"
           component={MainScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
