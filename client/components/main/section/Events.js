@@ -1,15 +1,17 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ButtonGroup } from '@rneui/themed';
 import SearchBar from '../SearchBar';
 import { useColorSchemeContext } from '../ColorSchemeContext';
 import RoundedButton from '../cards/RoundedButton';
 import { getIsBookmarked } from '../cards/EventCard.js';
 import Card from '../cards/EventCard';
+import { GetSaved } from '../APIUse.js';
+
+
 
 const Events = ({route}) => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext()
-
   const filters = [
     { id: 0, type: 'All' },
     { id: 1, type: 'Club' },
@@ -17,17 +19,18 @@ const Events = ({route}) => {
     { id: 3, type: 'University' },
   ];
 
-   data = [
-    { id: 0, title: 'Event 1', club: 'Club 1', type: 3, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
-    { id: 1, title: 'Event 2', club: 'Club 2', type: 1, startDate: new Date('2024-01-24T11:30:00'), endDate: new Date('2024-01-26T18:30:00'), interested: 2245, isBookmarked: 0, },
-    { id: 2, title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632 , isBookmarked: 0,},
-    { id: 3, title: 'Event 4', club: 'Club 4', type: 3, startDate: new Date('2024-01-28T22:30:00'), endDate: new Date('2024-01-29T1:00:00'), interested: 4253, isBookmarked: 0, },
-    { id: 4, title: 'Event 5', club: 'Club 5', type: 1, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-24T12:15:00'), interested: 165, isBookmarked: 0, },
-    { id: 5, title: 'Event 6', club: 'Club 6', type: 2, startDate: new Date('2023-01-24T11:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 4332, isBookmarked: 0, },
-   { id: 6, title: 'Event 7', club: 'Club 7', type: 2, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 9876 , isBookmarked: 0,},
+   data = [     
+    { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
+    { id: "1", title: 'Event 2', club: 'Club 2', type: 1, startDate: new Date('2024-01-24T11:30:00'), endDate: new Date('2024-01-26T18:30:00'), interested: 2245, isBookmarked: 0, },
+    { id: "2", title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632 , isBookmarked: 0,},
+    { id: "3", title: 'Event 4', club: 'Club 4', type: 3, startDate: new Date('2024-01-28T22:30:00'), endDate: new Date('2024-01-29T1:00:00'), interested: 4253, isBookmarked: 0, },
+    { id: "4", title: 'Event 5', club: 'Club 5', type: 1, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-24T12:15:00'), interested: 165, isBookmarked: 0, },
+    { id: "5", title: 'Event 6', club: 'Club 6', type: 2, startDate: new Date('2023-01-24T11:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 4332, isBookmarked: 0, },
+    { id: "6", title: 'Event 7', club: 'Club 7', type: 2, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 9876 , isBookmarked: 0,},
 
   ];
   const originalData = [...data]; // Make a copy of the original data
+
 
 function sortByInterestedDescending(data) {
   return [...data].sort((a, b) => b.interested - a.interested); // sort without alterting data
@@ -64,18 +67,34 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
       .catch(error => {
         console.error("Get Request Failed", error)
       })
-  
-    
   }
+  const [likedInformation, SetLiked] = useState(null)
+  const [loading, setLoading] = useState(true);
+
+   useEffect(() => {             //all of the cards will recieve the same "liked" information file
+        async function fetchData() {
+          SetLiked(await GetSaved())
+          setLoading(false)  
+        }
+
+      fetchData()
+  }, []);
+
+
 
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
     item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
     item.club.toUpperCase().includes(searchPhrase.toUpperCase());
-
+  
     if (isMatch) {
-      return <Card title={item.title} club={item.club} type={item.type} startDate={item.startDate} endDate={item.endDate} interested={item.interested} SizePerc={.43}/>;
-    }
+     if(!loading)
+     {
+      return <Card id = {item.id} title={item.title} club={item.club} type={item.type} 
+        startDate={item.startDate} endDate={item.endDate} interested={item.interested} 
+        SizePerc={.43} UserLiked={(item.id in likedInformation) ? 1 : 0}/>;
+     }
+    }                             //if the id is in saved table, the favorited will be on 
 
     return null;
   };

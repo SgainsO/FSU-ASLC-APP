@@ -15,7 +15,9 @@ router.get('/health', (req, res) => {
 // REQUEST URL: /users/:userID/add-to-saveds
 router.post('/users/:userID/add-to-saved', async (req, res) => {
   try{
+    console.log('adding')
   const {PostID} = req.body;
+  const userID = req.params.userID; 
   const client = await pool.connect();
   const result = await client.query('UPDATE users SET saved = array_append(saved, $1) WHERE id = $2', [PostID ,userID]);
   const newEvent = result.rows[0];
@@ -28,6 +30,42 @@ router.post('/users/:userID/add-to-saved', async (req, res) => {
 
 });
 
+// INPUT STRING
+// REQUEST TYPE: POST
+// REQUEST URL: /users/:userID/add-to-saveds
+router.post('/users/:userID/remove-from-saved', async (req, res) => {
+  try {
+    console.log("remove")
+    const { PostID } = req.body;
+    const userID = req.params.userID; 
+    const client = await pool.connect();
+    const result = await client.query('UPDATE users SET saved = array_remove(saved, $1) WHERE id = $2', [PostID, userID]);
+    client.release();
+    res.json({ success: true }); // Respond with a success message
+  } catch (err) {
+    console.error('Error executing update array query:', err);
+    res.status(500).json({ error: 'Error removing saved post' }); // Send an error response
+  }
+});
+
+
+// REQUEST TYPE: GET
+// REQUEST URL: /api/getSavedEvents/:userID
+// RESPONSE: JSON
+router.get('/getSavedEvents/:userID', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const userID = req.params.userID;
+    const result = await client.query('SELECT saved FROM users WHERE id IN ($1);',[userID]);
+    const users = result.rows;
+    client.release();
+
+    res.status(200).json({data: users, total: users.length})
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({data: {}, message: "Internal Error", total: users.length});
+  }  
+});
 
 
 
