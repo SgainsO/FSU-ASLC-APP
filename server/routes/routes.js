@@ -1,18 +1,8 @@
 const express = require('express');
-const dbConfig = require("../db.config.js");
-const { Pool } = require('pg');
+const pool = require('../db/database');
 var cors = require('cors');
-const { route } = require('./events.js');
 
 const router = express.Router();             //Allows us to use the express framework
-
-const pool = new Pool({ 
-  user: dbConfig.USER,
-  host: dbConfig.HOST,
-  database: dbConfig.DB,
-  password: dbConfig.PASSWORD,
-  port: 5432
-});                          //Connects to the PostSQL database
 
 // REQUEST TYPE: GET
 // REQUEST URL: /api/health
