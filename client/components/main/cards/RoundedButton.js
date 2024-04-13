@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { GetEventsFromKey } from '../APIUse';
 
-const RoundedButton = ({ title, onPress, buttonStyle, textStyle, isActive }) => {
-    const [buttonColor, setButtonColor] = useState('white'); // State to hold button color
+const RoundedButton = ({ title, onPress, buttonStyle, textStyle, isActive, Key, ChangeDataFunction }) => {
+    
+  const [loading, setLoadingState] = useState(null)
+
+  async function HandleRequest()
+  {
+      setLoadingState(true);
+      ChangeDataFunction(await GetEventsFromKey(Key));
+      setLoadingState(false);
+  }
+
+  useEffect(() => {
+    HandleRequest();
+  }, [])
+
+  const [buttonColor, setButtonColor] = useState('white'); // State to hold button color
     const handlePress = () => {
-        // Change button color on press
+        
+      HandleRequest();
+
+
         setButtonColor(buttonColor === 'white' ? '#CEB888' : 'white');
-        onPress && onPress(); // Invoke the provided onPress function
+     //   onPress && onPress(); // Invoke the provided onPress function
       };
 
   return (

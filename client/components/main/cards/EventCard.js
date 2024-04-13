@@ -17,6 +17,8 @@ const EventCard = (props) => {
   const cardWidth = screenWidth * props.SizePerc
   console.log(cardWidth)
 
+  console.log(props)
+
   const cardImageStyle = {
     marginRight: 10,
     marginBottom: 20,
@@ -93,8 +95,8 @@ const EventCard = (props) => {
     alignItems: 'center'
   }
   
-  const [BookmarkColor, ChangeBookmarkColor] = useState(props.UserLiked === 0 ? 'white' : '#FFFF00');
-  const [BookmarkState, ChangeBookmarkState] = useState(props.UserLiked === 0 ? 'star-outline' : 'star') //Allows button to
+  const [BookmarkColor, ChangeBookmarkColor] = useState(props.UserLiked === false ? 'white' : '#FFFF00');
+  const [BookmarkState, ChangeBookmarkState] = useState(props.UserLiked === false ? 'star-outline' : 'star') //Allows button to
   
   const [isBookmarked, ChangeMarked] = useState(props.UserLiked) //A
 
@@ -103,14 +105,14 @@ const EventCard = (props) => {
   function HandleBookmarkPress()
   {
     console.log("Bookmark button pressed")
-    if (isBookmarked == 0)
+    if (isBookmarked == false)
     {
-    ChangeMarked(1);
+    ChangeMarked(true);
     AddToSave(id)
     }
     else
     {
-    ChangeMarked(0);
+    ChangeMarked(false);
     RemoveFromSave(id);  
     }
 

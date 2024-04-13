@@ -104,6 +104,22 @@ router.get('/getEvents', async (req, res) => {
   }
 });
 
+
+router.get('/getEventsFromKey/:key', async (req, res) => { 
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM events WHERE query_key = $1', [req.params.key]);
+    const events = result.rows;
+    client.release();
+
+    res.status(200).json({data: events, message: "Data Recieved", total: events.length})
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(404).json({data: {}, message: "Internal Error", total: events.lengths})
+  }
+});
+
+
 // REQUEST TYPE: GET
 // REQUEST URL: /api/getClubs
 // RESPONSE: JSON

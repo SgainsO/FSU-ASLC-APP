@@ -18,9 +18,11 @@ export function getCategories() {
 
 export function GetSaved() 
 {                                                    //FOR TESTING
-  return axios.get('http://localhost:3000/api/getSavedEvents/76d3aebd-5af3-496e-bd67-0d37c84bf28c') // Adjust the URL to match your local server
+  return axios.get(`http://localhost:3000/api/getSavedEvents/${userID}`) // Adjust the URL to match your local server
   .then(response => {
 
+
+    console.log('GetSaved')
     console.log(response.data.data[0].saved)
     return response.data.data[0].saved;
   })
@@ -50,11 +52,25 @@ export function RemoveFromSave(eventId)
 {
   axios.post(`http://localhost:3000/api/users/${userID}/remove-from-saved`, {PostID: eventId})
   .then(response => {
-    console.log('Response:', response.data);
     // Handle response data here
   })
   .catch(error => {
     console.error('Error:', error);
     // Handle errors here
   });
+}
+
+export function GetEventsFromKey(key) 
+{                                        
+  console.log(key)            //FOR TESTING
+  return axios.get(`http://localhost:3000/api/getEventsFromKey/${key}`) // Adjust the URL to match your local server
+  .then(response => {
+
+    return response.data.data;
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+    throw error; // Re-throwing the error to propagate it to the caller
+  });
+
 }

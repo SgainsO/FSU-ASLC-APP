@@ -20,7 +20,7 @@ const Events = ({route}) => {
   ];
 
    data = [     
-    { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
+    { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startdate: new Date('2024-01-24T10:30:00'), enddate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
     { id: "1", title: 'Event 2', club: 'Club 2', type: 1, startDate: new Date('2024-01-24T11:30:00'), endDate: new Date('2024-01-26T18:30:00'), interested: 2245, isBookmarked: 0, },
     { id: "2", title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632 , isBookmarked: 0,},
     { id: "3", title: 'Event 4', club: 'Club 4', type: 3, startDate: new Date('2024-01-28T22:30:00'), endDate: new Date('2024-01-29T1:00:00'), interested: 4253, isBookmarked: 0, },
@@ -39,6 +39,8 @@ function sortByInterestedDescending(data) {
 function sortByDateRecent(data) {
   return [...data].sort((a, b) => b.startDate - a.startDate);
 }
+
+const [DataToUse,ChangeData] = useState(data)
 
 const sortedRecentData = sortByDateRecent([...data]);
 
@@ -73,11 +75,11 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
 
    useEffect(() => {             //all of the cards will recieve the same "liked" information file
         async function fetchData() {
+          setLoading(true)
           SetLiked(await GetSaved())
           setLoading(false)  
         }
-
-      fetchData()
+        fetchData()
   }, []);
 
 
@@ -87,17 +89,23 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
     item.club.toUpperCase().includes(searchPhrase.toUpperCase());
   
+
     if (isMatch) {
      if(!loading)
      {
+      console.log(likedInformation)
+      console.log(item.id)
+      console.log(item.id in likedInformation)
+  
       return <Card id = {item.id} title={item.title} club={item.club} type={item.type} 
-        startDate={item.startDate} endDate={item.endDate} interested={item.interested} 
-        SizePerc={.43} UserLiked={(item.id in likedInformation) ? 1 : 0}/>;
-     }
+        startDate={new Date(item.startdate)} endDate={new Date(item.enddate)} interested={item.interested} 
+        SizePerc={.43} UserLiked={likedInformation.includes(item.id)? false: true}/>;
+     }                             //LikedInformation will not be stored in a seperate table    
     }                             //if the id is in saved table, the favorited will be on 
 
     return null;
   };
+
 
   const [buttonOne, setButtonOne] = useState(0);
   const [buttonTwo, setButtonTwo] = useState(0);
@@ -165,16 +173,16 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     
   };
 
-  function getData() {
+function getData() {
     if (buttonOne == 1)
-    return sortedDescendingData;
-  else if (buttonTwo == 1)
+    return DataToUse;
+else if (buttonTwo == 1)
   return sortedRecentData;
 else if (buttonThree == 1)
     return originalData;
 else
 return originalData;
-  }
+}
 
   
   return (
@@ -205,6 +213,8 @@ return originalData;
         onPress={() => { handlePress(1)}}
         buttonStyle={{  }} // You can customize the button's background color here
         textStyle={{  }} // You can customize the text color here
+        Key={'Test'}
+        ChangeDataFunction={ChangeData}
       />
       <RoundedButton
       style={[styles.button, {  }]}
@@ -213,6 +223,8 @@ return originalData;
         onPress={() => handlePress(2)}
         buttonStyle={{   }} // You can customize the button's background color here
         textStyle={{  }} // You can customize the text color here
+        Key={'music_festival'}
+        ChangeDataFunction={ChangeData}
       />
       <RoundedButton
       style={[styles.button, { }]}
@@ -221,12 +233,14 @@ return originalData;
         onPress={() => handlePress(3)}
         buttonStyle={{  }} // You can customize the button's background color here
         textStyle={{  }} // You can customize the text color here
+        Key={'test2'}
+        ChangeDataFunction={ChangeData}
       />
       </View>
       </View>
       
       <FlatList
-        data={getData()}
+        data={DataToUse}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
