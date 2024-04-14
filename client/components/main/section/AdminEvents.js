@@ -61,7 +61,7 @@ const AdminEvents = () => {
           <Entypo name="squared-plus" size={40} color="#27ae60" />
         </TouchableOpacity>
       </View>
-      <AdminTable state={eventData}/>
+      <AdminTable searchPhrase={searchPhrase} state={eventData}/>
     </View>
   );
 };

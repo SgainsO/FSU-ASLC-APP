@@ -60,7 +60,7 @@ const AdminUsers = () => {
           <Entypo name="squared-plus" size={40} color="#27ae60" />
         </TouchableOpacity>
       </View>
-      <AdminTable state={userData}/>
+      <AdminTable searchPhrase={searchPhrase} state={userData}/>
     </View>
   );
 };

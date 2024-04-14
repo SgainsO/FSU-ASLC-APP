@@ -43,28 +43,40 @@ const AdminTable = (props) => {
   );
 
   renderItem = ({ item, index }) => {
-    return (
-      <View style={[styles.row, index % 2 === 1 && styles.alternateRow]}>
-        {item.map((cellData, cellIndex) => {
-          const cellWidth = state.widthPercents[cellIndex];
-          const isFirstCell = cellIndex === 0;
-          const cellContent = isImageUrl(cellData) ?
-              <Image source={{ uri: cellData }} style={[styles.img, state.type == 'Event' && {borderRadius: 0,  width: 50, height: 50}]} /> :
-              <Text style={styles.text}>{cellData}</Text>;
+    // Check if any cell contains the search phrase (case insensitive)
+    const containsSearchPhrase = item.some(cellData => {
+      // Assuming cellData is a string, adjust logic if it's not
+      return typeof cellData === 'string' && cellData.toLowerCase().includes(props.searchPhrase.toLowerCase());
+    });
   
-          return (
-            <View key={cellIndex} style={[styles.cell, { width: `${cellWidth}%` }, isFirstCell && { alignItems: 'center' }]}>
-              {cellContent}
-            </View>
-          );
-        })}
-        {/* Add action buttons as an additional cell */}
-        <View style={[styles.cell, { width: `${state.widthPercents[state.widthPercents.length - 1]}%`, justifyContent: 'center', alignItems: 'center' }]}>
-          {this.actionButtons(item, index)}
+    // Only render the item if it contains the search phrase
+    if (containsSearchPhrase) {
+      return (
+        <View style={[styles.row, index % 2 === 1 && styles.alternateRow]}>
+          {item.map((cellData, cellIndex) => {
+            const cellWidth = state.widthPercents[cellIndex];
+            const isFirstCell = cellIndex === 0;
+            const cellContent = isImageUrl(cellData) ?
+                <Image source={{ uri: cellData }} style={[styles.img, state.type == 'Event' && {borderRadius: 0,  width: 50, height: 50}]} /> :
+                <Text style={styles.text}>{cellData}</Text>;
+    
+            return (
+              <View key={cellIndex} style={[styles.cell, { width: `${cellWidth}%` }, isFirstCell && { alignItems: 'center' }]}>
+                {cellContent}
+              </View>
+            );
+          })}
+          {/* Add action buttons as an additional cell */}
+          <View style={[styles.cell, { width: `${state.widthPercents[state.widthPercents.length - 1]}%`, justifyContent: 'center', alignItems: 'center' }]}>
+            {this.actionButtons(item, index)}
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
+  
+    return null; // Or an appropriate placeholder if no items match
   };
+  
 
   // Update header content when tableHead or widthPercents change
   useEffect(() => {
