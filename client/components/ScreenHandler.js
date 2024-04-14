@@ -28,7 +28,7 @@ const ScreenHandler = () => {
     if (userToken) {
       navigation.navigate('Main');
     } else {
-      navigation.navigate('Signup');
+      navigation.navigate('Login');
     }
   }, [userToken]);
 

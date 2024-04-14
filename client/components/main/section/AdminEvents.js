@@ -5,6 +5,7 @@ import axios from 'axios';
 import AdminCreation from '../modal/AdminCreation';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
+import { getEventsURL } from '../../AxiosService';
 
 import { Entypo } from '@expo/vector-icons';
 
@@ -22,7 +23,7 @@ const AdminEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/getEvents');
+        const response = await axios.get(getEventsURL());
         const formattedData = response.data.data.map(event => [
           event.url, // TODO: FIX THIS
           event.id.toString(),

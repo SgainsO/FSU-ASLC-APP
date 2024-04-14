@@ -5,6 +5,7 @@ import axios from 'axios';
 import AdminCreation from '../modal/AdminCreation';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
+import { getClubsURL } from '../../AxiosService';
 
 import { Entypo } from '@expo/vector-icons';
 
@@ -22,7 +23,7 @@ const AdminClubs = () => {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/getClubs');
+        const response = await axios.get(getClubsURL());
         const formattedData = response.data.data.map(club => [
           club.url,
           club.id.toString(),
