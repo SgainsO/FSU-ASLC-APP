@@ -13,23 +13,15 @@ const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Sign in logic here
-    console.log(`Logging in with username: ${username} and password: ${password}`);
-  };
-
-  const handleSignUp = () => {
-    // sign up logic here
-    console.log('Sign up button pressed');
-  };
-
   const navigation = useNavigation();
 
   const navigate = (navigateTo) => {
     navigation.navigate(navigateTo);
   }
-
-  const { setIsAdmin } = useAuth();
+  const handleIconPress = (iconName, navigateTo) => {
+    navigation.navigate(navigateTo);
+};
+  const { setIsAdmin, handleLogin, isLoggedIn} = useAuth();
 
   return (
     <View style={styles.container}>
@@ -56,15 +48,15 @@ const LoginScreen = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={styles.button} onPress={() => handleLogin(username, password)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+      <TouchableOpacity style={styles.button} onPress={() => [isLoggedIn(), navigate("Signup")]}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigate('Main')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigate("Main")}>
         <Text style={styles.buttonText}>Temp Go To Home</Text>
       </TouchableOpacity>
 

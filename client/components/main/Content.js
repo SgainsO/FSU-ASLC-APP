@@ -21,8 +21,10 @@ import AdminHome from './section/AdminHome';
 import AdminClubs from './section/AdminClubs';
 import AdminEvents from './section/AdminEvents';
 import AdminUsers from './section/AdminUsers';
+import Signup from '../login/Signup'
 
 import { useAuth } from '../AuthProvider';
+import LoginScreen from '../login/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -126,6 +128,11 @@ const Content = ({ navigation }) => {
             <Stack.Screen
               name="AdminHome"
               component={AdminHome}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

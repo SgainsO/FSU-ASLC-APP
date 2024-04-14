@@ -2,6 +2,7 @@ import {useState} from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { AddToSave, RemoveFromSave } from '../APIUse';
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -12,8 +13,11 @@ const cardHeight = 250;
 
 const EventCard = (props) => {
 
+  const id = props.id
   const cardWidth = screenWidth * props.SizePerc
   console.log(cardWidth)
+
+  console.log(props)
 
   const cardImageStyle = {
     marginRight: 10,
@@ -91,20 +95,28 @@ const EventCard = (props) => {
     alignItems: 'center'
   }
   
-  const [BookmarkColor, ChangeBookmarkColor] = useState('white')     //Allows button to change from white to another color
-  const [BookmarkState, ChangeBookmarkState] = useState('star-outline') //Allows button to
+  const [BookmarkColor, ChangeBookmarkColor] = useState(props.UserLiked === false ? 'white' : '#FFFF00');
+  const [BookmarkState, ChangeBookmarkState] = useState(props.UserLiked === false ? 'star-outline' : 'star') //Allows button to
   
-  let isBookmarked = 0;
+  const [isBookmarked, ChangeMarked] = useState(props.UserLiked) //A
+
+
 
   function HandleBookmarkPress()
   {
     console.log("Bookmark button pressed")
-    if (isBookmarked == 0)
-    isBookmarked = 1;
+    if (isBookmarked == false)
+    {
+    ChangeMarked(true);
+    AddToSave(id)
+    }
     else
-    isBookmarked = 0;
+    {
+    ChangeMarked(false);
+    RemoveFromSave(id);  
+    }
 
-    
+    //Coolors always change regardless of state change
     ChangeBookmarkColor(BookmarkColor === "white"? "#FFFF00" : "white")
     ChangeBookmarkState(BookmarkState === "star-outline"? "star" : "star-outline")
   }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView,  TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useColorSchemeContext } from '../ColorSchemeContext';
+import {useAuth} from "../../AuthProvider.js";
 import SettingScreen from '../modal/Comments.js'
     
 
@@ -33,6 +34,8 @@ const Sett = () => {
     const navigation = useNavigation();
     
     const [activeIcon, setActiveIcon] = useState("Home");
+    const { handleLogout, isLoggedIn} = useAuth();
+
 
     const handleIconPress = (iconName, navigateTo) => {
         setActiveIcon(iconName);
@@ -61,7 +64,7 @@ const Sett = () => {
       <WordWithLine word="Notifications                               >" onPress={() => handleIconPress('Notifications', 'Notifications')}/>
       <WordWithLine word="Interaction History                    >" onPress={() => handleIconPress('Interaction', 'Interaction')}/>
       <WordWithLine word="Contact Us                                  >" onPress={() => handleIconPress('ContactUs', 'ContactUs')}/>
-      <WordWithLineRed word="Log out                                         >" onPress={() => handleIconPress('Login', 'Login')}/>
+      <WordWithLineRed word="Log out                                         >" onPress={() => [handleLogout(), handleIconPress('Login', 'Login')]}/>
       
 <View style={colorScheme === 'dark' && styles.blackBackground}>
 
