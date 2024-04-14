@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const db = require('../db/database'); // Import the pool
-const { randomInt } = require('firebase-tools/lib/utils');
 const auth = require("../auth");
 
 const registerUser = async (req, res) => {
