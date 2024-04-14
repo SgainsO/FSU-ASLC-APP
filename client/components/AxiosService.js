@@ -6,9 +6,6 @@ import axios from 'axios';
 const IP = "192.168.50.128"
 const PORT = "3000"
 
-// Create context
-const AxiosContent = createContext();
-
 // COULD MAKE THESE FETCH DATA IN CORRECT FORMAT HERE AS WELL, TOO LAZY RN
 
 export const getClubsURL = () => {
@@ -22,15 +19,3 @@ export const getEventsURL = () => {
 export const getUsersURL = () => {
     return `http://${IP}:${PORT}/api/getUsers`;
 }
-
-// Provider component
-export const AxiosService = ({ children }) => {
-  return (
-    <AxiosContent.Provider value={{ isAdmin, setIsAdmin, userToken, handleLogin, isLoggedIn, handleLogout}}>
-      {children}
-    </AxiosContent.Provider>
-  );
-};
-
-// Hook to use auth context
-export const useAxios = () => useContext(AxiosContent);
