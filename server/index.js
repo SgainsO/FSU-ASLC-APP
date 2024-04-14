@@ -2,9 +2,12 @@ const express = require('express');
 const app = express();
 const eventRoutes = require('./routes/routes');
 const authRoutes = require('./routes/auth');
-const PORT = process.env.PORT || 3000; 
 const Axios = require('axios');
-const cors= require("cors");
+const cors = require("cors");
+const ip = require('ip');
+
+const HOST = ip.address();
+const PORT = process.env.PORT || 3000; 
 
 app.use(cors())
 console.log('Starting server')
@@ -25,8 +28,8 @@ app.use(function(req, res, next) {
      next();
    }});
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server is running on ${HOST}:${PORT}`);
 }); 
 
 const corsOptions ={
