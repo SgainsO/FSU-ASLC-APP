@@ -3,6 +3,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 
+import { getURL } from './AxiosService';
+
 // Create context
 const AuthContext = createContext();
 
@@ -16,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   
     if (email != "" && password != "") {
       try {
-        axios.post('http://localhost:3000/auth/login', {
+        axios.post(`${getURL()}/auth/login`, {
           email: email,
           password: password
         }).then((response) => {
