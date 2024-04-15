@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 import Settings from './modal/settings';
 import Animatable from 'react-native-animatable';
 import Icon from './Icon'
+import { ScrollView } from 'react-native';
 
 const Header = () => {
     const barStyle = {
@@ -60,15 +61,18 @@ const Header = () => {
     function ModalContent()                           //Content here will show up in the modal
     {
       return(
-      <View style= {{justifyContent: 'space-between', width: '100%'}}>
-        <TouchableOpacity style = {styles.cat_button} onPress={() => sett()}>
-            <Text style={styles.cat_button_text}>Settings</Text>
-          </TouchableOpacity>
-
-        <TouchableOpacity style = {styles.cat_button} onPress={() => freq()}>
-            <Text style={styles.cat_button_text}>Frequently Asked Questions</Text>
-          </TouchableOpacity>
-      </View>)
+        <ScrollView style={{ width: '100%' }}>
+        <TouchableOpacity style={styles.cat_button} onPress={() => sett()}>
+          <Text style={styles.cat_button_text}>Settings</Text>
+        </TouchableOpacity>
+  
+        <TouchableOpacity style={styles.cat_button} onPress={() => freq()}>
+          <Text style={styles.cat_button_text}>Frequently Asked Questions</Text>
+        </TouchableOpacity>
+  
+        {/* Add more TouchableOpacity components here as needed */}
+      </ScrollView>
+      )
     }
 
 
@@ -158,14 +162,15 @@ const styles = StyleSheet.create({
       {
         borderWidth: .25,
         fontSize: 16, 
-        backgroundColor: '#CEB888',    
+        backgroundColor: '#A1495E',    
         textAlign: 'center',
         borderRadius: 10,
         justifyContent: 'center',
         width: '75%',
         alignSelf: 'center',
         marginBottom: '2%',
-        height: '20%',
+        height: '75%',
+        marginTop: '2%',
       },
       cat_button_text:
       {
