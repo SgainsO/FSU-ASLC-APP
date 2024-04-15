@@ -104,6 +104,22 @@ router.get('/getEvents', async (req, res) => {
   }
 });
 
+router.get('/getTwentyEvents/:AboveId', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const aboveId = req.params.AboveId
+    const result = await client.query('SELECT * FROM items WHERE id > $1 ORDER BY id LIMIT 20', [aboveId]);
+    client.release();
+
+    res.status(200).json({data: result.rows, message: "Data Recieved", total: result.rows.length})
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(404).json({data: {}, message: "Internal Error", total: result.rows.length})
+  }
+
+
+});
+
 
 router.get('/getEventsFromKey/:key', async (req, res) => { 
   try {
