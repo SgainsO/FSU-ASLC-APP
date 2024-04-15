@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { getURL } from '../AxiosService';
 
 //axios.defaults.withCredentials = true; 
 const userID = '76d3aebd-5af3-496e-bd67-0d37c84bf28c'
 //Retrieves all event data and return as a json file
 export function getCategories() {
-  return axios.get('http://localhost:3000/api/getAllCategories') // Adjust the URL to match your local server
+  return axios.get(`${getURL()}/api/getAllCategories`) // Adjust the URL to match your local server
     .then(response => {
       // Assuming the response contains JSON data, you can access it through response.data
    //   console.log('Data received:', response.data);
@@ -18,7 +19,7 @@ export function getCategories() {
 
 export function GetSaved() 
 {                                                    //FOR TESTING
-  return axios.get(`http://localhost:3000/api/getSavedEvents/${userID}`) // Adjust the URL to match your local server
+  return axios.get(`${getURL()}/api/getSavedEvents/${userID}`) // Adjust the URL to match your local server
   .then(response => {
 
 
@@ -37,7 +38,7 @@ export async function AddToSave(eventId)
 {
   await console.log(eventId);
   console.log('entered add')
-  axios.post(`http://localhost:3000/api/users/${userID}/add-to-saved`, {PostID: eventId})
+  axios.post(`${getURL()}/api/users/${userID}/add-to-saved`, {PostID: eventId})
   .then(response => {
     console.log('Response:', response);
     // Handle response data here
@@ -50,7 +51,7 @@ export async function AddToSave(eventId)
 
 export function RemoveFromSave(eventId)
 {
-  axios.post(`http://localhost:3000/api/users/${userID}/remove-from-saved`, {PostID: eventId})
+  axios.post(`${getURL()}/api/users/${userID}/remove-from-saved`, {PostID: eventId})
   .then(response => {
     // Handle response data here
   })
@@ -63,7 +64,7 @@ export function RemoveFromSave(eventId)
 export function GetEventsFromKey(key) 
 {                                        
   console.log(key)            //FOR TESTING
-  return axios.get(`http://localhost:3000/api/getEventsFromKey/${key}`) // Adjust the URL to match your local server
+  return axios.get(`${getURL()}/api/getEventsFromKey/${key}`) // Adjust the URL to match your local server
   .then(response => {
 
     return response.data.data;

@@ -8,7 +8,7 @@ import { getIsBookmarked } from '../cards/EventCard.js';
 import Card from '../cards/EventCard';
 import { GetSaved } from '../APIUse.js';
 
-
+import { getURL } from '../../AxiosService.js';
 
 const Events = ({route}) => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext()
@@ -62,7 +62,7 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
 
   function GetAllEventData()                                 //ROUTE MUST LOOK LIKE THIS 
   {
-    const response = axios.get('http://localhost:8080/api/' + dbLink + '/events')
+    const response = axios.get(getURL() + '/api/' + dbLink + '/events')
       .then(response => {                    //Error Catching
         console.log("Get Request Succesful")
         return response.data;})
