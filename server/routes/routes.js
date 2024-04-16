@@ -108,7 +108,7 @@ router.get('/getTwentyEvents/:AboveId', async (req, res) => {
   try {
     const client = await pool.connect();
     const aboveId = req.params.AboveId
-    const result = await client.query('SELECT * FROM items WHERE id > $1 ORDER BY id LIMIT 20', [aboveId]);
+    const result = await client.query('SELECT * FROM events WHERE id > $1 ORDER BY id LIMIT 20', [aboveId]);
     client.release();
 
     res.status(200).json({data: result.rows, message: "Data Recieved", total: result.rows.length})
