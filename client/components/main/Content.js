@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './section/Home';
 import Search from './section/Search';
 import Post from './section//Post';
-import Events from './section/Events';
 import Rewards from './section/Rewards';
 import FAQs from './section/FAQs';
 import goToEvent from './section/GoToEvent';
@@ -58,11 +57,6 @@ const Content = ({ navigation }) => {
             <Stack.Screen
               name="Post"
               component={Post}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Events"
-              component={Events}
               options={{ headerShown: false }}
             />
             <Stack.Screen

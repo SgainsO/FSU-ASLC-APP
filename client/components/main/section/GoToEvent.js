@@ -2,7 +2,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Events from './Events.js'
+import Events from './Home.js'
 
 import { getURL } from '../../AxiosService.js';
 
@@ -27,7 +27,7 @@ function GetTitleAndRoute()
 return(
     <View>
         <TouchableOpacity onPress={() =>
-         navigate('Events', { title: 'Event Category Name',  dbLink:dbLink})}>
+          navigate('Events', { title: 'Event Category Name',  dbLink:dbLink})}>
             <Text>1st event types</Text>
         </TouchableOpacity>
     </View>

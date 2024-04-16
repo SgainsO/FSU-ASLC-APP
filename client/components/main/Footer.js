@@ -38,7 +38,7 @@ const Footer = (props) => {
 
     if (isAdmin) {
         icons = [
-            { name: 'Home', navigateTo: 'Events', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Home', navigateTo: 'AdminHome', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
             { name: 'Users', navigateTo: 'AdminUsers', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
             { name: 'Clubs', navigateTo: 'AdminClubs', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
             { name: 'Events', navigateTo: 'AdminEvents', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
@@ -46,7 +46,7 @@ const Footer = (props) => {
     }
     else {
         icons = [
-            { name: 'Home', navigateTo: 'Events', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
+            { name: 'Home', navigateTo: 'Home', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
     //        { name: 'Search', navigateTo: 'Search', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
             { name: 'Post', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
             { name: 'Events', navigateTo: 'Search', activeImage: require('../../assets/events_filled.png'), inactiveImage: require('../../assets/events_outline.png') },
