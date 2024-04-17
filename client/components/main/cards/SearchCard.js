@@ -44,7 +44,7 @@ fontFamily: 'Arial',
 const navigation = useNavigation();
 
 return (
-<TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Events', {title: title, dbLink: dbLink})}>
+<TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Home', {title: title, dbLink: dbLink})}>
 <ImageBackground source={{uri: imageurl}} style = {{flex: 1}} resizeMode='cover'>        
 <View style={[overlayStyle]}>
 <View style={titleContainerStyle}>
