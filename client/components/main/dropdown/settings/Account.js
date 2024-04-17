@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: 42,
         fontWeight: 'bold',
+        fontFamily: 'Times New Roman',
     },
   containerR: {
     alignItems: 'center',
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 10,
     color: 'red',
+    fontFamily: 'Arial',
   },
   wordB: {
     fontSize: 26,
@@ -135,6 +137,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 10,
     color: '#007AFF',
+    fontFamily: 'Arial',
   },
   back: {
     fontSize: 20,

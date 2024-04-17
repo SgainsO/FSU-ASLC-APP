@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     },
     text: {
         marginLeft: 10,
+        fontFamily: 'Arial'
     },
     darkContainer: {
         borderColor: 'white',

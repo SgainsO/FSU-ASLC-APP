@@ -57,14 +57,16 @@ const Rewards = () => {
     RewardsAmount: {
       fontSize: 40,
       fontWeight: '600',
-      paddingLeft: 10,
+      paddingLeft: 8,
       marginTop: 6,
+      fontFamily: 'Arial',
     },
     RewardsHistory: {
       fontSize: 22,
       fontWeight: '600',
       paddingLeft: '14%',
-      paddingTop: 17
+      paddingTop: 17,
+      fontFamily: 'Times New Roman',
     },
     darkContainer: {
       backgroundColor: '#121212',
@@ -85,11 +87,11 @@ const Rewards = () => {
         <Text style={[styles.RewardsHistory,  colorScheme === 'dark' && styles.darkText]}>Rewards History {'>'}</Text>
       </View>
       <ScrollView style={{paddingTop: 10}}>
-        <Text style={[{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 5},  colorScheme === 'dark' && styles.darkText]}>MY REWARDS</Text>
+        <Text style={[{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 5, fontFamily: 'Times New Roman'},  colorScheme === 'dark' && styles.darkText]}>MY REWARDS</Text>
         <View style={styles.centeredBox}>
           <RoundedBox />
         </View>
-        <Text style={[{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 15},colorScheme === 'dark' && styles.darkText ]}>REWARDS STORE</Text>
+        <Text style={[{fontSize: 16, fontWeight: '600', paddingLeft: 35, paddingBottom: 14, paddingTop: 15, fontFamily: 'Times New Roman'},colorScheme === 'dark' && styles.darkText ]}>REWARDS STORE</Text>
         <FlatList
           data ={data}
           renderItem ={({item}) => <RewardsCard {...item} />}

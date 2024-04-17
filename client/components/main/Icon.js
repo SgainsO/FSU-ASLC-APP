@@ -6,6 +6,7 @@ const Icon = (props) => {
     fontWeight: '600',
     ...(props.textColor && { color: props.textColor }),
     textAlign: 'center',
+    fontFamily: 'Arial',
   };
 
   return (

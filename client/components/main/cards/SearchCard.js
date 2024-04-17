@@ -38,6 +38,7 @@ const titleStyle = {
 fontSize: 27,
 fontWeight: '600',
 color: 'rgba(206, 184, 136, 1)',
+fontFamily: 'Arial',
 };
 
 const navigation = useNavigation();

@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 60,
     fontWeight: '600',
+    fontFamily: 'Times New Roman',
   },
   accordionContainer: {
     marginTop: 16,
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#782f40',
     fontWeight: '500',
+    fontFamily: 'Times New Roman',
   },
   answerContainer: {
     backgroundColor: 'transparent',
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
   },
   answer: {
     fontSize: 14,
+    fontFamily: 'Arial',
   },
 });
 

@@ -7,6 +7,7 @@ import Settings from './modal/settings';
 import Animatable from 'react-native-animatable';
 import Icon from './Icon'
 import { ScrollView } from 'react-native';
+import { useColorSchemeContext } from './ColorSchemeContext';
 
 const Header = () => {
     const barStyle = {
@@ -16,6 +17,7 @@ const Header = () => {
         backgroundColor: '#782F40',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
+        fontFamily: 'Times New Roman',
     };
 
     const iconStyle = {
@@ -79,7 +81,7 @@ const Header = () => {
     return (
         <View style={barStyle}>
             <Image source={require('../../assets/fsu_logo.png')} style={{ width: 50, height: 50, margin: 4 }} />
-            <Text style={{ color: 'white', fontSize: 30, fontWeight: 600, marginBottom: 8 }}>ASLC Connect</Text>
+            <Text style={{ color: 'white', fontSize: 30, fontWeight: 600, marginBottom: 8, fontFamily: 'Times New Roman', }}>ASLC Connect</Text>
             <Icon
                 iconStyle={iconStyle}
                 iconSource={activeIcon === 'Home' ? require('../../assets/burger_menu.png') : require('../../assets/burger_menu.png')}
@@ -155,8 +157,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0)', // transparent background
         
       },
+      darkModal: {
+
+      },
       title: {
       fontWeight: 'bold',
+      fontFamily: 'Times New Roman'
       },
       cat_button:
       {
@@ -176,6 +182,8 @@ const styles = StyleSheet.create({
       {
         alignSelf: 'center',
         fontWeight: 'bold',
+        fontSize: '20',
+        fontFamily: 'Times New Roman',
       }
     });
 

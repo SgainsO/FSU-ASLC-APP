@@ -59,12 +59,12 @@ const Sett = () => {
     <Text></Text>
 </View>
     <WordWithLine/>
-      <WordWithLine word="Account                                       >" onPress={() => handleIconPress('Account', 'Account')} />    
-      <WordWithLine word="Display                                         > "onPress={() => handleIconPress('Display', 'Display')} />
-      <WordWithLine word="Notifications                               >" onPress={() => handleIconPress('Notifications', 'Notifications')}/>
-      <WordWithLine word="Interaction History                    >" onPress={() => handleIconPress('Interaction', 'Interaction')}/>
-      <WordWithLine word="Contact Us                                  >" onPress={() => handleIconPress('ContactUs', 'ContactUs')}/>
-      <WordWithLineRed word="Log out                                         >" onPress={() => [handleLogout(), handleIconPress('Login', 'Login')]}/>
+      <WordWithLine word="Account                               >" onPress={() => handleIconPress('Account', 'Account')} />    
+      <WordWithLine word="Display                                > "onPress={() => handleIconPress('Display', 'Display')} />
+      <WordWithLine word="Notifications                        >" onPress={() => handleIconPress('Notifications', 'Notifications')}/>
+      <WordWithLine word="Interaction History               >" onPress={() => handleIconPress('Interaction', 'Interaction')}/>
+      <WordWithLine word="Contact Us                          >" onPress={() => handleIconPress('ContactUs', 'ContactUs')}/>
+      <WordWithLineRed word="Log out                                >" onPress={() => [handleLogout(), handleIconPress('Login', 'Login')]}/>
       
 <View style={colorScheme === 'dark' && styles.blackBackground}>
 
@@ -76,8 +76,9 @@ const Sett = () => {
         Title: {
             flexDirection: 'row',
             justifyContent: 'space-between',
-            color: 'black', fontSize: 40, fontWeight: 'bold',
+            color: 'black', fontSize: 45, fontWeight: 'bold',
             marginLeft: 5,
+            fontFamily: 'Times New Roman',
         },
         line: {
             height: 1,
@@ -102,7 +103,7 @@ const Sett = () => {
             marginBottom: 5,
             marginLeft: 20,
             marginTop: 10,
-            
+            fontFamily: 'Arial',
           },
           word2: {
             fontSize: 30,
@@ -110,13 +111,13 @@ const Sett = () => {
             marginLeft: 20,
             marginTop: 10,
             color: 'red',
-            
+            fontFamily: 'Arial',
           },
           darkContainer: {
             
             flexDirection: 'row',
             justifyContent: 'space-between',
-            color: 'white', fontSize: 40, fontWeight: 'bold',
+            color: 'white', fontSize: 45, fontWeight: 'bold',
             marginLeft: 5,
             backgroundColor: '#121212',
           },

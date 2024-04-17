@@ -256,19 +256,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 12,
     backgroundColor: 'white',
+    fontFamily: 'Arial',
   },
   darkContainer: {
     backgroundColor: '#121212',
+    fontFamily: 'Arial',
   },
   darkText: {
     color: '#FFFFFF',
+    
   },
   Title:
   {
     paddingTop: 10,
     fontSize: 40,
     fontWeight: '600',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    fontFamily: 'Times New Roman',
   },
   topContainer: {
     height: 95,
@@ -302,6 +306,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 35,
     marginVertical: 14,
     marginTop: 15,
+    fontFamily: 'Times New Roman',
   },
   row: {
     flex: 1,

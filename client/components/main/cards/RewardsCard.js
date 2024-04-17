@@ -38,8 +38,8 @@ const Card = ({ title, icon, rewardAmount}) => {
    return (
     <View style={[cardImageStyle]}>
       <View style={[overlayStyle, colorScheme === 'dark' && styles.darkContainer]}>
-        <Text style={[{ fontSize: 16, fontWeight: 600 },colorScheme === 'dark' && styles.darkText]}>{title}</Text>
-        <Text style={[{ fontSize: 16, color: '#455154' },colorScheme === 'dark' && styles.darkText]}>{icon} {rewardAmount}</Text>
+        <Text style={[{ fontSize: 16, fontWeight: 600, fontFamily: 'Arial' },colorScheme === 'dark' && styles.darkText]}>{title}</Text>
+        <Text style={[{ fontSize: 16, color: '#455154', fontFamily: 'Arial' },colorScheme === 'dark' && styles.darkText]}>{icon} {rewardAmount}</Text>
       </View>
     </View>
   );

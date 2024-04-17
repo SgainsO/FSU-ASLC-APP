@@ -20,7 +20,7 @@ const ContactUs = () => {
     </TouchableOpacity>
     
     <Text style={[styles.text, colorScheme === 'dark' && styles.darkText]}>
-        Hello, World!
+    (850) 644–6860
       </Text>
 </View>
         );

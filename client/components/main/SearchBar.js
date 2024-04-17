@@ -17,7 +17,7 @@ const SearchBar = (props) => {
           style={{ marginLeft: 1 }}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, colorScheme === 'dark' && styles.darkText]}
           placeholder="Search"
           value={props.searchPhrase}
           onChangeText={props.setSearchPhrase}
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
   },
   darkContainer: {
     backgroundColor: 'black',
+    color: 'white',
+  },
+  darkText: {
+    color: 'white',
   },
   searchBar__unclicked: {
     padding: 10,

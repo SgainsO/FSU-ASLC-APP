@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'black', // Change the text color as needed
     fontSize: 12,
-    
+    fontFamily: 'Arial',
   },
 });
 

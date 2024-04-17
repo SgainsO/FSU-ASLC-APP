@@ -26,6 +26,7 @@ const Categories = () => {
     textAlign: 'center',
     paddingTop: 20,
     paddingBottom: 20,
+    
   };
 
   const data = [

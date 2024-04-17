@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         color: 'black', fontSize: 40, fontWeight: 'bold',
         marginLeft: 5,
+        fontFamily: 'Arial',
     },
     line: {
         height: 1,
@@ -79,10 +80,11 @@ const styles = StyleSheet.create({
         fontSize: 24,
         justifyContent: 'center', // Center vertically
         alignItems: 'center',
+        fontFamily: 'Arial',
       },
       darkContainer: {
         flex: 1,
-        backgroundColor: '#121212',
+        backgroundColor: '#121212',     
       },
       darkText: {
         color: '#FFFFFF',

@@ -3,7 +3,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AddToSave, RemoveFromSave } from '../APIUse';
-
+import { useColorSchemeContext } from '../ColorSchemeContext.js';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -183,11 +183,11 @@ const EventCard = (props) => {
         </TouchableOpacity>
         <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/>
       <View style={overlayStyle}>
-        <Text style={{ fontSize: 10, fontWeight: 600 }}>{dateString}</Text>
-        <Text style={{ fontSize: 10, fontWeight: 600 }}>{timeString}</Text>
-        <Text style={{ fontSize: 12, fontWeight: 600 }}>{props.title}</Text>
-        <Text style={{ fontSize: 12, color: '#455154' }}>{props.club}</Text>
-        <Text style={{ fontSize: 12, color: '#455154' }}>{formatNumber(props.interested)} interested</Text>
+        <Text style={{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial',}}>{dateString}</Text>
+        <Text style={{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial', }}>{timeString}</Text>
+        <Text style={{ fontSize: 12, fontWeight: 600, fontFamily: 'Arial', }}>{props.title}</Text>
+        <Text style={{ fontSize: 12, color: '#455154', fontFamily: 'Arial', }}>{props.club}</Text>
+        <Text style={{ fontSize: 12, color: '#455154', fontFamily: 'Arial', }}>{formatNumber(props.interested)} interested</Text>
       </View>
     </View>
 

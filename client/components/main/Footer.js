@@ -27,6 +27,7 @@ const Footer = (props) => {
         marginTop: 12,
         marginHorizontal: 28,
         marginBottom: 4,
+        
     }
 
     const navigation = useNavigation();
@@ -48,7 +49,7 @@ const Footer = (props) => {
         icons = [
             { name: 'Home', navigateTo: 'Home', activeImage: require('../../assets/home_filled.png'), inactiveImage: require('../../assets/home_outline.png') },
     //        { name: 'Search', navigateTo: 'Search', activeImage: require('../../assets/search_filled.png'), inactiveImage: require('../../assets/search_outline.png') },
-            { name: 'Post', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
+    //        { name: 'Post', navigateTo: 'Post', activeImage: require('../../assets/post_filled.png'), inactiveImage: require('../../assets/post_outline.png') },
             { name: 'Events', navigateTo: 'Search', activeImage: require('../../assets/events_filled.png'), inactiveImage: require('../../assets/events_outline.png') },
             { name: 'Rewards', navigateTo: 'Rewards', activeImage: require('../../assets/rewards_filled.png'), inactiveImage: require('../../assets/rewards_outline.png') },
         ]

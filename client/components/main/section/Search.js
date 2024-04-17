@@ -27,7 +27,7 @@ const handleSearch = (text) => {
 
 
 const data = [
-  { id: 0, title: 'Today\'s Events', backgroundImage: require('../../../assets/calendar.png') },
+  { id: 0, title: 'Today\'s Events', backgroundImage: require('../../../assets/sans_undertale.png') },
   { id: 1, title: 'Upcoming Events', backgroundImage: require('../../../assets/save_the_date.png') },
   { id: 2, title: 'Past Events', backgroundImage: require('../../../assets/indiana_jones.png') },
   { id: 3, title: 'Movie Events', backgroundImage: require('../../../assets/pulp_fiction.png') },
@@ -76,7 +76,7 @@ return (
     />
   </View>
   <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
-  <Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
+  <Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5, fontFamily: 'Times New Roman'}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
   <FlatList
     data ={data}           //Change to "ServerData" to run api command
     renderItem ={({item}) => <SearchCard {...item} />}
