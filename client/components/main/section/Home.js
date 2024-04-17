@@ -237,7 +237,7 @@ return originalData;
         ChangeDataFunction={ChangeData}
       />
       </View>
-      </View>
+      </View >
       
       <FlatList
         data={DataToUse}

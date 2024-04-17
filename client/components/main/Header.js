@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native';
 import { useColorSchemeContext } from './ColorSchemeContext';
 
 const Header = () => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
     const barStyle = {
         flex: 1,
         flexDirection: 'row',
@@ -105,12 +106,12 @@ const Header = () => {
             //  onRequestClose={props.hideModal}
             >
               <TouchableWithoutFeedback onPress={toggleModal}>
-                   <View style={modeul_styles.darkBackground}/>
+                   <View style={[modeul_styles.darkBackground,  ]}/>
              </TouchableWithoutFeedback>
 
         
               <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex: 1, backgroundColor: 'red'}}>
-                <View style={modeul_styles.container}>
+                <View style={[modeul_styles.container, colorScheme === 'dark' && styles.darkModal]}>
                   <View style={modeul_styles.headerContainer}>
   
                     <Entypo 
@@ -120,7 +121,7 @@ const Header = () => {
                       onPress={toggleModal}
                     />
                   </View>
-                  <View style={modeul_styles.commentContainer}>
+                  <View style={[modeul_styles.commentContainer, colorScheme === 'dark' && styles.darkModal]}>
                     <ModalContent/>
                   </View>
                 </View>
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
         
       },
       darkModal: {
-
+        backgroundColor: '#121212',
       },
       title: {
       fontWeight: 'bold',

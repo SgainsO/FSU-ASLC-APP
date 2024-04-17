@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity, StyleSheet, } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AddToSave, RemoveFromSave } from '../APIUse';
@@ -12,7 +12,7 @@ const infoHeight = 85
 const cardHeight = 250;
 
 const EventCard = (props) => {
-
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   const id = props.id
   const cardWidth = screenWidth * props.SizePerc
   console.log(cardWidth)
@@ -174,25 +174,36 @@ const EventCard = (props) => {
   
 
   return (
-    <View style={cardImageStyle}>
-      <View style={ImageHolderStyle}>
+    <View style={[cardImageStyle,colorScheme === 'dark' && styles.darkContainer] }>
+      <View style={[ImageHolderStyle, ]}>
         <Image source={ require("./bob.jpg")} style = {ImageStyle}/>        
         </View>
         <TouchableOpacity style={BookMarkButton} onPress={() => HandleBookmarkPress()}>
           <Icon name={BookmarkState} size = {30} color={BookmarkColor}/>
         </TouchableOpacity>
         <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/>
-      <View style={overlayStyle}>
-        <Text style={{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial',}}>{dateString}</Text>
-        <Text style={{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial', }}>{timeString}</Text>
-        <Text style={{ fontSize: 12, fontWeight: 600, fontFamily: 'Arial', }}>{props.title}</Text>
-        <Text style={{ fontSize: 12, color: '#455154', fontFamily: 'Arial', }}>{props.club}</Text>
-        <Text style={{ fontSize: 12, color: '#455154', fontFamily: 'Arial', }}>{formatNumber(props.interested)} interested</Text>
+      <View style={[overlayStyle, colorScheme === 'dark' && styles.darkContainer]}>
+        <Text style={[{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial', },colorScheme === 'dark' && styles.darkText ]}>{dateString}</Text>
+        <Text style={[{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial', },colorScheme === 'dark' && styles.darkText ]}>{timeString}</Text>
+        <Text style={[{ fontSize: 12, fontWeight: 600, fontFamily: 'Arial', },colorScheme === 'dark' && styles.darkText ]}>{props.title}</Text>
+        <Text style={[{ fontSize: 12, color: '#455154', fontFamily: 'Arial', },colorScheme === 'dark' && styles.darkText ]}>{props.club}</Text>
+        <Text style={[{ fontSize: 12, color: '#455154', fontFamily: 'Arial', },colorScheme === 'dark' && styles.darkText ]}>{formatNumber(props.interested)} interested</Text>
       </View>
     </View>
 
 
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 12,
+    backgroundColor: 'white',
+    },
+  darkContainer: {
+    backgroundColor: '#2b2b2b',
+  },
+  darkText: {
+    color: '#FFFFFF',
+  },
+});
 export default EventCard;

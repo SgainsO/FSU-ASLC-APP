@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Accordion from 'react-native-collapsible/Accordion';
-
+import { useColorSchemeContext } from '../ColorSchemeContext.js';
 const FAQ = [
   {
     question: 'Where is the ASLC located?',
@@ -27,9 +27,10 @@ const FAQ = [
 ];
 
 const FAQs = () => {
+  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
   renderHeader = (section, index, isActive) => {
     const dynamicBorderStyle = {
-      ...styles.questionContainer,
+      ...styles.questionContainer, 
       borderTopWidth: index === 0 ? 0 : 1,
     };
 
@@ -44,7 +45,7 @@ const FAQs = () => {
   renderContent = (section) => {
     return (
       <View style={styles.answerContainer}>
-        <Text style={styles.answer}>{section.answer}</Text>
+        <Text style={[styles.answer,colorScheme === 'dark' && styles.darkText] }>{section.answer}</Text>
       </View>
     );
   };
@@ -52,12 +53,12 @@ const FAQs = () => {
   const [activeSection, setActiveSection] = useState("");
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
         <View style={styles.headerContainer}>
-          <Text style={styles.title}>FAQ</Text>
+          <Text style={[styles.title, colorScheme === 'dark' && styles.darkText]}>FAQ</Text>
         </View>
       
-        <View style={styles.accordionContainer}>
+        <View style={[styles.accordionContainer, colorScheme === 'dark' && styles.darkQuestions]}>
           <Accordion
             expandMultiple={true}
             sections={FAQ}
@@ -75,6 +76,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flexDirection: 'column',
+  },
+  darkContainer: {
+backgroundColor: '#121212',
+  },
+  darkQuestions: {
+    backgroundColor: '#171717'
+  },
+  darkText: {
+color: 'white',
   },
   headerContainer: {
     width: "100%",
@@ -97,7 +107,7 @@ const styles = StyleSheet.create({
     background: 'transparent'
   },
   questionContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#782F40',
     borderWidth: 0,
     borderTopWidth: 1,
     paddingVertical: 12,
@@ -109,7 +119,7 @@ const styles = StyleSheet.create({
   },
   question: {
     fontSize: 16,
-    color: '#782f40',
+    color: 'white',
     fontWeight: '500',
     fontFamily: 'Times New Roman',
   },
