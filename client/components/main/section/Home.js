@@ -89,21 +89,20 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
     item.club.toUpperCase().includes(searchPhrase.toUpperCase());
   
-
     if (isMatch) {
-     if(!loading)
-     {
-      console.log(likedInformation)
-      console.log(item.id)
-      console.log(item.id in likedInformation)
-  
-      return <Card id = {item.id} title={item.title} club={item.club} type={item.type} 
-        startDate={new Date(item.startdate)} endDate={new Date(item.enddate)} interested={item.interested} 
-        SizePerc={.43} UserLiked={likedInformation.includes(item.id)? false: true}/>;
-     }                             //LikedInformation will not be stored in a seperate table    
-    }                             //if the id is in saved table, the favorited will be on 
-
-    return null;
+      if(!loading)
+      {
+       console.log(likedInformation)
+       const found = likedInformation.find((element) => element === item.id.toString())
+   
+       console.log(found)
+       return <Card id = {item.id} title={item.title} club={item.club} type={item.type} 
+         startDate={new Date(item.startdate)} endDate={new Date(item.enddate)} interested={item.interested} 
+         SizePerc={.43} UserLiked={found === undefined ? false : true}/>;
+      }                             //LikedInformation will not be stored in a seperate table    
+     }                             //if the id is in saved table, the favorited will be on 
+ 
+     return null;
   };
 
 
