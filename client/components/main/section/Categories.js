@@ -1,9 +1,11 @@
 import { View, FlatList, Text, StyleSheet, TextInput } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../SearchBar';
-import SearchCard from '../cards/SearchCard';
+import SearchCard from '../cards/SearchCard';                         //SEARCH CARD IS THE PRESSABLE COMPONENT
 import { useColorSchemeContext } from '../ColorSchemeContext';
 import { getCategories } from '../APIUse';
+
+
 
 const Search = () => {
 const { colorScheme, toggleColorScheme } = useColorSchemeContext();

@@ -63,7 +63,7 @@ const Footer = (props) => {
         }
         else
         {                                                                       //Only time events will be called directly will be at the home screen
-            navigation.navigate(navigateTo, {title: "All Events", dbLink: "ALL"});         //All indicates returning all events from the database
+            navigation.navigate(navigateTo, {title: "All Events", dbLink: ["ALL"]});         //All indicates returning all events from the database
         }
         
     };
