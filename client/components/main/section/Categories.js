@@ -1,72 +1,101 @@
-import React, { useState } from 'react';
-import { View, Button, FlatList, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Card from '../cards/HomeEventCard';
-import CommentSection from '../modal/Comments';
+import { View, FlatList, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import SearchBar from '../SearchBar';
+import SearchCard from '../cards/SearchCard';
 import { useColorSchemeContext } from '../ColorSchemeContext';
+import { getCategories } from '../APIUse';
 
-const Categories = () => {
-  const { colorScheme, toggleColorScheme } = useColorSchemeContext();
-  const getTodayDate = () => {
-    const currentDate = new Date();
-    const format = { weekday: 'long', month: '2-digit', day: '2-digit', year: '2-digit' };
-    const finalFormat = currentDate.toLocaleDateString('en-US', format);
-    return finalFormat;
-  };
+const Search = () => {
+const { colorScheme, toggleColorScheme } = useColorSchemeContext();
 
-  const containerStyle = {
-    flex: 1,
-    backgroundColor: 'white',
-    paddingHorizontal: 16,
-  };
+const rowStyle = {
+  flex: 1,
+  justifyContent: "space-around",
+  marginHorizontal: 25,
+  marginVertical: 10,
+};
 
-  const textStyle = {
-    fontSize: 30,
-    fontWeight: '600',
-    textAlign: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
-    
-  };
+const searchBarContainerStyle = {
+  alignItems: 'center',
+}
 
-  const data = [
-    { id: 0, title: 'Movies', image_link: 'https://media.newyorker.com/photos/64ba967803ba9998f5c20360/master/w_960,c_limit/TNY_final_2.jpg', dbLink: 'mov'},
-    { id: 1, title: 'Games',  image_link: 'https://www.smashbros.com/assets_v2/img/movie/20200622_1.jpg', dbLink: 'game' },
-  ];
+const [searchText, setSearchText] = useState('');
 
-  const [isModalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
+const handleSearch = (text) => {
+  setSearchText(text);
+}
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
 
-  const navigate = (navigateTo) => {
-    navigation.navigate(navigateTo);
+const data = [
+  { id: 0, title: 'Today\'s Events', backgroundImage: require('../../../assets/sans_undertale.png') },
+  { id: 1, title: 'Upcoming Events', backgroundImage: require('../../../assets/save_the_date.png') },
+  { id: 2, title: 'Past Events', backgroundImage: require('../../../assets/indiana_jones.png') },
+  { id: 3, title: 'Movie Events', backgroundImage: require('../../../assets/pulp_fiction.png') },
+  { id: 4, title: 'Gaming Events', backgroundImage: require('../../../assets/sans_undertale.png') },
+  { id: 5, title: 'Pottery Events', backgroundImage: require('../../../assets/Pottery.png') },
+  { id: 6, title: 'Holiday Specific Events', backgroundImage: require('../../../assets/american_psycho.png') },
+  { id: 7, title: 'FAQ', backgroundImage: require('../../../assets/faq_guy.png') },
+];
+
+const dbLink = 1;     //In application we will actually recieve this value from the database
+
+
+const [serverData, newData] = useState([])
+const [page, setPage] = useState(0)
+const [loading, setLoading] = useState(false)
+
+useEffect(() =>{
+  fetchData();
+}, [page])
+
+
+fetchData = async () => 
+{
+  setLoading(true)
+  console.log('being called')
+  if (!serverData.isistEnd)
+  {
+  newData(await getCategories())
+  console.log(await serverData)
   }
+  setLoading(false)
+};
 
+_listEmptyComponent = () => {
   return (
-    <View style={[containerStyle,colorScheme === 'dark' && styles.darkContainer ]}>
-      <Text style={[textStyle, colorScheme === 'dark' && styles.darkText]}>
-        Categories
-      </Text>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <Card {...item} />
-          </View>
-        )}
-        showsVerticalScrollIndicator={false} 
-        keyExtractor={item => item.id.toString()}
-        vertical
-      />
+          <Text style = {{ textAlign: 'center', justifyContent: 'center'}}>No Events</Text>
+  )
+}
 
-    </View>
-  );
+return (
+<View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
+  <View style={searchBarContainerStyle}>
+    <SearchBar
+      searchPhrase={searchText}
+      setSearchPhrase={handleSearch}
+    />
+  </View>
+  <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
+  <Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5, fontFamily: 'Times New Roman'}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
+  <FlatList
+    data ={data}           //Change to "ServerData" to run api command
+    renderItem ={({item}) => <SearchCard {...item} />}
+    keyExtractor={item => item.id}
+    numColumns={2}
+    columnWrapperStyle={rowStyle}
+    ListEmptyComponent={_listEmptyComponent}
+//    onEndReached={fetchData} 
+
+  />
+</View>
+);
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 12,
+    backgroundColor: 'white',
+    },
   darkContainer: {
     backgroundColor: '#121212',
   },
@@ -75,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Categories;
+export default Search;

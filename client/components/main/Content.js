@@ -4,7 +4,7 @@ import { NavigationContext } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './section/Home';
-import Search from './section/Search';
+import Search from './section/Categories';
 import Post from './section//Post';
 import Rewards from './section/Rewards';
 import FAQs from './section/FAQs';
@@ -15,7 +15,7 @@ import Display from './dropdown/settings/Display'
 import Interaction from './dropdown/settings/Interaction'
 import Notifications from './dropdown/settings/Notifications'
 import ContactUs from './dropdown/settings/ContactUs'
-import Categories from './section/Categories';
+//import Categories from './section/Categories';
 import AdminHome from './section/AdminHome';
 import AdminClubs from './section/AdminClubs';
 import AdminEvents from './section/AdminEvents';
@@ -97,11 +97,6 @@ const Content = ({ navigation }) => {
             <Stack.Screen
               name="ContactUs"
               component={ContactUs}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Categories"
-              component={Categories}
               options={{headerShown: false}}
             />
             <Stack.Screen
