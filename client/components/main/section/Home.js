@@ -7,8 +7,10 @@ import RoundedButton from '../cards/RoundedButton.js';
 import { getIsBookmarked } from '../cards/EventCard.js';
 import Card from '../cards/EventCard.js';
 import { GetSaved } from '../APIUse.js';
+import NewButton from '../cards/NewButton.js'
 
 import { getURL } from '../../AxiosService.js';
+import { Button } from '@rneui/base';
 
 const Home = ({route}) => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext()
@@ -19,7 +21,7 @@ const Home = ({route}) => {
     { id: 3, type: 'University' },
   ];
 
-   data = [     
+  const data = [     
     { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startdate: new Date('2024-01-24T10:30:00'), enddate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
     { id: "1", title: 'Event 2', club: 'Club 2', type: 1, startDate: new Date('2024-01-24T11:30:00'), endDate: new Date('2024-01-26T18:30:00'), interested: 2245, isBookmarked: 0, },
     { id: "2", title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632 , isBookmarked: 0,},
@@ -29,6 +31,13 @@ const Home = ({route}) => {
     { id: "6", title: 'Event 7', club: 'Club 7', type: 2, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 9876 , isBookmarked: 0,},
 
   ];
+
+  const ButtonData = [
+    { id: 1, title: 'Popular' },
+    { id: 2, title: 'Chronological' },
+    { id: 3, title: 'Followed' },
+  ];
+
   const originalData = [...data]; // Make a copy of the original data
 
 
@@ -83,7 +92,6 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   }, []);
 
 
-
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
     item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
@@ -106,84 +114,21 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   };
 
 
-  const [buttonOne, setButtonOne] = useState(0);
-  const [buttonTwo, setButtonTwo] = useState(0);
-  const [buttonThree, setButtonThree] = useState(0);
-    
-
   const [activeButton, setActiveButton] = useState(null);
-   const handlePress = (buttonIndex) => {
-    // handle button press here
-    if (activeButton != buttonIndex)
-    setActiveButton(buttonIndex);
-  else
-  setActiveButton(0);
-    
-    if (buttonIndex == 1)
-    {
-      if (buttonOne == 0)
-      {
-      data = sortByInterestedDescending(data);
-      //console.log('buttonOne was ', buttonOne);
-      setButtonOne(1);
-      //console.log('buttonOne is now ', buttonOne);
-      }
-      else
-      {
-        data = originalData;
-        //console.log('buttonOne is 1 and now its 0');
-        setButtonOne(0);
-      }
-    }
 
-    if (buttonIndex == 2)
-    {
-      if (buttonTwo == 0)
-      {
-      data = sortByDateRecent(data);
-      
-      setButtonTwo(1);
-      
-      }
-      else
-      {
-        data = originalData;
-        
-        setButtonTwo(0);
-      }
-    }
-    
-    if (buttonIndex == 3)
-    {
-      if (buttonThree == 0)
-      {
-      data = sortByDateRecent(data);
-      
-      setButtonThree(1);
-      
-      }
-      else
-      {
-        data = originalData;
-        
-        setButtonThree(0);
-      }
-    }
-    
+  const handleButtonPress = (id) => {
+    setActiveButton(id);
   };
 
-function getData() {
-    if (buttonOne == 1)
-    return DataToUse;
-else if (buttonTwo == 1)
-  return sortedRecentData;
-else if (buttonThree == 1)
-    return originalData;
-else
-return originalData;
-}
-
-  
+  const renderButton = ({ item }) => (
+    <NewButton
+      item={item}
+      active={item.id === activeButton}
+      handleButtonPress={handleButtonPress}
+      ChangeDataFunction={ChangeData} // This doesn't do anything yet
+    />
+  );
+      
   return (
     <View style={colorScheme === 'dark' ? styles.darkContainer : styles.container}>
         <Text style = {[styles.Title, colorScheme === 'dark' && styles.darkText]}>{eventScreenName}</Text>
@@ -203,39 +148,16 @@ return originalData;
           setClicked={setClicked}
         />
         </View>
-        <View style={styles.button}> 
-        <RoundedButton
-        style={[styles.button, { }]}
-        title="Popular"
-        
-        isActive={activeButton === 1}
-        onPress={() => { handlePress(1)}}
-        buttonStyle={{  }} // You can customize the button's background color here
-        textStyle={{  }} // You can customize the text color here
-        Key={'Test'}
-        ChangeDataFunction={ChangeData}
+
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <FlatList           // Flatlist for the 3 buttons
+        data={ButtonData}
+        renderItem={renderButton}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal
+        contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'center', flexGrow: 1 }}
       />
-      <RoundedButton
-      style={[styles.button, {  }]}
-        title="Chronological" 
-        isActive={activeButton === 2}
-        onPress={() => handlePress(2)}
-        buttonStyle={{   }} // You can customize the button's background color here
-        textStyle={{  }} // You can customize the text color here
-        Key={'music_festival'}
-        ChangeDataFunction={ChangeData}
-      />
-      <RoundedButton
-      style={[styles.button, { }]}
-        title="Followed"
-        isActive={activeButton === 3}
-        onPress={() => handlePress(3)}
-        buttonStyle={{  }} // You can customize the button's background color here
-        textStyle={{  }} // You can customize the text color here
-        Key={'test2'}
-        ChangeDataFunction={ChangeData}
-      />
-      </View>
+    </View>
       </View >
       
       <FlatList
@@ -258,6 +180,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Arial',
   },
   darkContainer: {
+    flex: 12,
     backgroundColor: '#121212',
     fontFamily: 'Arial',
   },
