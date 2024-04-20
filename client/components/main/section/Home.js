@@ -121,29 +121,39 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   };
 
   const keysForTesting = ['Test', 'music_festival', 'test2'] 
-  const [jsonifiedKeys, ChangeKeys] = useState([{id: 10, Key: 'INITIAL STATE'}]);
+  //const [jsonifiedKeys, ChangeKeys] = useState([{id: 10, Key: 'INITIAL STATE'},{id: 20, Key: 'INITIAL STATE'}]);
   const [loadingKeys, keyLoadingStateChange] = useState(true);
-  
+  let jsonifiedKeys = []
   
   useEffect(() => {
+    console.log('useffect ran')
+    keyLoadingStateChange(true)
+    function ReFormatKeys()
+    {
+      console.log("Inreformat Keys")
     const newKeys = {};
     for (let i = 0; i < keysForTesting.length; i++) {
       newKeys[i] = { id: i, Key: keysForTesting[i] };
     }
-    ChangeKeys({ ...jsonifiedKeys, ...newKeys });
+    console.log(newKeys)
+    jsonifiedKeys = newKeys
     keyLoadingStateChange(false);
+    }
+    ReFormatKeys()
+    console.log(jsonifiedKeys)
   }, []);
 
 
-  const renderButton = ({ item }) => {
+  const renderButton = (item) => {
     console.log('enter')
+    console.log(JSON.stringify(item))
     console.log("Button Item= " + item)
     if(!loadingKeys)
     {
     return (
       <RoundedButton
-      Title={item.Key}
-      Key={item.Key}
+      Title={item.item}
+      Key={item.item}
       ChangeDataFunction={ChangeData}
 
 
@@ -175,9 +185,9 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
 
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <FlatList           // Flatlist for the 3 buttons
-        data={[{id: 1, Key: 'Test'}, {id: 2, Key:'music_festival'}, {id: 10, Key: 'test2'}]}
+        data={keysForTesting}
         renderItem={renderButton}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item}
         horizontal
         contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'center', flexGrow: 1 }}
       />
