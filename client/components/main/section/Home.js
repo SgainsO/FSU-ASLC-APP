@@ -104,9 +104,9 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
        const found = likedInformation.find((element) => element === item.id.toString())
    
        console.log(found)
-       return <Card id = {item.id} title={item.title} club={item.club} type={item.type} 
+       return (<Card id = {item.id} title={item.title} club={item.club} type={item.type} 
          startDate={new Date(item.startdate)} endDate={new Date(item.enddate)} interested={item.interested} 
-         SizePerc={.43} UserLiked={found === undefined ? false : true}/>;
+         SizePerc={.43} UserLiked={found === undefined ? false : true}/>);
       }                             //LikedInformation will not be stored in a seperate table    
      }                             //if the id is in saved table, the favorited will be on 
  
@@ -120,14 +120,38 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     setActiveButton(id);
   };
 
-  const renderButton = ({ item }) => (
-    <NewButton
-      item={item}
-      active={item.id === activeButton}
-      handleButtonPress={handleButtonPress}
-      ChangeDataFunction={ChangeData} // This doesn't do anything yet
+  const keysForTesting = ['Test', 'music_festival', 'test2'] 
+  const [jsonifiedKeys, ChangeKeys] = useState([{id: 10, Key: 'INITIAL STATE'}]);
+  const [loadingKeys, keyLoadingStateChange] = useState(true);
+  
+  
+  useEffect(() => {
+    const newKeys = {};
+    for (let i = 0; i < keysForTesting.length; i++) {
+      newKeys[i] = { id: i, Key: keysForTesting[i] };
+    }
+    ChangeKeys({ ...jsonifiedKeys, ...newKeys });
+    keyLoadingStateChange(false);
+  }, []);
+
+
+  const renderButton = ({ item }) => {
+    console.log('enter')
+    console.log("Button Item= " + item)
+    if(!loadingKeys)
+    {
+    return (
+      <RoundedButton
+      Title={item.Key}
+      Key={item.Key}
+      ChangeDataFunction={ChangeData}
+
+
     />
-  );
+    )
+    }
+    return null;
+  };
       
   return (
     <View style={colorScheme === 'dark' ? styles.darkContainer : styles.container}>
@@ -151,9 +175,9 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
 
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <FlatList           // Flatlist for the 3 buttons
-        data={ButtonData}
+        data={[{id: 1, Key: 'Test'}, {id: 2, Key:'music_festival'}, {id: 10, Key: 'test2'}]}
         renderItem={renderButton}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={item => item.id.toString()}
         horizontal
         contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'center', flexGrow: 1 }}
       />
