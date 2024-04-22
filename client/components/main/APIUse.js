@@ -75,3 +75,18 @@ export function GetEventsFromKey(key)
   });
 
 }
+
+export function GetAllEvents()
+{
+  return axios.get(`${getURL()}/api/getEvents`) // Adjust the URL to match your local server
+    .then(response => {
+      // Assuming the response contains JSON data, you can access it through response.data
+    //  console.log('Data received:', response.data);
+      return response.data.data;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error; // Re-throwing the error to propagate it to the caller
+    });
+
+}

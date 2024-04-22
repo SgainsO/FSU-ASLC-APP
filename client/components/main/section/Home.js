@@ -65,7 +65,8 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
-  const {title, dbLink} = route.params || {title: "All Events", dbLink: "ALL"}
+  const {title, dbLink} = route.params || {title: "All Events", dbLink: ["ALL"]}
+  console.log("dbLink " + dbLink)
   const eventScreenName = title === undefined ? "Title Here" : title;     // Define a defualt in case alternative title was not passed
   console.log(eventScreenName)
 
@@ -114,17 +115,22 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   };
 
 
-  const [activeButton, setActiveButton] = useState(null);
+ // const [activeButton, setActiveButton] = useState(null);
 
   const handleButtonPress = (id) => {
     setActiveButton(id);
   };
 
-  const keysForTesting = ['Test', 'music_festival', 'test2'] 
+  //const keys = ['Test', 'music_festival', 'test2']  //For Testing
+  console.log(dbLink)
+  const keys = dbLink
+  console.log("key" + keys)
+
+
   //const [jsonifiedKeys, ChangeKeys] = useState([{id: 10, Key: 'INITIAL STATE'},{id: 20, Key: 'INITIAL STATE'}]);
-  const [loadingKeys, keyLoadingStateChange] = useState(true);
+ // const [loadingKeys, keyLoadingStateChange] = useState(true);
   let jsonifiedKeys = []
-  
+  /*
   useEffect(() => {
     console.log('useffect ran')
     keyLoadingStateChange(true)
@@ -132,8 +138,8 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     {
       console.log("Inreformat Keys")
     const newKeys = {};
-    for (let i = 0; i < keysForTesting.length; i++) {
-      newKeys[i] = { id: i, Key: keysForTesting[i] };
+    for (let i = 0; i < keys.length; i++) {
+      newKeys[i] = { id: i, Key: keys[i] };
     }
     console.log(newKeys)
     jsonifiedKeys = newKeys
@@ -141,25 +147,60 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     }
     ReFormatKeys()
     console.log(jsonifiedKeys)
-  }, []);
+  }, []); */
+/*
+  const buttonASM = []          //Active State Manager
 
+  for(let i = 0; i < keys.length; i++) 
+  {
+    const [isActive, changeActiveState] = useState(true)
+    const title= keys[i]
+    buttonASM.push({ title ,isActive, changeActiveState})  
+  }
+  */
+
+  /*
+  const changeColors = (name) => {
+
+    console.log("The id name is" + name)
+    for (let i = 0; i < keys.length; i++)
+    {
+      if(buttonASM[i].title === name)
+      {
+        console.log("Changing ActiveState")
+        buttonASM[i].changeActiveState(true)
+      }
+      else
+      {
+        buttonASM[i].changeActiveState(false)
+      }
+    }
+  }
+  */
+  const [activeButton, changeActiveButton] = useState(keys[0])
+  const changeColors = (name) => {
+      changeActiveButton(name)
+  }
 
   const renderButton = (item) => {
     console.log('enter')
     console.log(JSON.stringify(item))
     console.log("Button Item= " + item)
-    if(!loadingKeys)
-    {
+
+
+    console.log("Item has the key: " + item.item)
     return (
       <RoundedButton
-      Title={item.item}
+      style={styles.button}
+      title={item.item}
       Key={item.item}
       ChangeDataFunction={ChangeData}
-
-
+      isActive={activeButton}
+      onPress={() => changeActiveButton(item.item)}
+      color = {activeButton === item.item ? '#CEB888' : 'white'}
+      opacity = {keys.length === 1 ? 0 : 100}
     />
     )
-    }
     return null;
   };
       
@@ -183,9 +224,10 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
         />
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.row}>
       <FlatList           // Flatlist for the 3 buttons
-        data={keysForTesting}
+  //      data={keys.length === 1 ? [] : keys}
+        data={keys}
         renderItem={renderButton}
         keyExtractor={item => item}
         horizontal
