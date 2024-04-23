@@ -127,56 +127,7 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   console.log("key" + keys)
 
 
-  //const [jsonifiedKeys, ChangeKeys] = useState([{id: 10, Key: 'INITIAL STATE'},{id: 20, Key: 'INITIAL STATE'}]);
- // const [loadingKeys, keyLoadingStateChange] = useState(true);
-  let jsonifiedKeys = []
-  /*
-  useEffect(() => {
-    console.log('useffect ran')
-    keyLoadingStateChange(true)
-    function ReFormatKeys()
-    {
-      console.log("Inreformat Keys")
-    const newKeys = {};
-    for (let i = 0; i < keys.length; i++) {
-      newKeys[i] = { id: i, Key: keys[i] };
-    }
-    console.log(newKeys)
-    jsonifiedKeys = newKeys
-    keyLoadingStateChange(false);
-    }
-    ReFormatKeys()
-    console.log(jsonifiedKeys)
-  }, []); */
-/*
-  const buttonASM = []          //Active State Manager
 
-  for(let i = 0; i < keys.length; i++) 
-  {
-    const [isActive, changeActiveState] = useState(true)
-    const title= keys[i]
-    buttonASM.push({ title ,isActive, changeActiveState})  
-  }
-  */
-
-  /*
-  const changeColors = (name) => {
-
-    console.log("The id name is" + name)
-    for (let i = 0; i < keys.length; i++)
-    {
-      if(buttonASM[i].title === name)
-      {
-        console.log("Changing ActiveState")
-        buttonASM[i].changeActiveState(true)
-      }
-      else
-      {
-        buttonASM[i].changeActiveState(false)
-      }
-    }
-  }
-  */
   const [activeButton, changeActiveButton] = useState(keys[0])
   const changeColors = (name) => {
       changeActiveButton(name)
