@@ -10,7 +10,7 @@ import { useAuth } from '../AuthProvider';
 const {width, height} = Dimensions.get('window');
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
@@ -30,9 +30,9 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Username"
-          placeholderTextColor= '#a19f99'
-          value={username}
+          placeholder="Email"
+          placeholderTextColor= '#FFFFFF'
+          value={email}
           onChangeText={(text) => setUsername(text)}
         />
       </View>
@@ -40,7 +40,7 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholderTextColor= '#a19f99'
+          placeholderTextColor= '#FFFFFF'
           placeholder="Password"
           secureTextEntry={true}
           value={password}
@@ -48,16 +48,12 @@ const LoginScreen = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => handleLogin(username, password)}>
+      <TouchableOpacity style={styles.button} onPress={() => handleLogin(email, password)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => [isLoggedIn(), navigate("Signup")]}>
         <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigate("Main")}>
-        <Text style={styles.buttonText}>Temp Go To Home</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => setIsAdmin(false)}>
@@ -91,20 +87,20 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#FFFFFF',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#F8F5E4',
+    backgroundColor: '#FFFFFF',
     padding: 10,
     borderRadius: 8,
     width: '100%',
     marginTop: 10,
   },
   buttonText: {
-    color: '#a19f99',
+    color: '#000000',
     textAlign: 'center',
     fontWeight: 'bold',
   },
