@@ -10,7 +10,9 @@ import { useAuth } from '../AuthProvider';
 const {width, height} = Dimensions.get('window');
 
 const Signup = () => {
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
@@ -30,20 +32,41 @@ const Signup = () => {
     <View style={styles.container}>
       <Image source={require('../../assets/aslc_logo.png')} style= {styles.logoImage} />
       <Image source={require('../../assets/connect.png') }  style = {{marginBottom: 20}}/>
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Username"
-          placeholderTextColor= '#a19f99'
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          placeholder="First Name"
+          placeholderTextColor= '#FFFFFF'
+          value={firstName}
+          onChangeText={(text) => setFirstName(text)}
         />
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholderTextColor= '#a19f99'
+          placeholder="Last Name"
+          placeholderTextColor= '#FFFFFF'
+          value={lastName}
+          onChangeText={(text) => setLastName(text)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor= '#FFFFFF'
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholderTextColor= '#FFFFFF'
           placeholder="Password"
           secureTextEntry={true}
           value={password}
@@ -74,20 +97,20 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#ffffff',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#F8F5E4',
+    backgroundColor: '#ffffff',
     padding: 10,
     borderRadius: 8,
     width: '100%',
     marginTop: 10,
   },
   buttonText: {
-    color: '#a19f99',
+    color: '#000000',
     textAlign: 'center',
     fontWeight: 'bold',
   },
