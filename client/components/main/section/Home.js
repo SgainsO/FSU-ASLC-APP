@@ -105,15 +105,15 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     if (loading || endReached) return;
     setLoading(true);
     try {
-      const data = await GetTwentyEvents(offset, limit); // Pass offset and limit
-      console.log('data:', data); // Log data to see what's being returned
+      const data = await GetTwentyEvents(offset, limit);
+      console.log('data:', data);
       if (data.length === 0) {
         console.log("No more events to load.");
-        setEndReached(true); // Update endReached state
+        setEndReached(true);
       } else {
         setEvents(prevEvents => [...prevEvents, ...data]);
         if (data.length < limit) {
-          setEndReached(true); // Update endReached state
+          setEndReached(true);
         }
         setOffset(prevOffset => prevOffset + limit); 
       }
@@ -126,10 +126,10 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   
   useEffect(() => {
     setLoading(true);
-    setEndReached(false); // Reset endReached state
-    setLimit(20); // Reset limit to fetch the first 20 events
-    setOffset(0); // Reset offset
-    setEvents([]); // Clear events array
+    setEndReached(false);
+    setLimit(20);
+    setOffset(0);
+    setEvents([]);
     fetchEvents();
   }, []);
   
