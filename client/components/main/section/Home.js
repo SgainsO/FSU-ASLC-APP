@@ -1,5 +1,5 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
 import { ButtonGroup } from '@rneui/themed';
 import SearchBar from '../SearchBar.js';
 import { useColorSchemeContext } from '../ColorSchemeContext.js';
@@ -22,12 +22,14 @@ const Home = ({route}) => {
     { id: 3, type: 'University' },
   ];
 
+
   
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(20);
   const [offset, setOffset] = useState(0);
   const [endReached, setEndReached] = useState(false);
+  const flatListRef = useRef(null);
 
   const data = [     
     { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startdate: new Date('2024-01-24T10:30:00'), enddate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
@@ -99,36 +101,44 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     fetchData();
   }, []);
   
-  useEffect(() => {
-    setLoading(true);
-    fetchEvents();
-  }, [limit, offset]);
-  
-
   const fetchEvents = async () => {
     if (loading || endReached) return;
     setLoading(true);
     try {
-      const lastEvent = events[events.length - 1];
-      const aboveId = lastEvent ? lastEvent.id : 0;
-      const data = await GetTwentyEvents(aboveId, limit, offset);
+      const data = await GetTwentyEvents(offset, limit); // Pass offset and limit
+      console.log('data:', data); // Log data to see what's being returned
       if (data.length === 0) {
-        setEndReached(true);
+        console.log("No more events to load.");
+        setEndReached(true); // Update endReached state
       } else {
         setEvents(prevEvents => [...prevEvents, ...data]);
-        setOffset(prevOffset => prevOffset + limit);
+        if (data.length < limit) {
+          setEndReached(true); // Update endReached state
+        }
+        setOffset(prevOffset => prevOffset + limit); 
       }
     } catch (error) {
       console.error('Error fetching events:', error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-  }  
+  };
+  
+  useEffect(() => {
+    setLoading(true);
+    setEndReached(false); // Reset endReached state
+    setLimit(20); // Reset limit to fetch the first 20 events
+    setOffset(0); // Reset offset
+    setEvents([]); // Clear events array
+    fetchEvents();
+  }, []);
   
 
   const handleEndReached = () => {
-    fetchEvents();
+    if (!endReached) {
+      fetchEvents();
+    }
   };
-
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
       item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
@@ -230,6 +240,8 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
         ListEmptyComponent={() => <Text style={{}}>NO MATCHES FOUND</Text>}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.1}
+        ListFooterComponent={loading && <ActivityIndicator style={{ margin: 10 }} color="#0000ff" />}
+        removeClippedSubviews={false}
       />
     </View>
   );
