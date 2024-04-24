@@ -90,3 +90,14 @@ export function GetAllEvents()
     });
 
 }
+
+export function GetTwentyEvents(aboveId, limit = 20, offset = 0) {
+  return axios.get(`${getURL()}/api/getTwentyEvents/${aboveId}`, { params: { limit, offset } })
+    .then(response => {
+      return response.data.data;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error;
+    });
+}

@@ -7,6 +7,7 @@ import RoundedButton from '../cards/RoundedButton.js';
 import { getIsBookmarked } from '../cards/EventCard.js';
 import Card from '../cards/EventCard.js';
 import { GetSaved } from '../APIUse.js';
+import { GetTwentyEvents } from '../APIUse.js';
 import NewButton from '../cards/NewButton.js'
 
 import { getURL } from '../../AxiosService.js';
@@ -20,6 +21,13 @@ const Home = ({route}) => {
     { id: 2, type: 'Movie' },
     { id: 3, type: 'University' },
   ];
+
+  
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(20);
+  const [offset, setOffset] = useState(0);
+  const [endReached, setEndReached] = useState(false);
 
   const data = [     
     { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startdate: new Date('2024-01-24T10:30:00'), enddate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
@@ -81,37 +89,62 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
       })
   }
   const [likedInformation, SetLiked] = useState(null)
-  const [loading, setLoading] = useState(true);
 
-   useEffect(() => {             //all of the cards will recieve the same "liked" information file
-        async function fetchData() {
-          setLoading(true)
-          SetLiked(await GetSaved())
-          setLoading(false)  
-        }
-        fetchData()
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      SetLiked(await GetSaved());
+      setLoading(false);
+    }
+    fetchData();
   }, []);
+  
+  useEffect(() => {
+    setLoading(true);
+    fetchEvents();
+  }, [limit, offset]);
+  
 
+  const fetchEvents = async () => {
+    if (loading || endReached) return;
+    setLoading(true);
+    try {
+      const lastEvent = events[events.length - 1];
+      const aboveId = lastEvent ? lastEvent.id : 0;
+      const data = await GetTwentyEvents(aboveId, limit, offset);
+      if (data.length === 0) {
+        setEndReached(true);
+      } else {
+        setEvents(prevEvents => [...prevEvents, ...data]);
+        setOffset(prevOffset => prevOffset + limit);
+      }
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+    setLoading(false);
+  }  
+  
+
+  const handleEndReached = () => {
+    fetchEvents();
+  };
 
   const renderItem = ({ item }) => {
     const isMatch = searchPhrase === "" ||
-    item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
-    item.club.toUpperCase().includes(searchPhrase.toUpperCase());
+      item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
+      item.club.toUpperCase().includes(searchPhrase.toUpperCase());
   
     if (isMatch) {
-      if(!loading)
-      {
-       console.log(likedInformation)
-       const found = likedInformation.find((element) => element === item.id.toString())
-   
-       console.log(found)
-       return (<Card id = {item.id} title={item.title} club={item.club} type={item.type} 
-         startDate={new Date(item.startdate)} endDate={new Date(item.enddate)} interested={item.interested} 
-         SizePerc={.43} UserLiked={found === undefined ? false : true}/>);
-      }                             //LikedInformation will not be stored in a seperate table    
-     }                             //if the id is in saved table, the favorited will be on 
- 
-     return null;
+      if (!loading) {
+        console.log(likedInformation);
+        const found = likedInformation.find((element) => element === item.id.toString());
+        console.log(found);
+        return (<Card id={item.id} title={item.title} club={item.club} type={item.type}
+          startDate={new Date(item.startDate)} endDate={new Date(item.endDate)} interested={item.interested}
+          SizePerc={0.43} UserLiked={found === undefined ? false : true} />);
+      }
+    }
+    return null;
   };
 
 
@@ -186,15 +219,17 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
       />
     </View>
       </View >
-      
+    
       <FlatList
-        data={DataToUse}
+        data={events}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}
         ListHeaderComponent={() => <Text style={[styles.title, colorScheme === 'dark' && styles.darkText]}>DISCOVER EVENTS</Text>}
         ListEmptyComponent={() => <Text style={{}}>NO MATCHES FOUND</Text>}
+        onEndReached={handleEndReached}
+        onEndReachedThreshold={0.1}
       />
     </View>
   );
