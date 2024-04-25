@@ -362,5 +362,37 @@ router.post('/event/add', async (req, res) => {
 }
 );
 
+router.post('/event/:id/update', async (req, res) => {
+  const ID = req.params.id;
+  const { Title, Club, Type, StartDate, EndDate, url } = req.body;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('UPDATE events SET title = $1, club_id = $2, query_key = $3, startdate = $4, enddate = $5, url = $6 WHERE id = $7 RETURNING *',
+      [Title, Club, Type, StartDate, EndDate, url, ID]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error updating event');
+  }
+});
+
+router.delete('/event/:id/delete', async (req, res) => {
+  const ID = req.params.id;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('DELETE FROM events WHERE id = $1 RETURNING *', [ID]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error deleting event');
+  }
+});
+
 
 module.exports = router;

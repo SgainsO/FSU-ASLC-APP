@@ -306,11 +306,23 @@ const AdminCreation = (props) => {
         case 'Event':
           
           const eventPayload = {
-            "Title": data.title,
+            "Club": data.club,
             "Type": data.type,
+            "Title": data.title,
             "StartDate": data.startDate,
-            "EndDate": data.endDate,
+            "EndDate": "Tomorrow",
             "URL": "d"
+          }
+
+          try {
+            const response = await axios.post(`${getURL()}/api/event/${data.id}/update`, eventPayload);
+
+            if (response.status === 200) {
+              console.log(`Updated ${props.type}`, data);
+            }
+          }
+          catch (error) {
+            console.error(error);
           }
           break;
       }

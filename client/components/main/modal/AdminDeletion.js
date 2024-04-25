@@ -42,7 +42,17 @@ const AdminDeletion = (props) => {
         }
         break;
       case 'Event':
-        console.log('Delete event with ID: ', props.data[1]);
+        try {
+          const response = await axios.delete(`${getURL()}/api/event/${props.data[1]}/delete`);
+
+          if (response.status === 200) {
+            console.log('Event deleted successfully');
+          }
+        } catch (error) {
+          console.error('Error deleting event: ', error);
+          
+        }
+        
         break;
     }
 
