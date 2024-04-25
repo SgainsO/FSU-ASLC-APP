@@ -25,13 +25,13 @@ const AdminEvents = () => {
       try {
         const response = await axios.get(getEventsURL());
         const formattedData = response.data.data.map(event => [
-          event.url, // TODO: FIX THIS
-          event.id.toString(),
+          event.url,
+          event.id,
           event.club_id,
-          event.type,
+          event.query_key,
           event.title,
-          event.start_date,
-          event.end_date,
+          event.startdate,
+          event.enddate,
         ]);
         console.log('formattedData: ', formattedData);
         setEventData(prevState => ({ ...prevState, tableData: formattedData }));

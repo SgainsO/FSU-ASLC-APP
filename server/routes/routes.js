@@ -76,7 +76,7 @@ router.get('/getSavedEvents/:userID', async (req, res) => {
 router.get('/getUsers', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM users');
+    const result = await client.query('SELECT url, email, firstname, lastname, id FROM users');
     const users = result.rows;
     client.release();
 
@@ -308,6 +308,91 @@ router.delete('/club/:id/delete', async (req, res) => {
   }
 });
 
+
+// USER RELATED ROUTES
+
+router.post('/user/:id/update', async (req, res) => {
+  const ID = req.params.id;
+
+  const { Email, firstName, lastName, URL } = req.body;
+  try {
+    const client = await pool.connect();
+    const result = await client.query('UPDATE users SET email = $1, firstname = $2, lastname = $3, url = $4 WHERE id = $5 RETURNING *',
+      [Email, firstName, lastName, URL, ID]);
+    const newUser = result.rows[0];
+    client.release();
+    res.json(newUser);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error updating user');
+  }
+});
+
+router.delete('/user/:id/delete', async (req, res) => {
+  const ID = req.params.id;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('DELETE FROM users WHERE id = $1 RETURNING *', [ID]);
+    const newUser = result.rows[0];
+    client.release();
+    res.json(newUser);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error deleting user');
+  }
+});
+
+// Event related routes
+
+router.post('/event/add', async (req, res) => {
+  const { Title, Club, Type, StartDate, EndDate, url } = req.body;
+  
+  try {
+    const client = await pool.connect();
+    const result = await client.query('INSERT INTO events (title, club_id, query_key, startdate, enddate, url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [Title, Club, Type, StartDate, EndDate, url]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error creating event');
+  }
+}
+);
+
+router.post('/event/:id/update', async (req, res) => {
+  const ID = req.params.id;
+  const { Title, Club, Type, StartDate, EndDate, url } = req.body;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('UPDATE events SET title = $1, club_id = $2, query_key = $3, startdate = $4, enddate = $5, url = $6 WHERE id = $7 RETURNING *',
+      [Title, Club, Type, StartDate, EndDate, url, ID]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error updating event');
+  }
+});
+
+router.delete('/event/:id/delete', async (req, res) => {
+  const ID = req.params.id;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('DELETE FROM events WHERE id = $1 RETURNING *', [ID]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error deleting event');
+  }
+});
 
 
 module.exports = router;

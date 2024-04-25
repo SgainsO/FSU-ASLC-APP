@@ -216,14 +216,16 @@ const AdminCreation = (props) => {
   const { control, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({ defaultValues: defaultFormValues})
 
   useEffect(() => {
-
-    console.log("props.data", props.data)
+    console.log(props.data)
     if (props.data) {
       switch (props.type) {
         case 'User':
+          console.log(props.data[2])
+          
+          setValue('id', props.data[1])
           setValue('firstName', props.data[2]);
-          setValue('lastName', props.data[2]);
-          setValue('email', props.data[3]);
+          setValue('lastName', props.data[3]);
+          setValue('email', props.data[4]);
           break;
         case 'Club':
           setValue('id', props.data[1])
@@ -235,7 +237,8 @@ const AdminCreation = (props) => {
           if (props.data[6]) {
             setEndDateEnabled(true);
           }
-
+          setValue('url', props.data[0])
+          setValue('id', props.data[1])
           setValue('club', props.data[2]);
           setValue('type', props.data[3]);
           setValue('title', props.data[4]);
@@ -263,10 +266,26 @@ const AdminCreation = (props) => {
     if (isEditMode) {
       switch (props.type) {
         case 'User':
-          console.log(`Updated ${props.type}`, data);
+          const userPayload = {
+            "firstName": data.firstName,
+            "lastName": data.lastName,
+            "Email": data.email,
+            "URL": "d"
+          }
+
+          try {
+            const response = await axios.post(`${getURL()}/api/user/${data.id}/update`, userPayload);
+
+            if (response.status === 200) {
+              console.log(`Updated ${props.type}`, data);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+
           break;
         case 'Club':
-          const payload = {
+          const clubPayload = {
             "Name": data.name,
             "Type": data.type,
             "Socials": data.socials,
@@ -274,7 +293,7 @@ const AdminCreation = (props) => {
           }
 
           try {
-            const response = await axios.post(`${getURL()}/api/club/${data.id}/update`, payload);
+            const response = await axios.post(`${getURL()}/api/club/${data.id}/update`, clubPayload);
             
             if (response.status === 200) {
               console.log(`Updated ${props.type}`, data);
@@ -285,11 +304,31 @@ const AdminCreation = (props) => {
           
           break;
         case 'Event':
-          console.log(`Updated ${props.type}`, data);
+          
+          const eventPayload = {
+            "Club": data.club,
+            "Type": data.type,
+            "Title": data.title,
+            "StartDate": data.startDate,
+            "EndDate": "Tomorrow",
+            "URL": "d"
+          }
+
+          try {
+            const response = await axios.post(`${getURL()}/api/event/${data.id}/update`, eventPayload);
+
+            if (response.status === 200) {
+              console.log(`Updated ${props.type}`, data);
+            }
+          }
+          catch (error) {
+            console.error(error);
+          }
           break;
       }
     }
     else {
+      console.log(props)
       switch (props.type) {
         case 'User':
           console.log(`Created ${props.type}`, data);
@@ -313,7 +352,26 @@ const AdminCreation = (props) => {
           }
           break;
         case 'Event':
-          console.log(`Created ${props.type}`, data);
+          const eventPayload = {
+            "Club": data.club,
+            "Type": data.type,
+            "Title": data.title,
+            "StartDate": data.startDate,
+            "EndDate": "Tomorrow",
+            "URL": "d"
+          }
+
+          try {
+            const response = await axios.post(`${getURL()}/api/event/add`, eventPayload);
+
+            if (response.status === 200) {
+              console.log(`Created ${props.type}`, data);
+            }
+          }
+          catch (error) {
+            console.error(error);
+          }
+
           break;
       }
     }

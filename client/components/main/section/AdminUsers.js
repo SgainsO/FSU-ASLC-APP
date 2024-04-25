@@ -5,7 +5,7 @@ import axios from 'axios';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
 
-import { getUsersURL } from '../../AxiosService';
+import { getURL } from '../../AxiosService';
 
 import { Entypo } from '@expo/vector-icons';
 import AdminCreation from '../modal/AdminCreation';
@@ -15,26 +15,29 @@ const AdminUsers = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
   const [userData, setUserData] = useState({
-    tableHead: ['Image', 'ID', 'Name', 'Email', 'Actions'],
+    tableHead: ['Image', 'ID', 'First Name', 'Last Name', 'Email', 'Actions'],
     tableData: [],
-    widthPercents: [15, 15, 22, 28, 20],
+    widthPercents: [10, 10, 20, 20, 20, 20],
     type: 'User'
   });
   
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(getUsersURL());
+        const response = await axios.get(`${getURL()}/api/getUsers`);
+
+        console.log(response)
         const formattedData = response.data.data.map(user => [
           user.url,
-          user.id.toString(),
-          `${user.firstname} ${user.lastname}`,
+          user.id,
+          user.firstname,
+          user.lastname,
           user.email,
         ]);
         console.log('formattedData: ', formattedData);
         setUserData(prevState => ({ ...prevState, tableData: formattedData }));
       } catch (error) {
-        console.error(`Error retrieving users from ${getUsersURL()}: error`);
+        console.error(error);
       }
     };
     fetchUsers();
@@ -75,6 +78,16 @@ const styles = StyleSheet.create({
   },
   darkText: {
     color: '#FFFFFF',
+  },
+  cell: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000',
   },
   topContainer: {
     height: 50,
