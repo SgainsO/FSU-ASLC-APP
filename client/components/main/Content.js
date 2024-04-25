@@ -12,7 +12,7 @@ import goToEvent from './section/GoToEvent';
 import Sett from './dropdown/Sett'
 import Account from './dropdown/settings/Account'
 import Display from './dropdown/settings/Display'
-import Interaction from './dropdown/settings/Interaction'
+import Bookmarks from './dropdown/settings/Bookmarks'
 import Notifications from './dropdown/settings/Notifications'
 import ContactUs from './dropdown/settings/ContactUs'
 //import Categories from './section/Categories';
@@ -90,8 +90,8 @@ const Content = ({ navigation }) => {
               options={{headerShown: false}}
             />
             <Stack.Screen
-              name="Interaction"
-              component={Interaction}
+              name="Bookmarks"
+              component={Bookmarks}
               options={{headerShown: false}}
             />
             <Stack.Screen

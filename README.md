@@ -37,6 +37,11 @@ Follow these steps to run the client code on your machine:
 
 Before starting server you must have access to the .env file and place it in the server folder 
 
+#### Navigate to the /server/ folder
+```
+cd server
+
+```
 #### Installing Neccesary Modules
 ```
 npm install
@@ -46,3 +51,5 @@ npm install
 ```
 npm start
 ```
+
+#### Change IP in line 6 of client/components/AxiosServices.js to your local IP
