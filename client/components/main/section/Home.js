@@ -1,5 +1,5 @@
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ButtonGroup } from '@rneui/themed';
 import SearchBar from '../SearchBar.js';
 import { useColorSchemeContext } from '../ColorSchemeContext.js';
@@ -13,7 +13,7 @@ import NewButton from '../cards/NewButton.js'
 import { getURL } from '../../AxiosService.js';
 import { Button } from '@rneui/base';
 
-const Home = ({route}) => {
+const Home = ({ route }) => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext()
   const filters = [
     { id: 0, type: 'All' },
@@ -22,8 +22,6 @@ const Home = ({route}) => {
     { id: 3, type: 'University' },
   ];
 
-
-  
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [limit, setLimit] = useState(20);
@@ -31,14 +29,14 @@ const Home = ({route}) => {
   const [endReached, setEndReached] = useState(false);
   const flatListRef = useRef(null);
 
-  const data = [     
+  const data = [
     { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startdate: new Date('2024-01-24T10:30:00'), enddate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
     { id: "1", title: 'Event 2', club: 'Club 2', type: 1, startDate: new Date('2024-01-24T11:30:00'), endDate: new Date('2024-01-26T18:30:00'), interested: 2245, isBookmarked: 0, },
-    { id: "2", title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632 , isBookmarked: 0,},
+    { id: "2", title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632, isBookmarked: 0, },
     { id: "3", title: 'Event 4', club: 'Club 4', type: 3, startDate: new Date('2024-01-28T22:30:00'), endDate: new Date('2024-01-29T1:00:00'), interested: 4253, isBookmarked: 0, },
     { id: "4", title: 'Event 5', club: 'Club 5', type: 1, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-24T12:15:00'), interested: 165, isBookmarked: 0, },
     { id: "5", title: 'Event 6', club: 'Club 6', type: 2, startDate: new Date('2023-01-24T11:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 4332, isBookmarked: 0, },
-    { id: "6", title: 'Event 7', club: 'Club 7', type: 2, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 9876 , isBookmarked: 0,},
+    { id: "6", title: 'Event 7', club: 'Club 7', type: 2, startDate: new Date('2024-01-24T10:30:00'), endDate: new Date('2024-01-25T12:30:00'), interested: 9876, isBookmarked: 0, },
 
   ];
 
@@ -50,20 +48,19 @@ const Home = ({route}) => {
 
   const originalData = [...data]; // Make a copy of the original data
 
+  function sortByInterestedDescending(data) {
+    return [...data].sort((a, b) => b.interested - a.interested); // sort without alterting data
+  }
 
-function sortByInterestedDescending(data) {
-  return [...data].sort((a, b) => b.interested - a.interested); // sort without alterting data
-}
+  function sortByDateRecent(data) {
+    return [...data].sort((a, b) => b.startDate - a.startDate);
+  }
 
-function sortByDateRecent(data) {
-  return [...data].sort((a, b) => b.startDate - a.startDate);
-}
+  const [DataToUse, ChangeData] = useState(data)
 
-const [DataToUse,ChangeData] = useState(data)
+  const sortedRecentData = sortByDateRecent([...data]);
 
-const sortedRecentData = sortByDateRecent([...data]);
-
-const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a copy of the original data to the function
+  const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a copy of the original data to the function
 
   // Search bar consts
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -75,7 +72,7 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
-  const {title, dbLink} = route.params || {title: "All Events", dbLink: ["ALL"]}
+  const { title, dbLink } = route.params || { title: "All Events", dbLink: ["ALL"] }
   console.log("dbLink " + dbLink)
   const eventScreenName = title === undefined ? "Title Here" : title;     // Define a defualt in case alternative title was not passed
   console.log(eventScreenName)
@@ -85,7 +82,8 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     const response = axios.get(getURL() + '/api/' + dbLink + '/events')
       .then(response => {                    //Error Catching
         console.log("Get Request Succesful")
-        return response.data;})
+        return response.data;
+      })
       .catch(error => {
         console.error("Get Request Failed", error)
       })
@@ -100,30 +98,35 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     }
     fetchData();
   }, []);
-  
+
   const fetchEvents = async () => {
     if (loading || endReached) return;
     setLoading(true);
     try {
       const data = await GetTwentyEvents(offset, limit);
       console.log('data:', data);
+
       if (data.length === 0) {
         console.log("No more events to load.");
         setEndReached(true);
-      } else {
+      } 
+
+      else {
         setEvents(prevEvents => [...prevEvents, ...data]);
+        setOffset(prevOffset => prevOffset + limit);
         if (data.length < limit) {
           setEndReached(true);
         }
-        setOffset(prevOffset => prevOffset + limit); 
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error fetching events:', error);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     setLoading(true);
     setEndReached(false);
@@ -132,33 +135,36 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     setEvents([]);
     fetchEvents();
   }, []);
-  
+
 
   const handleEndReached = () => {
     if (!endReached) {
       fetchEvents();
     }
   };
-  const renderItem = ({ item }) => {
+
+  const renderItem = useCallback(({ item }) => {
     const isMatch = searchPhrase === "" ||
       item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
       item.club.toUpperCase().includes(searchPhrase.toUpperCase());
   
     if (isMatch) {
-      if (!loading) {
-        console.log(likedInformation);
-        const found = likedInformation.find((element) => element === item.id.toString());
-        console.log(found);
-        return (<Card id={item.id} title={item.title} club={item.club} type={item.type}
-          startDate={new Date(item.startDate)} endDate={new Date(item.endDate)} interested={item.interested}
-          SizePerc={0.43} UserLiked={found === undefined ? false : true} />);
-      }
+      return (
+        <Card 
+          id={item.id}
+          title={item.title}
+          club={item.club}
+          type={item.type}
+          startDate={new Date(item.startDate)}
+          endDate={new Date(item.endDate)}
+          interested={item.interested}
+          SizePerc={0.43}
+          UserLiked={likedInformation && likedInformation.includes(item.id.toString())}
+        />
+      );
     }
     return null;
-  };
-
-
- // const [activeButton, setActiveButton] = useState(null);
+  }, [searchPhrase, likedInformation, loading]);
 
   const handleButtonPress = (id) => {
     setActiveButton(id);
@@ -169,11 +175,9 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
   const keys = dbLink
   console.log("key" + keys)
 
-
-
   const [activeButton, changeActiveButton] = useState(keys[0])
   const changeColors = (name) => {
-      changeActiveButton(name)
+    changeActiveButton(name)
   }
 
   const renderButton = (item) => {
@@ -181,55 +185,52 @@ const sortedDescendingData = sortByInterestedDescending([...data]); // Pass a co
     console.log(JSON.stringify(item))
     console.log("Button Item= " + item)
 
-
     console.log("Item has the key: " + item.item)
     return (
       <RoundedButton
-      style={styles.button}
-      title={item.item}
-      Key={item.item}
-      ChangeDataFunction={ChangeData}
-      isActive={activeButton}
-      onPress={() => changeActiveButton(item.item)}
-      color = {activeButton === item.item ? '#CEB888' : 'white'}
-      opacity = {keys.length === 1 ? 0 : 100}
-    />
+        style={styles.button}
+        title={item.item}
+        Key={item.item}
+        ChangeDataFunction={ChangeData}
+        isActive={activeButton}
+        onPress={() => changeActiveButton(item.item)}
+        color={activeButton === item.item ? '#CEB888' : 'white'}
+        opacity={keys.length === 1 ? 0 : 100}
+      />
     )
-    return null;
   };
-      
+
   return (
     <View style={colorScheme === 'dark' ? styles.darkContainer : styles.container}>
-        <Text style = {[styles.Title, colorScheme === 'dark' && styles.darkText]}>{eventScreenName}</Text>
-        
+      <Text style={[styles.Title, colorScheme === 'dark' && styles.darkText]}>{eventScreenName}</Text>
+
       <View style={[styles.topContainer, colorScheme === 'dark' && styles.darkContainer]}>
         <View style={styles.searchstyle}>
 
-        <SearchBar
-        
-          dropdownType={dropdownType}
-          setdropdownType={setdropdownType}
-          isFocus={isFocus}
-          setIsFocus={setIsFocus}
-          searchPhrase={searchPhrase}
-          setSearchPhrase={setSearchPhrase}
-          clicked={clicked}
-          setClicked={setClicked}
-        />
+          <SearchBar
+            dropdownType={dropdownType}
+            setdropdownType={setdropdownType}
+            isFocus={isFocus}
+            setIsFocus={setIsFocus}
+            searchPhrase={searchPhrase}
+            setSearchPhrase={setSearchPhrase}
+            clicked={clicked}
+            setClicked={setClicked}
+          />
         </View>
 
         <View style={styles.row}>
-      <FlatList           // Flatlist for the 3 buttons
-  //      data={keys.length === 1 ? [] : keys}
-        data={keys}
-        renderItem={renderButton}
-        keyExtractor={item => item}
-        horizontal
-        contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'center', flexGrow: 1 }}
-      />
-    </View>
+          <FlatList           // Flatlist for the 3 buttons
+            //      data={keys.length === 1 ? [] : keys}
+            data={keys}
+            renderItem={renderButton}
+            keyExtractor={item => item}
+            horizontal
+            contentContainerStyle={{ justifyContent: 'space-evenly', alignItems: 'center', flexGrow: 1 }}
+          />
+        </View>
       </View >
-    
+
       <FlatList
         data={events}
         renderItem={renderItem}
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
   },
   darkText: {
     color: '#FFFFFF',
-    
+
   },
   Title:
   {
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 1,
     elevation: 1,
-    
+
   },
   searchContainer: {
     height: 40,
@@ -313,7 +314,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     justifyContent: "space-evenly",
-    
+
   },
   searchstyle: {
     alignItems: 'center',
