@@ -2,8 +2,8 @@ import { Text, View, ImageBackground, StyleSheet, TouchableOpacity } from 'react
 import {useNavigation} from '@react-navigation/native'
 
 
-
-const Card = ({ title, imageurl, dbLink }) => {
+                                //cat_query will be responsible for loading the buttons
+const Card = ({ title, imageurl, cat_query }) => {
 const cardStyle = {
 marginHorizontal: 10,
 width: 150,
@@ -44,7 +44,7 @@ fontFamily: 'Arial',
 const navigation = useNavigation();
 
 return (
-<TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Home', {title: title, dbLink: dbLink})}>
+<TouchableOpacity style={cardStyle} onPress={() => navigation.navigate('Home', {title: title, dbLink: cat_query})}>      
 <ImageBackground source={{uri: imageurl}} style = {{flex: 1}} resizeMode='cover'>        
 <View style={[overlayStyle]}>
 <View style={titleContainerStyle}>
