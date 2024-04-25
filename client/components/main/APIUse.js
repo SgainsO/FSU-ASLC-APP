@@ -91,9 +91,10 @@ export function GetAllEvents()
 
 }
 
-export function GetTwentyEvents(aboveId, limit = 20, offset = 0) {
-  return axios.get(`${getURL()}/api/getTwentyEvents/${aboveId}`, { params: { limit, offset } })
+export function GetTwentyEvents(searchKey, aboveId,limit = 20, offset = 0) {
+  return axios.get(`${getURL()}/api/getTwentyEvents/${aboveId}`, { params: { limit, offset,searchKey } })
     .then(response => {
+      console.log("Axios Resp" + response.data)
       return response.data.data;
     })
     .catch(error => {

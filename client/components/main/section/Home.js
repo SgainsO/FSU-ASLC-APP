@@ -72,22 +72,16 @@ const Home = ({ route }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
 
-  const { title, dbLink } = route.params || { title: "All Events", dbLink: ["ALL"] }
+
+
+  const { title, dbLink} = route.params || { title: "All Events", dbLink: ["ALL"] }
   console.log("dbLink " + dbLink)
   const eventScreenName = title === undefined ? "Title Here" : title;     // Define a defualt in case alternative title was not passed
   console.log(eventScreenName)
 
-  function GetAllEventData()                                 //ROUTE MUST LOOK LIKE THIS 
-  {
-    const response = axios.get(getURL() + '/api/' + dbLink + '/events')
-      .then(response => {                    //Error Catching
-        console.log("Get Request Succesful")
-        return response.data;
-      })
-      .catch(error => {
-        console.error("Get Request Failed", error)
-      })
-  }
+  const keys = dbLink
+  const [activeButton, changeActiveButton] = useState(keys[0])
+
   const [likedInformation, SetLiked] = useState(null)
 
   useEffect(() => {
@@ -96,14 +90,33 @@ const Home = ({ route }) => {
       SetLiked(await GetSaved());
       setLoading(false);
     }
+  
     fetchData();
+   /* 
+   if (dbLink[0] === "Bookmark") {
+      events.forEach((element, index) => {
+        let found = false;
+        likedInformation.forEach(postId => {
+          if (element.includes(postId)) {
+            found = true;
+          }
+        });
+        if (!found) {
+          events.splice(index, 1);
+        }
+      });
+    }
+    */  
+
   }, []);
+
 
   const fetchEvents = async () => {
     if (loading || endReached) return;
+    
     setLoading(true);
     try {
-      const data = await GetTwentyEvents(offset, limit);
+      const data = await GetTwentyEvents(activeButton, offset, limit);
       console.log('data:', data);
 
       if (data.length === 0) {
@@ -172,10 +185,8 @@ const Home = ({ route }) => {
 
   //const keys = ['Test', 'music_festival', 'test2']  //For Testing
   console.log(dbLink)
-  const keys = dbLink
   console.log("key" + keys)
 
-  const [activeButton, changeActiveButton] = useState(keys[0])
   const changeColors = (name) => {
     changeActiveButton(name)
   }

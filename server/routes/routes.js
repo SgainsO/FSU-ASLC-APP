@@ -87,6 +87,12 @@ router.get('/getUsers', async (req, res) => {
   }  
 });
 
+
+
+
+
+
+
 // REQUEST TYPE: GET
 // REQUEST URL: /api/getAllEvents
 // RESPONSE: JSON
@@ -111,9 +117,20 @@ router.get('/getTwentyEvents/:aboveId', async (req, res) => {
 
     const limit = req.query.limit || 20;
     const offset = req.query.offset || 0;
+    const key = req.query.searchKey || '*';
+    console.log(key);
+    let result;
+    if(key !== 'ALL')
+    {
+    result = await client.query('SELECT * FROM events WHERE id > $1 AND query_key = $2 LIMIT $3 OFFSET $4;', [ aboveId,key, limit, offset]);
+    }
+    else
+    {
+      result = await client.query('SELECT * FROM events WHERE id > $1 LIMIT $2 OFFSET $3;', [ aboveId, limit, offset]);
+    }
 
-    const result = await client.query('SELECT * FROM events WHERE id > $1 LIMIT $2 OFFSET $3;', [aboveId, limit, offset]);
     const events = result.rows;
+    console.log(events)
     client.release();
 
     res.status(200).json({ data: events, message: "Data Received", total: events.length });
