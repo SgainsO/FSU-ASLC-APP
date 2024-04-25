@@ -5,8 +5,11 @@ import { useForm, Controller, set } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
 import { Dropdown, SelectCountry as SelectClub } from 'react-native-element-dropdown';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import axios from 'axios';
 
 import { FontAwesome6, Entypo, Fontisto } from '@expo/vector-icons';
+import { getURL } from '../../AxiosService';
+
 
 const AdminCreation = (props) => {
   const modalWidth = Dimensions.get('window').width * 0.8;
@@ -250,12 +253,37 @@ const AdminCreation = (props) => {
     paddingLeft: 10,
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (isEditMode) {
       console.log(`Updated ${props.type}`, data);
     }
     else {
-      console.log(`Created new ${props.type}`, data);
+      switch (props.type) {
+        case 'User':
+          console.log(`Created ${props.type}`, data);
+          break;
+        case 'Club':
+          payload = {
+            "Name": data.name,
+            "Type": data.type,
+            "Socials": data.socials,
+            "URL": "d"
+          }
+                    
+          try {
+            const response = await axios.post(`${getURL()}/api/addClub`, payload);
+
+            if (response.status === 200) {
+              console.log(`Created ${props.type}`, data);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+          break;
+        case 'Event':
+          console.log(`Created ${props.type}`, data);
+          break;
+      }
     }
     
     toggleModal();
