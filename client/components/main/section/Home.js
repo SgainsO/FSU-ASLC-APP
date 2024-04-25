@@ -113,7 +113,7 @@ const Home = ({ route }) => {
 
   const fetchEvents = async () => {
     if (loading || endReached) return;
-    
+
     setLoading(true);
     try {
       const data = await GetTwentyEvents(activeButton, offset, limit);
@@ -148,6 +148,10 @@ const Home = ({ route }) => {
     setEvents([]);
     fetchEvents();
   }, []);
+
+  useEffect( () =>{
+    changeActiveButton(keys[0]) 
+    },[route])
 
 
   const handleEndReached = () => {
