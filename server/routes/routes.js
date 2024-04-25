@@ -309,5 +309,39 @@ router.delete('/club/:id/delete', async (req, res) => {
 });
 
 
+// USER RELATED ROUTES
+
+router.post('/user/:id/update', async (req, res) => {
+  const ID = req.params.id;
+
+  const { Email, firstName, lastName, URL } = req.body;
+  try {
+    const client = await pool.connect();
+    const result = await client.query('UPDATE users SET email = $1, firstname = $2, lastname = $3, url = $4 WHERE id = $5 RETURNING *',
+      [Email, firstName, lastName, URL, ID]);
+    const newUser = result.rows[0];
+    client.release();
+    res.json(newUser);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error updating user');
+  }
+});
+
+router.delete('/user/:id/delete', async (req, res) => {
+  const ID = req.params.id;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('DELETE FROM users WHERE id = $1 RETURNING *', [ID]);
+    const newUser = result.rows[0];
+    client.release();
+    res.json(newUser);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error deleting user');
+  }
+});
+
 
 module.exports = router;
