@@ -291,6 +291,21 @@ router.post('/club/:id/update', async (req, res) => {
   }
 });
 
+router.delete('/club/:id/delete', async (req, res) => {
+  const ID = req.params.id;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('DELETE FROM clubs WHERE id = $1 RETURNING *', [ID]);
+    const newClub = result.rows[0];
+    client.release();
+    res.json(newClub);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error deleting club');
+  }
+});
+
 
 
 module.exports = router;
