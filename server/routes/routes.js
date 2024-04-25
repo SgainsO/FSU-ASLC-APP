@@ -343,5 +343,24 @@ router.delete('/user/:id/delete', async (req, res) => {
   }
 });
 
+// Event related routes
+
+router.post('/event/add', async (req, res) => {
+  const { Title, Club, Type, StartDate, EndDate, url } = req.body;
+  
+  try {
+    const client = await pool.connect();
+    const result = await client.query('INSERT INTO events (title, club_id, query_key, startdate, enddate, url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [Title, Club, Type, StartDate, EndDate, url]);
+    const newEvent = result.rows[0];
+    client.release();
+    res.json(newEvent);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error creating event');
+  }
+}
+);
+
 
 module.exports = router;
