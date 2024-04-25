@@ -256,7 +256,7 @@ router.post('/postEventCat', async (req, res) => {
 
 // CLUB RELATED ROUTES
 
-router.post('/addClub', async (req, res) => {
+router.post('/club/add', async (req, res) => {
   const { Name, Type, Socials, URL } = req.body;
   
 
