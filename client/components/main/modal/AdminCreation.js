@@ -187,6 +187,7 @@ const AdminCreation = (props) => {
   switch (props.type) {
     case 'User':
       defaultFormValues = {
+        id: "",
         firstName: "",
         lastName: "",
         email: "",
@@ -194,6 +195,7 @@ const AdminCreation = (props) => {
       break;
     case 'Club':
       defaultFormValues = {
+        id: "",
         name: "",
         type: "",
         socials: "",
@@ -201,6 +203,7 @@ const AdminCreation = (props) => {
       break;
     case 'Event':
       defaultFormValues = {
+        id: "",
         club: "",
         type: "",
         title: "",
@@ -213,6 +216,8 @@ const AdminCreation = (props) => {
   const { control, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({ defaultValues: defaultFormValues})
 
   useEffect(() => {
+
+    console.log("props.data", props.data)
     if (props.data) {
       switch (props.type) {
         case 'User':
@@ -221,6 +226,7 @@ const AdminCreation = (props) => {
           setValue('email', props.data[3]);
           break;
         case 'Club':
+          setValue('id', props.data[1])
           setValue('name', props.data[3]);
           setValue('type', props.data[2]);
           setValue('socials', props.data[4]);
@@ -255,7 +261,33 @@ const AdminCreation = (props) => {
 
   const onSubmit = async (data) => {
     if (isEditMode) {
-      console.log(`Updated ${props.type}`, data);
+      switch (props.type) {
+        case 'User':
+          console.log(`Updated ${props.type}`, data);
+          break;
+        case 'Club':
+          const payload = {
+            "Name": data.name,
+            "Type": data.type,
+            "Socials": data.socials,
+            "URL": "d"
+          }
+
+          try {
+            const response = await axios.post(`${getURL()}/api/club/${data.id}/update`, payload);
+            
+            if (response.status === 200) {
+              console.log(`Updated ${props.type}`, data);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+          
+          break;
+        case 'Event':
+          console.log(`Updated ${props.type}`, data);
+          break;
+      }
     }
     else {
       switch (props.type) {
@@ -271,7 +303,7 @@ const AdminCreation = (props) => {
           }
                     
           try {
-            const response = await axios.post(`${getURL()}/api/addClub`, payload);
+            const response = await axios.post(`${getURL()}/api/club/add`, payload);
 
             if (response.status === 200) {
               console.log(`Created ${props.type}`, data);
