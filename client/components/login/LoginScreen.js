@@ -33,7 +33,7 @@ const LoginScreen = () => {
           placeholder="Email"
           placeholderTextColor= '#FFFFFF'
           value={email}
-          onChangeText={(text) => setUsername(text)}
+          onChangeText={(text) => setEmail(text)}
         />
       </View>
 

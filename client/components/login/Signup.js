@@ -26,7 +26,7 @@ const Signup = () => {
     navigation.navigate(navigateTo);
 };
 
-  const { setIsAdmin, handleLogin, isLoggedIn} = useAuth();
+  const { setIsAdmin, handleRegister, isLoggedIn} = useAuth();
 
   return (
     <View style={styles.container}>
@@ -74,7 +74,7 @@ const Signup = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => isLoggedIn()}>
+      <TouchableOpacity style={styles.button} onPress={() => handleRegister(firstName, lastName, email, password)}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 

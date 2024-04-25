@@ -38,9 +38,34 @@ export const AuthProvider = ({ children }) => {
   }
 
   // TODO: Implement register
-  const handleRegister = () => {
-    setUserToken('testoken');
-    AsyncStorage.setItem('userToken', 'testoken');
+  const handleRegister = (firstName, lastName, email, password) => {
+
+    if (email != "" && password != "") {
+      try {
+        axios.post(`${getURL()}/auth/register`, {
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName
+        }).then((response) => {
+
+          if (response.status === 201) {
+            console.log(response.data);
+            setUserToken(response.data.userToken);
+            AsyncStorage.setItem('userToken', response.data.userToken);
+            console.log('Set user token to AsyncStorage');
+          } else {
+            console.log('Error registering user');
+          }
+        }
+        ).catch((error) => {
+          console.log(error);
+        });
+      }
+      catch (error) {
+        console.log(error);
+        }
+    }
   }
 
   const handleLogout = () => {
@@ -63,7 +88,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAdmin, setIsAdmin, userToken, handleLogin, isLoggedIn, handleLogout}}>
+    <AuthContext.Provider value={{ isAdmin, setIsAdmin, userToken, handleLogin, isLoggedIn, handleRegister, handleLogout}}>
       {children}
     </AuthContext.Provider>
   );
