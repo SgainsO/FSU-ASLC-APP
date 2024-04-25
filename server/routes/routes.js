@@ -274,6 +274,23 @@ router.post('/addClub', async (req, res) => {
 }
 );
 
+router.post('/club/:id/update', async (req, res) => {
+  const ID = req.params.id;
+  const { Name, Type, Socials, URL } = req.body;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('UPDATE clubs SET name = $1, type = $2, socials = $3, url = $4 WHERE id = $5 RETURNING *',
+      [Name, Type, Socials, URL, ID]);
+    const newClub = result.rows[0];
+    client.release();
+    res.json(newClub);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error updating club');
+  }
+});
+
 
 
 module.exports = router;
