@@ -5,7 +5,7 @@ import axios from 'axios';
 import AdminTable from '../tables/AdminTable';
 import SearchBar from '../SearchBar';
 
-import { getUsersURL } from '../../AxiosService';
+import { getURL } from '../../AxiosService';
 
 import { Entypo } from '@expo/vector-icons';
 import AdminCreation from '../modal/AdminCreation';
@@ -24,17 +24,19 @@ const AdminUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(getUsersURL());
+        const response = await axios.get(`${getURL()}/api/getUsers`);
+
+        console.log(response)
         const formattedData = response.data.data.map(user => [
           user.url,
-          user.id.toString(),
+          user.id,
           `${user.firstname} ${user.lastname}`,
           user.email,
         ]);
         console.log('formattedData: ', formattedData);
         setUserData(prevState => ({ ...prevState, tableData: formattedData }));
       } catch (error) {
-        console.error(`Error retrieving users from ${getUsersURL()}: error`);
+        console.error(error);
       }
     };
     fetchUsers();

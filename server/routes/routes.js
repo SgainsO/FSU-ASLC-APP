@@ -76,7 +76,7 @@ router.get('/getSavedEvents/:userID', async (req, res) => {
 router.get('/getUsers', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM users');
+    const result = await client.query('SELECT url, email, firstname, lastname, id FROM users');
     const users = result.rows;
     client.release();
 
