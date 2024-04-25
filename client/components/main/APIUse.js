@@ -75,3 +75,29 @@ export function GetEventsFromKey(key)
   });
 
 }
+
+export function GetAllEvents()
+{
+  return axios.get(`${getURL()}/api/getEvents`) // Adjust the URL to match your local server
+    .then(response => {
+      // Assuming the response contains JSON data, you can access it through response.data
+    //  console.log('Data received:', response.data);
+      return response.data.data;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error; // Re-throwing the error to propagate it to the caller
+    });
+
+}
+
+export function GetTwentyEvents(aboveId, limit = 20, offset = 0) {
+  return axios.get(`${getURL()}/api/getTwentyEvents/${aboveId}`, { params: { limit, offset } })
+    .then(response => {
+      return response.data.data;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error;
+    });
+}

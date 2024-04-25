@@ -42,7 +42,7 @@ const data = [
 const dbLink = 1;     //In application we will actually recieve this value from the database
 
 
-const [serverData, newData] = useState([])
+const [serverData, newData] = useState([])              //This file will hold the server data
 const [page, setPage] = useState(0)
 const [loading, setLoading] = useState(false)
 
@@ -80,8 +80,8 @@ return (
   <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
   <Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5, fontFamily: 'Times New Roman'}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
   <FlatList
-    data ={data}           //Change to "ServerData" to run api command
-    renderItem ={({item}) => <SearchCard {...item} />}
+    data ={serverData}           //Change to "serverData" to make categorie cards from server, run data for just testing events page
+    renderItem ={({item}) => <SearchCard {...item} />}          //Go to SearchCard.js to find navigation logic
     keyExtractor={item => item.id}
     numColumns={2}
     columnWrapperStyle={rowStyle}
