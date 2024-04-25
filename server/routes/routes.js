@@ -218,13 +218,13 @@ router.get('getCategory/:id', async (req, res) => {
 // REQUEST TYPE: POST
 // REQUEST URL: /api/postEvent
 // REQUEST PARMS: title, club, type, startDate, endDate, interested, category
-router.post('/postEvent', async (req, res) => {
-    const { title, club, type, startDate, endDate, interested, category } = req.body;
+router.post('/addEvent', async (req, res) => {
+    const { Title, Club, Type, startDate, endDate, Interested, Category } = req.body;
 
   try {
     const client = await pool.connect();
     const result = await client.query('INSERT INTO events (title, club, type, startDate, endDate, interested, category) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-      [title, club, type, startDate, endDate, interested, category]);
+      [Title, Club, Type, startDate, endDate, Interested, Category]);
     const newEvent = result.rows[0];
     client.release();
     res.json(newEvent);
@@ -253,6 +253,27 @@ router.post('/postEventCat', async (req, res) => {
     res.status(500).send('Error creating event');
   }
 });
+
+// CLUB RELATED ROUTES
+
+router.post('/addClub', async (req, res) => {
+  const { Name, Type, Socials, URL } = req.body;
+  
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('INSERT INTO clubs (name, type, socials, url) VALUES ($1, $2, $3, $4) RETURNING *',
+      [Name, Type, Socials, URL]);
+    const newClub = result.rows[0];
+    client.release();
+    res.json(newClub);
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).send('Error creating club');
+  }
+}
+);
+
 
 
 module.exports = router;
