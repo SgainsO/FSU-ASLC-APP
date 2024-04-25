@@ -91,8 +91,8 @@ export function GetAllEvents()
 
 }
 
-export function GetTwentyEvents(aboveId, limit = 20, offset = 0) {
-  return axios.get(`${getURL()}/api/getTwentyEvents/${aboveId}`, { params: { limit, offset } })
+export function GetTwentyEvents(aboveId, limit = 20, key) {   //activeButton holds the key name
+  return axios.get(`${getURL()}/api/getTwentyEvents/${aboveId}`, { params: { limit, key } })
     .then(response => {
       return response.data.data;
     })

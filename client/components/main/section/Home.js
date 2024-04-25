@@ -76,6 +76,10 @@ const Home = ({ route }) => {
   console.log("dbLink " + dbLink)
   const eventScreenName = title === undefined ? "Title Here" : title;     // Define a defualt in case alternative title was not passed
   console.log(eventScreenName)
+                     
+  const keys = dbLink                 //Laads int database link for more clear naming
+  const [activeButton, changeActiveButton] = useState(keys[0])
+  const [loadActiveButton, changeButtonLoadState] = useState()
 
   function GetAllEventData()                                 //ROUTE MUST LOOK LIKE THIS 
   {
@@ -100,10 +104,15 @@ const Home = ({ route }) => {
   }, []);
 
   const fetchEvents = async () => {
-    if (loading || endReached) return;
+   // if (loading || endReached) return;
+   console.log("Fetch Events, Before if")
+
+   if(loading) return;
     setLoading(true);
     try {
-      const data = await GetTwentyEvents(offset, limit);
+      console.log("reached try")
+      console.log("active button " + activeButton)
+      const data = await GetTwentyEvents(offset, limit, activeButton);
       console.log('data:', data);
 
       if (data.length === 0) {
@@ -131,10 +140,21 @@ const Home = ({ route }) => {
     setLoading(true);
     setEndReached(false);
     setLimit(20);
-    setOffset(0);
     setEvents([]);
     fetchEvents();
   }, []);
+
+  useEffect( () =>{
+    console.log("Route Change")
+    changeActiveButton(keys[0]) 
+    },[route])
+
+    useEffect(() => {
+      setEvents([])
+      setOffset(0);
+      console.log("key" + activeButton);
+      fetchEvents();
+    }, [activeButton])
 
 
   const handleEndReached = () => {
@@ -172,20 +192,19 @@ const Home = ({ route }) => {
 
   //const keys = ['Test', 'music_festival', 'test2']  //For Testing
   console.log(dbLink)
-  const keys = dbLink
+  
   console.log("key" + keys)
 
-  const [activeButton, changeActiveButton] = useState(keys[0])
   const changeColors = (name) => {
     changeActiveButton(name)
   }
 
+
+
+
   const renderButton = (item) => {
     console.log('enter')
-    console.log(JSON.stringify(item))
-    console.log("Button Item= " + item)
-
-    console.log("Item has the key: " + item.item)
+    console.log("Button Item= " + JSON.stringify(item))
     return (
       <RoundedButton
         style={styles.button}
