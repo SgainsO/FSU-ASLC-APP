@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
+import { getURL } from '../../AxiosService';
+import axios from 'axios';
 
 import { Entypo } from '@expo/vector-icons';
 
@@ -12,8 +14,29 @@ const AdminDeletion = (props) => {
     props.setModalVisible(!props.isModalVisible);
   };
 
-  const deleteItem = () => {
-    console.log(`Implement delete on ${props.type} ID`, props.data[1]);
+  const deleteItem = async () => {
+
+    switch (props.type) {
+      case 'User':
+        console.log('Delete user with ID: ', props.data[1]);
+        break;
+      case 'Club':
+        try {
+          const response = await axios.delete(`${getURL()}/api/club/${props.data[1]}/delete`);
+
+          if (response.status === 200) {
+            console.log('Club deleted successfully');
+          }
+        } catch (error) {
+          console.error('Error deleting club: ', error);
+          
+        }
+        break;
+      case 'Event':
+        console.log('Delete event with ID: ', props.data[1]);
+        break;
+    }
+
     toggleModal();
   }
 
