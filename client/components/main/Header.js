@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
       {
         alignSelf: 'center',
         fontWeight: 'bold',
-        fontSize: '20',
         fontFamily: 'Times New Roman',
       }
     });
