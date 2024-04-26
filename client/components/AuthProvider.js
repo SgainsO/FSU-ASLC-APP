@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [userID, setUserID] = useState(null);
 
   const handleLogin = (email, password) => {
   
@@ -22,10 +23,10 @@ export const AuthProvider = ({ children }) => {
           email: email,
           password: password
         }).then((response) => {
-          console.log(response.data);
+          setUserID(response.data.userID);
           setUserToken(response.data.userToken);
+          AsyncStorage.setItem('userID', response.data.userID);
           AsyncStorage.setItem('userToken', response.data.userToken);
-          console.log('Set user token to AsyncStorage');
         }
         ).catch((error) => {
           console.log(error);
@@ -50,10 +51,10 @@ export const AuthProvider = ({ children }) => {
         }).then((response) => {
 
           if (response.status === 201) {
-            console.log(response.data);
+            setUserID(response.data.userID);
             setUserToken(response.data.userToken);
+            AsyncStorage.setItem('userID', response.data.userID);
             AsyncStorage.setItem('userToken', response.data.userToken);
-            console.log('Set user token to AsyncStorage');
           } else {
             console.log('Error registering user');
           }

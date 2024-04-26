@@ -25,7 +25,14 @@ const registerUser = async (req, res) => {
         const newUser = await db.query('INSERT INTO users (url, email, firstname, lastname, password) VALUES ($1, $2, $3, $4, $5) RETURNING *', [url, email, firstName, lastName, hashedPassword]);
         const user = newUser.rows[0];
 
-        res.status(201).json({ data: user, message: "User created successfully." });
+
+        let token = auth.signToken(user.id);
+
+        if (!token) {
+            return res.status(500).json({ message: "Internal server error" });
+        }
+
+        res.status(201).json({ userToken: token, userID: user.id, message: "User created successfully." });
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
