@@ -14,6 +14,8 @@ const Signup = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [response, setResponse] = useState('');
 
   const navigation = useNavigation();
 
@@ -74,7 +76,11 @@ const Signup = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => handleRegister(firstName, lastName, email, password)}>
+      <View>
+        {submitted && <Text style={{color: '#CEB888'}}>Error: {response}</Text>}
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={() => handleRegister(firstName, lastName, email, password, setSubmitted, setResponse)}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
