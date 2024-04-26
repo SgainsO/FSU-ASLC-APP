@@ -407,7 +407,7 @@ router.delete('/event/:id/delete', async (req, res) => {
 
 // Route to increase 'interested' count by one
 router.put('/increase-interested/:eventId', async (req, res) => {
-  const eventId = req.params.eventId;
+  const eventId = parseInt(req.params.eventId);
   try {
     const result = await pool.query('UPDATE events SET interested = interested + 1 WHERE id = $1', [eventId]);
     res.send('Interested count increased successfully.');
@@ -419,7 +419,7 @@ router.put('/increase-interested/:eventId', async (req, res) => {
 
 // Route to decrease 'interested' count by one
 router.put('/decrease-interested/:eventId', async (req, res) => {
-  const eventId = req.params.eventId;
+  const eventId = parseInt(req.params.eventId);
   try {
     const result = await pool.query('UPDATE events SET interested = interested - 1 WHERE id = $1', [eventId]);
     res.send('Interested count decreased successfully.');

@@ -2,7 +2,7 @@ import {useState} from 'react'
 import { Text, View, Image, TouchableOpacity, StyleSheet, } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AddToSave, RemoveFromSave } from '../APIUse';
+import { AddToSave, RemoveFromSave, increaseInterested, decreaseInterested } from '../APIUse';
 import { useColorSchemeContext } from '../ColorSchemeContext.js';
 
 const screenWidth = Dimensions.get('window').width;
@@ -104,24 +104,37 @@ const EventCard = (props) => {
 
 
 
-  function HandleBookmarkPress()
-  {
-    console.log("Bookmark button pressed")
-    if (isBookmarked == false)
-    {
-    ChangeMarked(true);
-    AddToSave(id)
+  function HandleBookmarkPress() {
+    console.log("Bookmark button pressed");
+    if (!isBookmarked) {
+      ChangeMarked(true);
+      AddToSave(id)
+        .then(() => increaseInterested(id))
+        .then(() => {
+          console.log("Interested Count up");
+          ChangeBookmarkColor("#FFFF00");
+          ChangeBookmarkState("star");
+        })
+        .catch((error) => {
+          console.error("Error increasing the interested count:", error);
+          ChangeMarked(false);
+        });
+    } else {
+      ChangeMarked(false);
+      RemoveFromSave(id)
+        .then(() => decreaseInterested(id))
+        .then(() => {
+          console.log("Interested Count down");
+          ChangeBookmarkColor("white");
+          ChangeBookmarkState("star-outline");
+        })
+        .catch((error) => {
+          console.error("Error decreasing the interested count:", error);
+          ChangeMarked(true);
+        });
     }
-    else
-    {
-    ChangeMarked(false);
-    RemoveFromSave(id);  
-    }
-
-    //Coolors always change regardless of state change
-    ChangeBookmarkColor(BookmarkColor === "white"? "#FFFF00" : "white")
-    ChangeBookmarkState(BookmarkState === "star-outline"? "star" : "star-outline")
   }
+  
 
   function getIsBookmarked() {
     return isBookmarked;
