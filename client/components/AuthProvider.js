@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getURL } from './AxiosService';
 import { set } from 'react-hook-form';
@@ -16,20 +16,33 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userID, setUserID] = useState(null);
 
-  const handleLogin = (email, password) => {
+
   
+
+
+  const handleLogin = async (email, password) => {
+  
+
+    console.log('attempted login')
     if (email != "" && password != "") {
       try {
         axios.post(`${getURL()}/auth/login`, {
           email: email,
           password: password
         }).then((response) => {
+          console.log("then")
+          console.log(response.data.data)
           setUserID(response.data.userID);
           setUserToken(response.data.userToken);
-          AsyncStorage.setItem('userID', response.data.userID);
-          AsyncStorage.setItem('userToken', response.data.userToken);
+
+          console.log(userID)
+          PassInTokens(userID, userToken)
+
+//          AsyncStorage.setItem('userID', response.data.userID);
+//          AsyncStorage.setItem('userToken', response.data.userToken);
         }
         ).catch((error) => {
+          console.log("then")
           console.log(error);
         });
       }
@@ -38,6 +51,21 @@ export const AuthProvider = ({ children }) => {
       }
     }
   }
+
+  async function PassInTokens(userId,userToken) 
+  {
+    try {
+      await AsyncStorage.setItem("userID",userID)
+      await AsyncStorage.setItem("userToken",userToken)
+      }catch(error)
+      {
+        console.log(error);
+      }
+
+      // Congrats! You've just stored your first value!
+  
+  }
+
 
   const handleRegister = (firstName, lastName, email, password, setSubmitted, setResponse) => {
     if (email != "" && password != "") {

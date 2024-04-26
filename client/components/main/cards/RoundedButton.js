@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { GetEventsFromKey, GetAllEvents } from '../APIUse';
-
+import api from '../APIUse';
 const RoundedButton = ({ title, onPress, buttonStyle, textStyle, isActive, Key, ChangeDataFunction, color, opacity }) => {
   const [buttonColor, setButtonColor] = useState('white');
 
@@ -45,11 +44,11 @@ const RoundedButton = ({ title, onPress, buttonStyle, textStyle, isActive, Key, 
       setLoadingState(true);
       if(Key === 'ALL')
       {
-        ChangeDataFunction(await GetAllEvents());
+        ChangeDataFunction(await api.GetAllEvents());
       }
       else
       {
-      ChangeDataFunction(await GetEventsFromKey(Key))
+      ChangeDataFunction(await api.GetEventsFromKey(Key))
       }
       setLoadingState(false);
   }

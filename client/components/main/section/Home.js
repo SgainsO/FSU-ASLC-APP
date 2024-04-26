@@ -7,7 +7,7 @@ import RoundedButton from '../cards/RoundedButton.js';
 import { getIsBookmarked } from '../cards/EventCard.js';
 import Card from '../cards/EventCard.js';
 import { GetSaved } from '../APIUse.js';
-import { GetTwentyEvents } from '../APIUse.js';
+import api from '../APIUse.js';
 import NewButton from '../cards/NewButton.js'
 
 import { getURL } from '../../AxiosService.js';
@@ -114,11 +114,11 @@ const Home = ({ route }) => {
       console.log("active button " + activeButton)
       let data;
       if(forBookmark)
-      {data = await GetTwentyEvents(offset, limit, 'ALL');
+      {data = await api.GetTwentyEvents(offset, limit, 'ALL');
        data = events.filter(event => likedInformation.includes(event.id.toString()));
       }
       else
-      {data = await GetTwentyEvents(offset, limit, activeButton)};
+      {data = await api.GetTwentyEvents(offset, limit, activeButton)};
       console.log('data:', data);
 
       if (data.length === 0) {

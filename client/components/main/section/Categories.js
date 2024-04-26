@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../SearchBar';
 import SearchCard from '../cards/SearchCard';                         //SEARCH CARD IS THE PRESSABLE COMPONENT
 import { useColorSchemeContext } from '../ColorSchemeContext';
-import { getCategories } from '../APIUse';
+import api from '../APIUse';
 
 
 
@@ -57,7 +57,7 @@ fetchData = async () =>
   console.log('being called')
   if (!serverData.isistEnd)
   {
-  newData(await getCategories())
+  newData(await api.getCategories())
   console.log(await serverData)
   }
   setLoading(false)

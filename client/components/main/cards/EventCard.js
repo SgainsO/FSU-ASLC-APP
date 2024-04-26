@@ -3,6 +3,7 @@ import { Text, View, Image, TouchableOpacity, StyleSheet, } from 'react-native';
 import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AddToSave, RemoveFromSave } from '../APIUse';
+import api from '../APIUse';
 import { useColorSchemeContext } from '../ColorSchemeContext.js';
 
 const screenWidth = Dimensions.get('window').width;
@@ -110,12 +111,12 @@ const EventCard = (props) => {
     if (isBookmarked == false)
     {
     ChangeMarked(true);
-    AddToSave(id)
+    api.AddToSave(id)
     }
     else
     {
     ChangeMarked(false);
-    RemoveFromSave(id);  
+    api.RemoveFromSave(id);  
     }
 
     //Coolors always change regardless of state change
