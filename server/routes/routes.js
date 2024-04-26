@@ -405,5 +405,28 @@ router.delete('/event/:id/delete', async (req, res) => {
   }
 });
 
+// Route to increase 'interested' count by one
+router.put('/increase-interested/:eventId', async (req, res) => {
+  const eventId = req.params.eventId;
+  try {
+    const result = await pool.query('UPDATE events SET interested = interested + 1 WHERE id = $1', [eventId]);
+    res.send('Interested count increased successfully.');
+  } catch (error) {
+    console.error('Error increasing interested count:', error);
+    res.status(500).send('Internal server error.');
+  }
+});
+
+// Route to decrease 'interested' count by one
+router.put('/decrease-interested/:eventId', async (req, res) => {
+  const eventId = req.params.eventId;
+  try {
+    const result = await pool.query('UPDATE events SET interested = interested - 1 WHERE id = $1', [eventId]);
+    res.send('Interested count decreased successfully.');
+  } catch (error) {
+    console.error('Error decreasing interested count:', error);
+    res.status(500).send('Internal server error.');
+  }
+});
 
 module.exports = router;
