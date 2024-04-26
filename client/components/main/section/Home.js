@@ -195,10 +195,11 @@ const Home = ({ route }) => {
           title={item.title}
           club={item.club}
           type={item.type}
-          startDate={new Date(item.startDate)}
-          endDate={new Date(item.endDate)}
+          startDate={new Date(item.startdate)}
+          endDate={new Date(item.enddate)}
           interested={item.interested}
           SizePerc={0.43}
+          image_url={item.url}
           UserLiked={likedInformation && likedInformation.includes(item.id.toString())}
         />
       );
