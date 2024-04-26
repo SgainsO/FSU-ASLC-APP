@@ -42,6 +42,7 @@ const EventCard = (props) => {
     bottom: 0,
     left: 0,
     right: 0,
+
     height: infoHeight,
     paddingHorizontal: 8,
     backgroundColor: 'white',
@@ -52,9 +53,11 @@ const EventCard = (props) => {
 
   const ImageHolderStyle = {
     position: 'absolute',
-    overflow: 'hidden',
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: '#D9D9D9',
     justifyContent: 'center',
+    overflow: 'hidden',
     alignItems: 'center',
     left: 0,
     top: 0,
@@ -64,9 +67,8 @@ const EventCard = (props) => {
   }
 
   const ImageStyle = {
-    resizeMode: 'contain',
-    flex: 1
-
+    width: cardWidth,
+    height: cardHeight - infoHeight
   }
 
 
@@ -171,17 +173,18 @@ const EventCard = (props) => {
 
   const { dateString, timeString } = formatDateAndTime(props.startDate, props.endDate);
 
-  
+  console.log("url" + props.image_url)
 
   return (
     <View style={[cardImageStyle,colorScheme === 'dark' && styles.darkContainer] }>
-      <View style={[ImageHolderStyle, ]}>
-        <Image source={ require("./bob.jpg")} style = {ImageStyle}/>        
+      <View style={[ImageHolderStyle, ]}> 
+       <Image source={{uri: props.image_url}} style = {ImageStyle} resizeMode='cover'/>        
         </View>
         <TouchableOpacity style={BookMarkButton} onPress={() => HandleBookmarkPress()}>
           <Icon name={BookmarkState} size = {30} color={BookmarkColor}/>
         </TouchableOpacity>
-        <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/>
+      {/* 
+        <Image source={ require("./ubel.jpg")} style = {ProfileImageHolder}/> */}
       <View style={[overlayStyle, colorScheme === 'dark' && styles.darkContainer]}>
         <Text style={[{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial', },colorScheme === 'dark' && styles.darkText ]}>{dateString}</Text>
         <Text style={[{ fontSize: 10, fontWeight: 600, fontFamily: 'Arial', },colorScheme === 'dark' && styles.darkText ]}>{timeString}</Text>
