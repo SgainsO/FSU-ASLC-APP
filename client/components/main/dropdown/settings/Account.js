@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useColorSchemeContext } from '../../../main/ColorSchemeContext';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
+import { useAuth } from '../../../AuthProvider';
 
 const Account = () => {
   const { colorScheme, toggleColorScheme } = useColorSchemeContext();
@@ -15,6 +16,8 @@ const Account = () => {
     setActiveIcon(iconName);
     navigation.navigate(navigateTo);
   };
+
+  const { setIsAdmin} = useAuth()
 
 
   const [image, setImage] = useState(null);
@@ -34,6 +37,10 @@ const Account = () => {
       setImage(props.data?.[0] ?? defaultImg);
       setValue('image', result.assets[0].uri);
     }
+  };
+
+  const toggleAdminStatus = () => {
+    setIsAdmin(prevState => !prevState)
   };
 
   const WordWithLineBlue = ({ word, onPress }) => {
@@ -86,10 +93,11 @@ const Account = () => {
       </View>
 
       <View>
-      <WordWithLineBlue word="" ></WordWithLineBlue>
-      <WordWithLineBlue word="Change Username" ></WordWithLineBlue>
-      <WordWithLineBlue word="Change Password" ></WordWithLineBlue>
-      <WordWithLineRed word="Deactivate Account" ></WordWithLineRed>
+        <WordWithLineBlue word="" ></WordWithLineBlue>
+        <WordWithLineBlue word="Change Username" ></WordWithLineBlue>
+        <WordWithLineBlue word="Change Password" ></WordWithLineBlue>
+        <WordWithLineBlue word="Admin Status" onPress={toggleAdminStatus}></WordWithLineBlue>
+        <WordWithLineRed word="Deactivate Account" ></WordWithLineRed>
       </View>
 
     </View>

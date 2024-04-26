@@ -55,23 +55,7 @@ const LoginScreen = () => {
       <TouchableOpacity style={styles.button} onPress={() => [isLoggedIn(), navigate("Signup")]}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigate("Main")}>
-        <Text style={styles.buttonText}>Go to home</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => setIsAdmin(false)}>
-        <Text style={styles.buttonText}>Set Admin False</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => setIsAdmin(true)}>
-        <Text style={styles.buttonText}>Set Admin True</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button}>
-        <Notification />
-      </TouchableOpacity>
-      
+  
     </View>
   )
 };
