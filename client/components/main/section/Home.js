@@ -103,7 +103,7 @@ const Home = ({ route }) => {
     fetchData();
   }, []);
 
-  const fetchEvents = async () => {
+  const fetchEvents = async (forBookmark) => {
    // if (loading || endReached) return;
    console.log("Fetch Events, Before if")
 
@@ -112,7 +112,13 @@ const Home = ({ route }) => {
     try {
       console.log("reached try")
       console.log("active button " + activeButton)
-      const data = await GetTwentyEvents(offset, limit, activeButton);
+      let data;
+      if(forBookmark)
+      {data = await GetTwentyEvents(offset, limit, 'ALL');
+       data = events.filter(event => likedInformation.includes(event.id.toString()));
+      }
+      else
+      {data = await GetTwentyEvents(offset, limit, activeButton)};
       console.log('data:', data);
 
       if (data.length === 0) {
@@ -144,12 +150,26 @@ const Home = ({ route }) => {
     fetchEvents();
   }, []);
 
+
   useEffect( () =>{
     console.log("Route Change")
     changeActiveButton(keys[0]) 
+    
+    console.log("linfo " + likedInformation)
+
+    if (dbLink[0] === "Bookmark") {
+      fetchEvents(true)
+
+      const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
+      console.log("fe" + JSON.stringify(filteredEvents))
+
+      setEvents(filteredEvents);
+    }
+
     },[route])
 
     useEffect(() => {
+      console.log("Liked Information" + likedInformation)
       setEvents([])
       setOffset(0);
       console.log("key" + activeButton);
