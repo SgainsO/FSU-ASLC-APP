@@ -3,7 +3,7 @@ import { getURL } from '../AxiosService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //axios.defaults.withCredentials = true; 
-const userID = AsyncStorage.getItem('userID');
+const userID = localStorage.getItem('userID');
 //Retrieves all event data and return as a json file
 export function getCategories() {
   return axios.get(`${getURL()}/api/getAllCategories`) // Adjust the URL to match your local server

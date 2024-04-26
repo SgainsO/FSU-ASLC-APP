@@ -55,7 +55,7 @@ router.post('/users/:userID/remove-from-saved', async (req, res) => {
 router.get('/getSavedEvents/:userID', async (req, res) => {
   try {
     const client = await pool.connect();
-    const userID = req.params.userID;
+    const userID = req.params.userID.toString();
     const result = await client.query('SELECT saved FROM users WHERE id IN ($1);',[userID]);
     const users = result.rows;
     client.release();
