@@ -4,6 +4,7 @@ import { useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 
 import { getURL } from './AxiosService';
+import { set } from 'react-hook-form';
 
 // Create context
 const AuthContext = createContext();
@@ -38,34 +39,24 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  // TODO: Implement register
-  const handleRegister = (firstName, lastName, email, password) => {
-
+  const handleRegister = (firstName, lastName, email, password, setSubmitted, setResponse) => {
     if (email != "" && password != "") {
-      try {
-        axios.post(`${getURL()}/auth/register`, {
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName
-        }).then((response) => {
-
-          if (response.status === 201) {
-            setUserID(response.data.userID);
-            setUserToken(response.data.userToken);
-            AsyncStorage.setItem('userID', response.data.userID);
-            AsyncStorage.setItem('userToken', response.data.userToken);
-          } else {
-            console.log('Error registering user');
-          }
+      axios.post(`${getURL()}/auth/register`, {
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName
+      }).then((response) => {
+        if (response.status === 201) {
+          setUserID(response.data.userID);
+          setUserToken(response.data.userToken);
+          AsyncStorage.setItem('userID', response.data.userID);
+          AsyncStorage.setItem('userToken', response.data.userToken);
         }
-        ).catch((error) => {
-          console.log(error);
-        });
-      }
-      catch (error) {
-        console.log(error);
-        }
+      }).catch((error) => {
+          setSubmitted(true);
+          setResponse(error.response.data.message);
+      });
     }
   }
 
