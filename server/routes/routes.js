@@ -118,12 +118,12 @@ router.get('/getTwentyEvents/:aboveId', async (req, res) => {
     console.log("key " + key)
     if(key === 'ALL')
     {
-    result = await client.query('SELECT * FROM events WHERE id > $1 LIMIT $2;', [aboveId, limit]);
+    result = await client.query('SELECT * FROM events WHERE id > $1 ORDER BY startdate ASC LIMIT $2;', [aboveId, limit]);
     }
     else
     {
       console.log("Custom Key ran")
-      result = await client.query('SELECT * FROM events WHERE id > $1 AND query_key = $3 LIMIT $2;', [aboveId, limit, key]);
+      result = await client.query('SELECT * FROM events WHERE id > $1 AND query_key = $3 ORDER BY startdate ASC LIMIT $2', [aboveId, limit, key]);
     }
     const events = result.rows;
   //  console.log(events);
