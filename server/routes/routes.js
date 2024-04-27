@@ -210,6 +210,30 @@ router.get('getEvent/:id', async (req, res) => {
   }
 });
 
+
+
+router.get('/HighestEventID', async (req, res) => {
+  console.log("Try again");
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT MAX(id) FROM events;');
+    const events = result.rows;
+    client.release();
+
+    console.log("Calling Highest");
+    // Checks if event exists
+    if (events.length === 0) {
+      res.status(404).json({ data: {}, message: "Event not found", total: 0 });
+    } else {
+      res.status(200).json({ data: events[0], message: "", total: events.length });
+    }
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ data: {}, message: "Internal Error", total: 0 });
+  }
+});
+
+
 // REQUEST TYPE: GET
 // REQUEST URL: /api/getCategory/social
 // REQUEST PARMS: category

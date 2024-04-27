@@ -6,7 +6,7 @@ import { useColorSchemeContext } from '../ColorSchemeContext.js';
 import RoundedButton from '../cards/RoundedButton.js';
 import { getIsBookmarked } from '../cards/EventCard.js';
 import Card from '../cards/EventCard.js';
-import { GetSaved } from '../APIUse.js';
+import { GetSaved , getMaxEventIds} from '../APIUse.js';
 import { GetTwentyEvents } from '../APIUse.js';
 import NewButton from '../cards/NewButton.js'
 
@@ -29,7 +29,9 @@ const Home = ({ route }) => {
   const [endReached, setEndReached] = useState(false);
   const flatListRef = useRef(null);
 
-  const data = [
+  const data = []; 
+
+  const hardcode_data = [
     { id: "0", title: 'Event 1', club: 'Club 1', type: 3, startdate: new Date('2024-01-24T10:30:00'), enddate: new Date('2024-01-22T12:30:00'), interested: 42, isBookmarked: 0, },
     { id: "1", title: 'Event 2', club: 'Club 2', type: 1, startDate: new Date('2024-01-24T11:30:00'), endDate: new Date('2024-01-26T18:30:00'), interested: 2245, isBookmarked: 0, },
     { id: "2", title: 'Event 3', club: 'Club 3', type: 2, startDate: new Date('2024-01-21T10:45:00'), endDate: new Date('2024-01-22T12:30:00'), interested: 1632, isBookmarked: 0, },
@@ -82,6 +84,8 @@ const Home = ({ route }) => {
   const keys = dbLink                 //Laads int database link for more clear naming
   const [activeButton, changeActiveButton] = useState(keys[0])
   const [loadActiveButton, changeButtonLoadState] = useState()
+  const [highestId, inputHighest] = useState();                               //Hold the highest id for book mark pagination
+
 
   function GetAllEventData()                                 //ROUTE MUST LOOK LIKE THIS 
   {
@@ -123,37 +127,62 @@ const Home = ({ route }) => {
    if( loadFetch || loading || endReached) return;
     setFetchLoadState(true);
     try {
+      console.log("forbook" + forBookmark)
+
       SetLiked(await GetSaved())
+      console.log("Liked" + likedInformation)
       console.log("reached try")
       console.log("active button " + activeButton)
       let data;
       if(forBookmark){
 
-        data = await GetTwentyEvents(offset, limit, 'ALL');
-        data = data.filter(event => likedInformation.includes(event.id.toString()));
-     
-      }
-      else if(activeButton === 'today')
-      {
+        rawData = await GetTwentyEvents(offset, limit, 'ALL');
+        console.log("Liked" + likedInformation)
+        console.log("data prefilter" + JSON.stringify(rawData))
+        data = rawData.filter(event => likedInformation.includes(event.id.toString()));
+        console.log("bmarkFilterData " + JSON.stringify(data))
+
+        console.log("forbook" + forBookmark)
+      }else if(activeButton === 'today'){
+
         console.log("Todays Events")
         data = await GetTwentyEvents(offset, limit, activeButton);
         data.filter(event => event.getDate() === today.getDate && event.getMonth()
-                                     === today.getMonth() && event.getFullYear() === today.getFullYear);
+                    === today.getMonth() && event.getFullYear() === today.getFullYear);
 
       }else{
+
+        console.log("forbook" + forBookmark)
+
+
       data = await GetTwentyEvents(offset, limit, activeButton)};
       console.log('data:', data);
 
-      if (data.length === 0) {
-        console.log("No more events to load.");
+      if (data.length === 0 && !forBookmark) {
+        
+        console.log("ForBook:"+ forBookmark + "No more events to load.");
         setEndReached(true);
-      } 
+      }else if(forBookmark){
+        console.log("rawData" + JSON.stringify(rawData));
 
+        if(rawData.includes(highestId.toString())){
+          console.log("No more events to load in bookmarks.");
+          setEndReached(true);
+        }
+        else
+        {
+          setOffset(data.reduce((maxId, obj) => Math.max(maxId, obj.id), offset));
+          console.log("bookOff" + offset)
+          setEvents(prevEvents => [...prevEvents, ...data]);
+
+        }
+
+      } 
       else {
-        setOffset(data.reduce((maxId, obj) => Math.max(maxId, obj.id), -Infinity));
+        setOffset(data.reduce((maxId, obj) => Math.max(maxId, obj.id), offset));
         setEvents(prevEvents => [...prevEvents, ...data]);
     //    setOffset(prevOffset => prevOffset + limit);
-        if (data.length < limit) {
+        if (data.length < limit && !forBookmark) {
           setEndReached(true);
         }
       }
@@ -169,44 +198,50 @@ const Home = ({ route }) => {
   useEffect(() => {
     setLoading(true);
     setEndReached(false);
+    setOffset(0);
     setLimit(20);
     setEvents([]);
     fetchEvents(false);
+    inputHighest(getMaxEventIds())
   }, []);
 
 
   useEffect( () =>{
     console.log("Route Change")
     changeActiveButton(keys[0]) 
-    
-    console.log("linfo " + likedInformation)
+    setOffset(0);
 
-    if (dbLink[0] === "Bookmark") {
-      setEvents([])
-      setOffset(0)
-      fetchEvents(true)
-      const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
-      console.log("fe" + JSON.stringify(filteredEvents))
-
-    //  setEvents(filteredEvents);
-    }
     },[route])
 
-    useEffect(() => {
-      console.log("Liked Information" + likedInformation)
-      setEvents([])
-      setOffset(0);
-      console.log("key" + activeButton);
-      SetLiked(fetchData());
-      fetchEvents();
-      setEndReached(false);
+  useEffect(() => {
+    console.log("Liked Information" + likedInformation)
+    setEvents([])
+    setOffset(0);
+    console.log("offz " + offset)
+    console.log("key" + activeButton);
+    SetLiked(fetchData());
+    setEndReached(false);
+    getMaxEventIds()
+
+    if (dbLink[0] === 'Bookmark') {
+        setOffset(0)
+        setEvents([])
+        console.log("ForBook will be true")
+        fetchEvents(true)
+        const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
+        console.log("fel" + JSON.stringify(filteredEvents))
+ //       setEvents(filteredEvents);
+    }
+    else{
+      fetchEvents(false);
+    }
 
     }, [activeButton])
 
 
   const handleEndReached = () => {
     if (!endReached) {
-      fetchEvents();
+      fetchEvents(activeButton === "Bookmark" ? true : false);
     }
   };
 

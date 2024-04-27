@@ -118,3 +118,13 @@ export const decreaseInterested = async (eventId) => {
     throw error;
   }
 }
+
+export const getMaxEventIds = async () => {
+  try{
+    const response = await axios.get(`${getURL()}/api/HighestEventID/`)
+    return response.data.data.max;
+  } catch (error) {
+    console.error('Error getting max events', error);
+    throw error;
+  }
+}
