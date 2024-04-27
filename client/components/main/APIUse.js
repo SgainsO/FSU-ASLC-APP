@@ -46,16 +46,15 @@ export async function AddToSave(eventId)
   });
 }
 
-export function RemoveFromSave(eventId)
-{
-  axios.post(`${getURL()}/api/users/${userID}/remove-from-saved`, {PostID: eventId})
-  .then(response => {
-    // Handle response data here
-  })
-  .catch(error => {
+export async function RemoveFromSave(eventId) {
+  try {
+    const response = await axios.post(`${getURL()}/api/users/${userID}/remove-from-saved`, { PostID: eventId });
+    console.log('Response:', response);
+    return response.data;
+  } catch (error) {
     console.error('Error:', error);
-    // Handle errors here
-  });
+    throw error;
+  }
 }
 
 export function GetEventsFromKey(key) 
@@ -97,4 +96,24 @@ export function GetTwentyEvents(aboveId, limit = 20, key) {   //activeButton hol
       console.error('Error fetching data:', error);
       throw error;
     });
+}
+
+export const increaseInterested = async (eventId) => {
+  try {
+    const response = await axios.put(`${getURL()}/api/increase-interested/${eventId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error increasing the interested count:', error);
+    throw error;
+  }
+}
+
+export const decreaseInterested = async (eventId) => {
+  try {
+    const response = await axios.put(`${getURL()}/api/decrease-interested/${eventId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error decreasing the interested count:', error);
+    throw error;
+  }
 }

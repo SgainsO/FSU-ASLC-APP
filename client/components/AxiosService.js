@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 // CHANGE THIS TO UR LOCAL IP!!! SHOWN WITH STARTING SERVER
-const IP = "10.198.48.203"
+const IP = "192.168.56.1"
 const PORT = "3000"
 
 // COULD MAKE THESE FETCH DATA IN CORRECT FORMAT HERE AS WELL, TOO LAZY RN
