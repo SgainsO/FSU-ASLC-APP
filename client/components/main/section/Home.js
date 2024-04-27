@@ -113,15 +113,14 @@ const Home = ({ route }) => {
       console.log("reached try")
       console.log("active button " + activeButton)
       let data;
-      if(forBookmark)
-      {data = await GetTwentyEvents(offset, limit, 'ALL');
-      console.log("fe2" + JSON.stringify(data));
-      console.log("fe2.5" + " " + likedInformation)
-      data = data.filter(event => likedInformation.includes(event.id.toString()));
-      console.log("fe3" + JSON.stringify(data));
-      }
-      else
-      {data = await GetTwentyEvents(offset, limit, activeButton)};
+      if(forBookmark){
+        data = await GetTwentyEvents(offset, limit, 'ALL');
+        console.log("fe2" + JSON.stringify(data));
+        console.log("fe2.5" + " " + likedInformation)
+        data = data.filter(event => likedInformation.includes(event.id.toString()));
+        console.log("fe3" + JSON.stringify(data));
+      }else{
+      data = await GetTwentyEvents(offset, limit, activeButton)};
       console.log('data:', data);
 
       if (data.length === 0) {
