@@ -144,7 +144,12 @@ const Home = ({ route }) => {
 
         console.log("forbook" + forBookmark)
       }else if(activeButton === 'today'){
-        /*PLACE TODAYS EVENTS LOGIC HERE*/
+       //UNTESTED
+        console.log("Todays Events")
+        data = await GetTwentyEvents(offset, limit, 'ALL');
+        data = data.filter(event => event.getDate() === today.getDate && event.getMonth()
+                    === today.getMonth() && event.getFullYear() === today.getFullYear);
+
       }else{
 
         console.log("forbook" + forBookmark)
