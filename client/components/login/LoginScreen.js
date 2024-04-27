@@ -12,6 +12,8 @@ const {width, height} = Dimensions.get('window');
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [response, setResponse] = useState('');
 
   const navigation = useNavigation();
 
@@ -48,7 +50,11 @@ const LoginScreen = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => handleLogin(email, password)}>
+      <View>
+        {submitted && <Text style={{color: '#CEB888'}}>Error: {response}</Text>}
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={() => handleLogin(email, password, setSubmitted, setResponse)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 

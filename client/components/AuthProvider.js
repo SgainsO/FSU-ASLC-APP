@@ -16,31 +16,31 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userID, setUserID] = useState(null);
 
-  const handleLogin = (email, password) => {
+  const handleLogin = (email, password, setSubmitted, setResponse) => {
   
     if (email != "" && password != "") {
-      try {
-        axios.post(`${getURL()}/auth/login`, {
-          email: email,
-          password: password
-        }).then((response) => {
-          setUserID(response.data.userID);
-          setUserToken(response.data.userToken);
-          AsyncStorage.setItem('userID', response.data.userID);
-          AsyncStorage.setItem('userToken', response.data.userToken);
-        }
-        ).catch((error) => {
-          console.log(error);
-        });
+      axios.post(`${getURL()}/auth/login`, {
+        email: email,
+        password: password
+      }).then((response) => {
+        setUserID(response.data.userID);
+        setUserToken(response.data.userToken);
+        AsyncStorage.setItem('userID', response.data.userID);
+        AsyncStorage.setItem('userToken', response.data.userToken);
       }
-      catch (error) {
-        console.log(error);
-      }
+      ).catch((error) => {
+          setSubmitted(true);
+          setResponse(error.response.data.message);
+      });
+    }
+    else {
+      setSubmitted(true);
+      setResponse("Please enter a valid email and password.");
     }
   }
 
   const handleRegister = (firstName, lastName, email, password, setSubmitted, setResponse) => {
-    if (email != "" && password != "") {
+    if (firstName != "" && lastName != "" && email != "" && password != "") {
       axios.post(`${getURL()}/auth/register`, {
         email: email,
         password: password,
@@ -57,6 +57,10 @@ export const AuthProvider = ({ children }) => {
           setSubmitted(true);
           setResponse(error.response.data.message);
       });
+    }
+    else {
+      setSubmitted(true);
+      setResponse("Please enter a valid name, email, and password.");
     }
   }
 
