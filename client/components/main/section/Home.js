@@ -161,13 +161,13 @@ const Home = ({ route }) => {
     console.log("linfo " + likedInformation)
 
     if (dbLink[0] === "Bookmark") {
-
-      fetchData()
+      setEvents([])
+   //   fetchData()
       fetchEvents(true)
       const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
       console.log("fe" + JSON.stringify(filteredEvents))
 
-      setEvents(filteredEvents);
+    //  setEvents(filteredEvents);
     }
     },[route])
 
