@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { getURL } from '../AxiosService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-//axios.defaults.withCredentials = true; 
-const userID = localStorage.getItem('userID');
 //Retrieves all event data and return as a json file
 export function getCategories() {
   return axios.get(`${getURL()}/api/getAllCategories`) // Adjust the URL to match your local server
@@ -18,28 +15,27 @@ export function getCategories() {
     });
 }
 
-export function GetSaved() 
-{                                                    //FOR TESTING
-  return axios.get(`${getURL()}/api/getSavedEvents/${userID}`) // Adjust the URL to match your local server
-  .then(response => {
+export async function GetSaved() {  
+  try {
+    const userID = await AsyncStorage.getItem('userID');  // Correctly await the promise
+    if (!userID) {
+      throw new Error('No user ID found');
+    }
 
-
-    console.log('GetSaved')
-    console.log(response.data.data[0].saved)
+    const response = await axios.get(`${getURL()}/api/getSavedEvents/${userID}`); // Ensure userID is a string
+    console.log('GetSaved');
+    console.log(response.data.data[0].saved);
     return response.data.data[0].saved;
-  })
-  .catch(error => {
+  } catch (error) {
     console.error('Error fetching data:', error);
     throw error; // Re-throwing the error to propagate it to the caller
-  });
-
+  }
 }
 
 export async function AddToSave(eventId)
 {
-  await console.log(eventId);
-  console.log('entered add')
-  axios.post(`${getURL()}/api/users/${userID}/add-to-saved`, {PostID: eventId})
+  const userID = await AsyncStorage.getItem('userID');
+  axios.post(`${getURL()}/api/users/${userID}/add-to-saved`, { PostID: eventId })
   .then(response => {
     console.log('Response:', response);
     // Handle response data here
