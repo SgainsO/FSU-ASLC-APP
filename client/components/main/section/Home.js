@@ -115,7 +115,10 @@ const Home = ({ route }) => {
       let data;
       if(forBookmark)
       {data = await GetTwentyEvents(offset, limit, 'ALL');
-       data = events.filter(event => likedInformation.includes(event.id.toString()));
+      console.log("fe2" + JSON.stringify(data));
+      console.log("fe2.5" + " " + likedInformation)
+      data = data.filter(event => likedInformation.includes(event.id.toString()));
+      console.log("fe3" + JSON.stringify(data));
       }
       else
       {data = await GetTwentyEvents(offset, limit, activeButton)};
@@ -147,7 +150,7 @@ const Home = ({ route }) => {
     setEndReached(false);
     setLimit(20);
     setEvents([]);
-    fetchEvents();
+    fetchEvents(true);
   }, []);
 
 
@@ -158,14 +161,14 @@ const Home = ({ route }) => {
     console.log("linfo " + likedInformation)
 
     if (dbLink[0] === "Bookmark") {
-      fetchEvents(true)
+
       fetchData()
+      fetchEvents(true)
       const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
       console.log("fe" + JSON.stringify(filteredEvents))
 
       setEvents(filteredEvents);
     }
-
     },[route])
 
     useEffect(() => {
