@@ -109,6 +109,8 @@ router.get('/getTwentyEvents/:aboveId', async (req, res) => {
     const client = await pool.connect();
     const aboveId = req.params.aboveId;
 
+    console.log('aboveId ', aboveId);
+
     const limit = req.query.limit || 20;
     const offset = req.query.offset || 0;
     const key = req.query.key;

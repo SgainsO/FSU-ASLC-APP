@@ -46,6 +46,8 @@ const Home = ({ route }) => {
     { id: 3, title: 'Followed' },
   ];
 
+  const today = new Date();          //Gets todays date
+
   const originalData = [...data]; // Make a copy of the original data
 
   function sortByInterestedDescending(data) {
@@ -118,7 +120,7 @@ const Home = ({ route }) => {
    // if (loading || endReached) return;
    console.log("Fetch Events, Before if")
 
-   if( loadFetch || loading) return;
+   if( loadFetch || loading || endReached) return;
     setFetchLoadState(true);
     try {
       SetLiked(await GetSaved())
@@ -128,10 +130,16 @@ const Home = ({ route }) => {
       if(forBookmark){
 
         data = await GetTwentyEvents(offset, limit, 'ALL');
-        console.log("fe2" + JSON.stringify(data));
-        console.log("fe2.5" + " " + likedInformation)
         data = data.filter(event => likedInformation.includes(event.id.toString()));
-        console.log("fe3" + JSON.stringify(data));
+     
+      }
+      else if(activeButton === 'today')
+      {
+        console.log("Todays Events")
+        data = await GetTwentyEvents(offset, limit, activeButton);
+        data.filter(event => event.getDate() === today.getDate && event.getMonth()
+                                     === today.getMonth() && event.getFullYear() === today.getFullYear);
+
       }else{
       data = await GetTwentyEvents(offset, limit, activeButton)};
       console.log('data:', data);
@@ -142,8 +150,9 @@ const Home = ({ route }) => {
       } 
 
       else {
+        setOffset(data.reduce((maxId, obj) => Math.max(maxId, obj.id), -Infinity));
         setEvents(prevEvents => [...prevEvents, ...data]);
-        setOffset(prevOffset => prevOffset + limit);
+    //    setOffset(prevOffset => prevOffset + limit);
         if (data.length < limit) {
           setEndReached(true);
         }
