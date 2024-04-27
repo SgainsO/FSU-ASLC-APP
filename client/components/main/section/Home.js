@@ -93,8 +93,8 @@ const Home = ({ route }) => {
       })
   }
   const [likedInformation, SetLiked] = useState(null)
-
-  useEffect(() => {
+// const [loadingLiked, setLoadingLiked] = useState(null)
+/*  useEffect(() => {
     async function fetchData() {
       setLoading(true);
       SetLiked(await GetSaved());
@@ -102,19 +102,31 @@ const Home = ({ route }) => {
     }
     console.log("fetch data running")
     fetchData();
-  }, [events]);
+  }, []); */
 
+
+  async function fetchData() {
+    setLoading(true);
+    SetLiked(await GetSaved());
+    setLoading(false);
+  }
+
+
+
+  const [loadFetch, setFetchLoadState] = useState(false)
   const fetchEvents = async (forBookmark) => {
    // if (loading || endReached) return;
    console.log("Fetch Events, Before if")
 
-   if(loading) return;
-    setLoading(true);
+   if( loadFetch || loading) return;
+    setFetchLoadState(true);
     try {
+      SetLiked(await GetSaved())
       console.log("reached try")
       console.log("active button " + activeButton)
       let data;
       if(forBookmark){
+
         data = await GetTwentyEvents(offset, limit, 'ALL');
         console.log("fe2" + JSON.stringify(data));
         console.log("fe2.5" + " " + likedInformation)
@@ -141,7 +153,7 @@ const Home = ({ route }) => {
       console.error('Error fetching events:', error);
     } 
     finally {
-      setLoading(false);
+      setFetchLoadState(false);
     }
   };
 
@@ -162,6 +174,7 @@ const Home = ({ route }) => {
 
     if (dbLink[0] === "Bookmark") {
       setEvents([])
+      setOffset(0)
       fetchEvents(true)
       const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
       console.log("fe" + JSON.stringify(filteredEvents))
@@ -175,7 +188,9 @@ const Home = ({ route }) => {
       setEvents([])
       setOffset(0);
       console.log("key" + activeButton);
+      SetLiked(fetchData());
       fetchEvents();
+
     }, [activeButton])
 
 
