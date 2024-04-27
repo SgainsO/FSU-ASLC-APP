@@ -199,6 +199,7 @@ const Home = ({ route }) => {
       console.log("key" + activeButton);
       SetLiked(fetchData());
       fetchEvents();
+      setEndReached(false);
 
     }, [activeButton])
 
