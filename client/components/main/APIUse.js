@@ -48,6 +48,7 @@ export async function AddToSave(eventId)
 
 export async function RemoveFromSave(eventId) {
   try {
+    const userID = await AsyncStorage.getItem('userID');
     const response = await axios.post(`${getURL()}/api/users/${userID}/remove-from-saved`, { PostID: eventId });
     console.log('Response:', response);
     return response.data;
