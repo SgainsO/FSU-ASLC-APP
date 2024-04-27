@@ -100,8 +100,9 @@ const Home = ({ route }) => {
       SetLiked(await GetSaved());
       setLoading(false);
     }
+    console.log("fetch data running")
     fetchData();
-  }, []);
+  }, [events]);
 
   const fetchEvents = async (forBookmark) => {
    // if (loading || endReached) return;
@@ -149,7 +150,7 @@ const Home = ({ route }) => {
     setEndReached(false);
     setLimit(20);
     setEvents([]);
-    fetchEvents(true);
+    fetchEvents(false);
   }, []);
 
 
@@ -161,7 +162,6 @@ const Home = ({ route }) => {
 
     if (dbLink[0] === "Bookmark") {
       setEvents([])
-   //   fetchData()
       fetchEvents(true)
       const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
       console.log("fe" + JSON.stringify(filteredEvents))

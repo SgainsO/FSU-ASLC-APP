@@ -24,7 +24,7 @@ export async function GetSaved() {
 
     const response = await axios.get(`${getURL()}/api/getSavedEvents/${userID}`); // Ensure userID is a string
     console.log('GetSaved');
-    console.log(response.data.data[0].saved);
+    console.log("Saved Events" + response.data.data[0].saved);
     return response.data.data[0].saved;
   } catch (error) {
     console.error('Error fetching data:', error);
