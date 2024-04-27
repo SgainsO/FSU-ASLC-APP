@@ -159,7 +159,7 @@ const Home = ({ route }) => {
 
     if (dbLink[0] === "Bookmark") {
       fetchEvents(true)
-
+      fetchData()
       const filteredEvents = events.filter(event => likedInformation.includes(event.id.toString()));
       console.log("fe" + JSON.stringify(filteredEvents))
 
