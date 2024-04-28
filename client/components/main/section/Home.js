@@ -309,7 +309,7 @@ const Home = ({ route }) => {
   };
 
   return (
-    <View style={colorScheme === 'dark' ? styles.darkContainer : styles.container}>
+    <View style={[colorScheme,  styles.container, colorScheme === 'dark' && styles.darkContainer]}>
       <Text style={[styles.Title, colorScheme === 'dark' && styles.darkText]}>{eventScreenName}</Text>
 
       <View style={[styles.topContainer, colorScheme === 'dark' && styles.darkContainer]}>
@@ -363,9 +363,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Arial',
   },
   darkContainer: {
-    flex: 12,
     backgroundColor: '#121212',
-    fontFamily: 'Arial',
   },
   darkText: {
     color: '#FFFFFF',
