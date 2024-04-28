@@ -17,12 +17,14 @@ const SearchBar = (props) => {
           style={{ marginLeft: 1 }}
         />
         <TextInput
-          style={[styles.input, colorScheme === 'dark' && styles.darkText]}
-          placeholder="Search"
-          value={props.searchPhrase}
-          onChangeText={props.setSearchPhrase}
-          onFocus={() => { props.setClicked(true); }}
-        />
+  style={[styles.input, colorScheme === 'dark' && styles.darkText]}
+  placeholder="Search"
+  value={props.searchPhrase}
+  onChangeText={(text) => { 
+    props.setSearchPhrase(text.toLowerCase()); // Convert text to lowercase
+  }}
+  onFocus={() => { props.setClicked(true); }}
+/>
         {props.clicked && props.searchPhrase != "" && (
           <Entypo 
             name="cross" 
