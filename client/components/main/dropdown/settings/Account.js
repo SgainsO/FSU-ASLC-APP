@@ -73,7 +73,7 @@ const Account = () => {
       </TouchableOpacity>
     
       <View style={styles.centeredContainer}>
-        <Text style={styles.Title}>Account</Text>
+        <Text style={[styles.Title, colorScheme === 'dark' && styles.darkText]}>Account</Text>
         {/* Conditionally render the user-uploaded image if available */}
 
         {image ? (
