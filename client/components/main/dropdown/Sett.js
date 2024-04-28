@@ -62,7 +62,6 @@ const Sett = () => {
       <WordWithLine word="Account                               >" onPress={() => handleIconPress('Account', 'Account')} />    
       <WordWithLine word="Display                                > "onPress={() => handleIconPress('Display', 'Display')} />
       <WordWithLine word="Notifications                        >" onPress={() => handleIconPress('Notifications', 'Notifications')}/>
-      <WordWithLine word="Bookmarks                          >" onPress={() => handleIconPress('Bookmarks', 'Bookmarks')}/>
       <WordWithLine word="Contact Us                          >" onPress={() => handleIconPress('ContactUs', 'ContactUs')}/>
       <WordWithLineRed word="Log out                                >" onPress={() => [handleLogout(), handleIconPress('Login', 'Login')]}/>
       
