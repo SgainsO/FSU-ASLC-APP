@@ -253,8 +253,8 @@ const Home = ({ route }) => {
 
   const renderItem = useCallback(({ item }) => {
     const isMatch = searchPhrase === "" ||
-      item.title.toUpperCase().includes(searchPhrase.toUpperCase()) ||
-      item.club.toUpperCase().includes(searchPhrase.toUpperCase());
+      item.title.toUpperCase().includes(searchPhrase.toUpperCase())
+      ;//  ||  item.club.toUpperCase().includes(searchPhrase.toUpperCase());
   
     if (isMatch) {
       return (
