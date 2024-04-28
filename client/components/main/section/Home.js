@@ -214,13 +214,14 @@ const Home = ({ route }) => {
   useEffect( () =>{
     console.log("Route Change")
     changeActiveButton(keys[0]) 
-    setOffset(0);
+    setEvents([])       //This was added after removing the correct amount of events for true pagination functionality
+    setOffset(0);       //The code should work properly regardless
 
     },[route])
 
   useEffect(() => {
     console.log("Liked Information" + likedInformation)
-    setEvents([])
+    setEvents([])       //Reduntunt call inorder to ensure proper usage
     setOffset(0);
     console.log("offz " + offset)
     console.log("key" + activeButton);
