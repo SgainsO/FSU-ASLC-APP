@@ -147,9 +147,14 @@ const Home = ({ route }) => {
        //UNTESTED
         console.log("Todays Events")
         data = await GetTwentyEvents(offset, limit, 'ALL');
-        data = data.filter(event => event.getDate() === today.getDate && event.getMonth()
-                    === today.getMonth() && event.getFullYear() === today.getFullYear);
-
+        data = data.filter(event => {
+          const eventDate = new Date(event.startdate);
+          return (
+              eventDate.getDate() === today.getDate() &&
+              eventDate.getMonth() === today.getMonth() &&
+              eventDate.getFullYear() === today.getFullYear()
+          );
+      });
       }else{
 
         console.log("forbook" + forBookmark)
