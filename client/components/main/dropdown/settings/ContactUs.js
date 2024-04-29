@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, ScrollView,  TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView,  TouchableOpacity, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useColorSchemeContext } from '../../../main/ColorSchemeContext';
 
@@ -14,8 +14,8 @@ const ContactUs = () => {
             navigation.navigate(navigateTo);
         };
     return (
-      <ScrollView>
-<SafeAreaView style={colorScheme === 'dark' && styles.darkContainer}>
+      
+<View style={colorScheme === 'dark' && styles.darkContainer}>
 <TouchableOpacity onPress={() => handleIconPress('Sett', 'Sett')} >
     <Text style={styles.back}> {'< Back'}  </Text>
     </TouchableOpacity>
@@ -45,18 +45,17 @@ Saturday & Sunday: 12pm – 11pm{'\n'}
 
       </Text>
 
-      <SafeAreaView style={[styles.container, { marginLeft: -10 }]}>
+      <View style={[styles.container, { marginLeft: -10 }]}>
       <Image
         source={require('../../../../assets/ASLC-Map.png')} // Path to your image file
         style={[{ width: 300, height: 300 }, styles.image]} // Adjust width and height as needed
       />
-<Text style={styles.captionText}>The Student Life Cinema is located in the Askew Student Life Center at 942 Learning Way, 
+<Text style={[styles.captionText, colorScheme === 'dark' && styles.darkText]}>The Student Life Cinema is located in the Askew Student Life Center at 942 Learning Way, 
 in the southwest corner of the Florida State University campus. 
 Parking is available on the east side of Woodward Ave and in Traditions Parking Garage.</Text>
-</SafeAreaView>
+</View>
 
-</SafeAreaView>
-</ScrollView>
+</View>
         );
 };
 
