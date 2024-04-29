@@ -51,7 +51,7 @@ const Sett = () => {
         source={require('../../../assets/gear.png')} 
         style={styles.image}
         />
-        </View>
+</View>
 
         
 
