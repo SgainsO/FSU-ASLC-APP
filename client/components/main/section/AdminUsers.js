@@ -15,9 +15,9 @@ const AdminUsers = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
   const [userData, setUserData] = useState({
-    tableHead: ['Image', 'ID', 'First Name', 'Last Name', 'Email', 'Actions'],
+    tableHead: ['Admin', 'First Name', 'Last Name', 'Email', 'Actions'],
     tableData: [],
-    widthPercents: [10, 10, 20, 20, 20, 20],
+    widthPercents: [20, 20, 20, 20, 20],
     type: 'User'
   });
   
@@ -28,8 +28,7 @@ const AdminUsers = () => {
 
         console.log(response)
         const formattedData = response.data.data.map(user => [
-          user.url,
-          user.id,
+          user.admin_priv === 'true'? 'Yes' : 'No',
           user.firstname,
           user.lastname,
           user.email,

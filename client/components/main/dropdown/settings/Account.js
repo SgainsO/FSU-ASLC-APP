@@ -82,13 +82,12 @@ const Account = () => {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={pickImage}>
-            <Image source={require('../../../../assets/daniel.png')} style={styles.image} />
+            <Image source={require('../../../../assets/aslc_logo.png')} style={styles.image} />
           </TouchableOpacity>
         )}
 
 
         {/* Second Image (Overlayed) */}
-        <Image source={require('../../../../assets/pencil.png')} style={[styles.image, styles.overlay]} />
         
       </View>
 
