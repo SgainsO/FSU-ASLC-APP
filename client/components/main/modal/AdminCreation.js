@@ -405,19 +405,17 @@ const AdminCreation = (props) => {
 
   const [isEventTypeFocus, setEventTypeFocus] = useState(false);
   const eventTypes = [
-    { label: 'today', value: '0' },
-    { label: 'past', value: '1' },
-    { label: 'game', value: '2' },
-    { label: 'New', value: '3' },
-    { label: 'Classics', value: '4' },
-    { label: 'Co-ops', value: '5' },
-    { label: 'Midnights', value: '6' },
-    { label: 'Cultural', value: '7' },
-    { label: 'Study', value: '8' },
-    { label: 'Activity', value: '9' },
-    { label: 'Bookmark', value: '10' },
-    { label: 'Movie Meeting', value: '11'},
-    { label: 'General Meeting', value: '12'}
+    { label: 'Committee Meeting', value: '0' },
+    { label: 'Department Meeting', value: '1' },
+    { label: 'Film', value: '2' },
+    { label: 'Talent Shows', value: '3' },
+    { label: 'General Body Meeting', value: '4' },
+    { label: 'Career Panels', value: '5' },
+    { label: 'Alumni Networking Event', value: '6' },
+    { label: 'Academic Conference', value: '7' },
+    { label: 'Competitive Matches', value: '8' },
+    { label: 'Worship Services', value: '9' },
+    { label: 'Peer Mentoring Session', value: '10' },
   ];
 
   const [isEventClubFocus, setEventClubFocus] = useState(false);
