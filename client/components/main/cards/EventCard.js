@@ -191,7 +191,7 @@ const EventCard = (props) => {
   return (
     <View style={[cardImageStyle,colorScheme === 'dark' && styles.darkContainer] }>
       <View style={[ImageHolderStyle, ]}> 
-       <Image source={{uri: props.image_url}} style = {ImageStyle} resizeMode='cover'/>        
+       <Image source={{uri: props.image_url !== null ? props.image_url: 'https://pbs.twimg.com/profile_images/1649472289153359879/3U94pvS__400x400.jpg'}} style = {ImageStyle} resizeMode='cover'/>        
         </View>
         <TouchableOpacity style={BookMarkButton} onPress={() => HandleBookmarkPress()}>
           <Icon name={BookmarkState} size = {30} color={BookmarkColor}/>

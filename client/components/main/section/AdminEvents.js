@@ -24,7 +24,7 @@ const AdminEvents = () => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(getEventsURL());
-        const formattedData = response.data.data.map(event => [
+        const formattedData = response.data.data.map(event => [           
           event.url,
           event.id,
           event.club_id,

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // CHANGE THIS TO UR LOCAL IP!!! SHOWN WITH STARTING SERVER
 
-const IP = "192.168.0.152"
+const IP = "192.168.1.227"
 
 
 const PORT = "3000"

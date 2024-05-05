@@ -237,11 +237,13 @@ const AdminCreation = (props) => {
           if (props.data[6]) {
             setEndDateEnabled(true);
           }
+          console.log("Props" + props.data);
+
           setValue('url', props.data[0])
           setValue('id', props.data[1])
           setValue('club', props.data[2]);
           setValue('type', props.data[3]);
-          setValue('title', props.data[4]);update
+          setValue('title', props.data[4]);
           setValue('startDate', new Date(props.data[5]));
           setValue('endDate', new Date(props.data[6]));
           break;
@@ -357,7 +359,7 @@ const AdminCreation = (props) => {
             "Type": data.type,
             "Title": data.title,
             "StartDate": data.startDate,
-            "EndDate": "Tomorrow",
+            "EndDate": data.endDate !== "" ? data.endDate : new Date(data.startDate.getTime() + (3 * 60 * 60 * 1000)),
             "URL": "d"
           }
 
@@ -753,7 +755,7 @@ const AdminCreation = (props) => {
                       onBlur(); // To ensure form validation
                     }}
                     onChange={(item) => {
-                      onChange(item.value);
+                      onChange(item.label);
                       setEventTypeFocus(false);
                     }}
                   />
@@ -865,7 +867,7 @@ const AdminCreation = (props) => {
               />
             </View>
 
-            <TouchableOpacity style={formSubmit} onPress={handleSubmit(onSubmit)}>
+            <TouchableOpacity style={formSubmit} onPress={handleSubmit(onSubmit)}>             
               <Text style={formSubmitText}>{isEditMode ? "Update" : "Create"} {props.type}</Text>
             </TouchableOpacity>
           </View>

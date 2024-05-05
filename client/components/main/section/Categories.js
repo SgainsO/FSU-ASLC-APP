@@ -71,14 +71,8 @@ _listEmptyComponent = () => {
 
 return (
 <View style={[styles.container, colorScheme === 'dark' && styles.darkContainer]}>
-  <View style={searchBarContainerStyle}>
-    <SearchBar
-      searchPhrase={searchText}
-      setSearchPhrase={handleSearch}
-    />
-  </View>
-  <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginVertical: 10 }} />
   <Text style={[{fontSize: 25, fontWeight: '600', paddingLeft: 32, paddingTop: 5, fontFamily: 'Times New Roman'}, colorScheme === 'dark' && styles.darkText]}>Browse Categories</Text>
+  <View style={{ borderBottomColor: 'rgba(0, 0, 0, 0.1)', borderBottomWidth: 1, marginTop: 6 }} />
   <FlatList
     data ={serverData}           //Change to "serverData" to make categorie cards from server, run data for just testing events page
     renderItem ={({item}) => <SearchCard {...item} />}          //Go to SearchCard.js to find navigation logic
