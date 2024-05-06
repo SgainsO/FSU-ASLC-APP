@@ -14,10 +14,12 @@ const AdminUsers = () => {
   // Search bar consts
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
+
   const [userData, setUserData] = useState({
-    tableHead: ['Admin', 'First Name', 'Last Name', 'Email', 'Actions'],
+    tableHead: ['Admin', 'First Name', 'Last Name', 'Email ID', 'Actions'],
     tableData: [],
-    widthPercents: [20, 20, 20, 20, 20],
+    userIds: [],
+    widthPercents: [15, 20, 20, 25, 20],             //0 so the table can hold id without showing it
     type: 'User'
   });
   
@@ -25,16 +27,24 @@ const AdminUsers = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(`${getURL()}/api/getUsers`);
-
-        console.log(response)
+  
         const formattedData = response.data.data.map(user => [
-          user.admin_priv === 'true'? 'Yes' : 'No',
+          user.admin_priv === 'true' ? 'Yes' : 'No',
           user.firstname,
           user.lastname,
-          user.email,
+          user.email
         ]);
+  
+        const idArrays = response.data.data.map(user => user.id); // Array of user IDs
+  
         console.log('formattedData: ', formattedData);
-        setUserData(prevState => ({ ...prevState, tableData: formattedData }));
+        console.log('idArrays: ', idArrays);
+  
+        setUserData(prevState => ({
+          ...prevState,
+          tableData: formattedData,
+          userIds: idArrays // Setting the user IDs to a separate state
+        }));
       } catch (error) {
         console.error(error);
       }

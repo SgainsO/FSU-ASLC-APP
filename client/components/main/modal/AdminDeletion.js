@@ -19,7 +19,8 @@ const AdminDeletion = (props) => {
     switch (props.type) {
       case 'User':
         try {
-          const response = await axios.delete(`${getURL()}/api/user/${props.data[1]}/delete`);
+          console.log("Admin UserID" + props)
+          const response = await axios.delete(`${getURL()}/api/user/${props.activeKey}/delete`);
 
           if (response.status === 200) {
             console.log('User deleted successfully');
@@ -65,9 +66,9 @@ const AdminDeletion = (props) => {
       case 'User':
         return (
           <Text>
-            <Text style={styles.formLabel}>ID:</Text> {props.data[1]}
-            <Text style={styles.formLabel}>{'\n'}Name:</Text> {props.data[2]}
-            <Text style={styles.formLabel}>{'\n'}Email:</Text> {props.data[3]}
+            <Text style={styles.formLabel}>FirstName:</Text> {props.data[1]}
+            <Text style={styles.formLabel}>{'\n'}LastName:</Text> {props.data[2]}
+            <Text style={styles.formLabel}>{'\n'}User ID:</Text> {props.activeKey}
           </Text>
         );
       case 'Club':

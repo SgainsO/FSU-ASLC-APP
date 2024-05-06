@@ -12,29 +12,32 @@ const AdminTable = (props) => {
   const [isItemVisible, setItemVisible] = useState(false);
   const [isDeletionVisible, setDeletionVisible] = useState(false);
   const [itemData, setItem] = useState([]);
+  const [userID, setUserID] = useState('89h')
 
   const isImageUrl = (url) => {
     return typeof url === 'string' && url.match(/^http.*\.(jpeg|jpg|gif|png|JPG)$/);
   }
 
-  const toggleItemModal = (data) => {
+  const toggleItemModal = (data, id) => {
     setItem(data);
     setItemVisible(!isItemVisible);
+    setUserID(id)
   };
 
-  const toggleDeletionModal = (data) => {
+  const toggleDeletionModal = (data, id) => {
     setItem(data);
     setDeletionVisible(!isDeletionVisible);
+    setUserID(id)
   };
 
-  actionButtons = (data, index) => (
+  actionButtons = (data, id) => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 5 }}>
-      <TouchableOpacity onPress={() => toggleItemModal(data)}>
+      <TouchableOpacity onPress={() => toggleItemModal(data, id)}>
         <View style={styles.btn}>
           <MaterialIcons name="edit" size={30} color="#CEB888" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => toggleDeletionModal(data)}>
+      <TouchableOpacity onPress={() => toggleDeletionModal(data, id) }>
         <View style={styles.btn}>
           <Fontisto name="trash" size={24} color="#782F40" />
         </View>
@@ -68,7 +71,7 @@ const AdminTable = (props) => {
           })}
           {/* Add action buttons as an additional cell */}
           <View style={[styles.cell, { width: `${state.widthPercents[state.widthPercents.length - 1]}%`, justifyContent: 'center', alignItems: 'center' }]}>
-            {this.actionButtons(item, index)}
+            {state.type === 'User' ? actionButtons(item, state.userIds[index]) : actionButtons(item, null)}  
           </View>
         </View>
       );
@@ -95,12 +98,12 @@ const AdminTable = (props) => {
   return (
     <View style={styles.container}>
       {renderHeader()}
-      <AdminCreation data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} type={state.type} />
-      <AdminDeletion data={itemData} isModalVisible={isDeletionVisible} setModalVisible={setDeletionVisible} type={state.type} />
+      <AdminCreation data={itemData} isModalVisible={isItemVisible} setModalVisible={setItemVisible} type={state.type} activeKey={userID} />
+      <AdminDeletion data={itemData} isModalVisible={isDeletionVisible} setModalVisible={setDeletionVisible} type={state.type} activeKey={userID} />
       <FlatList
         data={state.tableData}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index)=> index.toString()}
       />
     </View>
   );

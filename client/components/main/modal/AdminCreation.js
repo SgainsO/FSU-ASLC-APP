@@ -221,11 +221,10 @@ const AdminCreation = (props) => {
       switch (props.type) {
         case 'User':
           console.log(props.data[2])
-          
-          setValue('id', props.data[1])
-          setValue('firstName', props.data[2]);
-          setValue('lastName', props.data[3]);
-          setValue('email', props.data[4]);
+          setValue('id', props.activeKey)
+          setValue('firstName', props.data[1]);
+          setValue('lastName', props.data[2]);
+          setValue('email', props.data[3]);
           break;
         case 'Club':
           setValue('id', props.data[1])
@@ -263,6 +262,9 @@ const AdminCreation = (props) => {
     marginBottom: 10,
     paddingLeft: 10,
   });
+
+  //URLS NEED TO BE IMPLEMENTED
+
 
   const onSubmit = async (data) => {
     if (isEditMode) {
@@ -312,8 +314,8 @@ const AdminCreation = (props) => {
             "Type": data.type,
             "Title": data.title,
             "StartDate": data.startDate,
-            "EndDate": "Tomorrow",
-            "URL": "d"
+            "EndDate": data.endDate !== "" ? data.endDate : new Date(data.startDate.getTime() + (3 * 60 * 60 * 1000)),
+            "URL": "data.url"           //Needs to be implemented
           }
 
           try {
@@ -360,7 +362,7 @@ const AdminCreation = (props) => {
             "Title": data.title,
             "StartDate": data.startDate,
             "EndDate": data.endDate !== "" ? data.endDate : new Date(data.startDate.getTime() + (3 * 60 * 60 * 1000)),
-            "URL": "d"
+            "URL": "d"                 
           }
 
           try {
