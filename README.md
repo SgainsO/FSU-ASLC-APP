@@ -1,5 +1,5 @@
 # FSU-ASLC-APP
-
+* Due to the AWS server being shut down, access to events will not be functional
 ## Getting Started
 
 ### Front-end
