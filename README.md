@@ -1,5 +1,7 @@
 # FSU-ASLC-APP
 * Due to the AWS server being shut down, access to events will not be functional
+* [Link to Code Explanation and Visual Showcase](https://www.youtube.com/watch?v=7JBeNP4VuEk)
+  * Admin functionality not shown in presentation
 ## Getting Started
 
 ### Front-end
